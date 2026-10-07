@@ -378,7 +378,7 @@
     <div class="top-bar">
       <div class="sync-badge" id="sync-badge">
         <span class="status-dot" id="sync-dot"></span>
-        <span id="sync-text">Conectando...</span>
+        <span id="sync-text">A carregar...</span>
       </div>
 
       <button class="action-btn-top" onclick="openEditModal()">
@@ -429,7 +429,6 @@
   </div>
 
   <script>
-    // Endpoint REST direto do seu Firebase
     const FIREBASE_ENDPOINT = "https://roca2-37116-default-rtdb.firebaseio.com/dados_compartilhados.json";
 
     const PARTICIPANTS = [
@@ -505,32 +504,37 @@
       dot.className = "status-dot";
       if (state === "syncing") {
         dot.classList.add("syncing");
-        text.textContent = msg || "Sincronizando...";
+        text.textContent = msg || "A sincronizar...";
       } else if (state === "offline") {
         dot.classList.add("offline");
-        text.textContent = msg || "Offline (salvo local)";
+        text.textContent = msg || "Offline (guardado localmente)";
       } else {
         text.textContent = msg || "Sincronizado na nuvem";
       }
     }
 
     function loadLocal() {
-      const savedExp = localStorage.getItem("roca_expenses_data");
-      if (savedExp) {
-        try { EXPENSES = JSON.parse(savedExp); } catch(e) {}
-      }
-      const savedPay = localStorage.getItem("roca_payments_data");
-      if (savedPay) {
-        try { PAYMENTS = JSON.parse(savedPay); } catch(e) {}
-      }
+      try {
+        const savedExp = localStorage.getItem("roca_expenses_data");
+        if (savedExp) {
+          const parsed = JSON.parse(savedExp);
+          if (Array.isArray(parsed) && parsed.length > 0) EXPENSES = parsed;
+        }
+      } catch(e) {}
+
+      try {
+        const savedPay = localStorage.getItem("roca_payments_data");
+        if (savedPay) PAYMENTS = JSON.parse(savedPay) || {};
+      } catch(e) {}
     }
 
     function saveLocal() {
-      localStorage.setItem("roca_expenses_data", JSON.stringify(EXPENSES));
-      localStorage.setItem("roca_payments_data", JSON.stringify(PAYMENTS));
+      try {
+        localStorage.setItem("roca_expenses_data", JSON.stringify(EXPENSES));
+        localStorage.setItem("roca_payments_data", JSON.stringify(PAYMENTS));
+      } catch(e) {}
     }
 
-    // Salva na nuvem via PUT direto do Firebase REST
     async function syncToCloud() {
       saveLocal();
       if (!navigator.onLine) {
@@ -538,7 +542,7 @@
         return;
       }
 
-      setSyncStatus("syncing", "Salvando na nuvem...");
+      setSyncStatus("syncing", "A guardar na nuvem...");
       try {
         const payload = JSON.stringify({
           expenses: EXPENSES,
@@ -555,14 +559,13 @@
         if (res.ok) {
           setSyncStatus("online", "Sincronizado na nuvem");
         } else {
-          setSyncStatus("offline", "Ajuste Regras no Firebase");
+          setSyncStatus("offline", "Ajuste as Regras no Firebase");
         }
       } catch (err) {
-        setSyncStatus("offline", "Offline (salvo local)");
+        setSyncStatus("offline", "Offline (guardado localmente)");
       }
     }
 
-    // Puxa da nuvem via GET do Firebase REST
     async function syncFromCloud() {
       if (!navigator.onLine) {
         setSyncStatus("offline");
@@ -573,26 +576,26 @@
         const res = await fetch(FIREBASE_ENDPOINT);
         if (res.ok) {
           const data = await res.json();
-          if (data && data.expenses) {
+          if (data && Array.isArray(data.expenses) && data.expenses.length > 0) {
             EXPENSES = data.expenses;
             PAYMENTS = data.payments || {};
             saveLocal();
             render();
             setSyncStatus("online", "Sincronizado na nuvem");
           } else if (data === null) {
-            // Se o banco estiver zerado pela primeira vez, grava os dados iniciais
+            // Nuvem vazia: envia a base inicial
             syncToCloud();
           }
         } else {
-          setSyncStatus("offline", "Ajuste Regras no Firebase");
+          setSyncStatus("offline", "Ajuste as Regras no Firebase");
         }
       } catch (err) {
-        setSyncStatus("offline", "Offline (salvo local)");
+        setSyncStatus("offline", "Offline (guardado localmente)");
       }
     }
 
     window.addEventListener('online', () => {
-      setSyncStatus("syncing", "Reconectando...");
+      setSyncStatus("syncing", "A reconectar...");
       syncFromCloud().then(syncToCloud);
     });
     window.addEventListener('offline', () => {
@@ -629,7 +632,8 @@
       });
 
       EXPENSES.forEach(exp => {
-        const activePeople = PARTICIPANTS.filter(p => !exp.excluded.includes(p));
+        const excluded = exp.excluded || [];
+        const activePeople = PARTICIPANTS.filter(p => !excluded.includes(p));
         const activeCount = activePeople.length;
         const hasDefined = typeof exp.total === 'number' && exp.total > 0 && activeCount > 0;
         const perPersonVal = hasDefined ? exp.total / activeCount : 0;
@@ -719,6 +723,7 @@
 
     function render() {
       const container = document.getElementById("expenses-container");
+      if (!container) return;
       container.innerHTML = "";
 
       const balances = {};
@@ -733,7 +738,8 @@
         const hasPix = exp.pix && exp.pix.trim().length > 0;
         const copyBtn = hasPix ? `<button class="copy-btn" onclick="copyPix('${exp.pix}')">Copiar PIX</button>` : '';
 
-        const activePeople = PARTICIPANTS.filter(p => !exp.excluded.includes(p));
+        const excluded = exp.excluded || [];
+        const activePeople = PARTICIPANTS.filter(p => !excluded.includes(p));
         const activeCount = activePeople.length;
         
         let perPersonVal = 0;
@@ -751,7 +757,7 @@
         let peopleHtml = "";
 
         PARTICIPANTS.forEach(person => {
-          if (exp.excluded.includes(person)) {
+          if (excluded.includes(person)) {
             peopleHtml += `
               <div class="person-chip" style="opacity: 0.4; cursor: not-allowed;">
                 <span class="excluded-tag">${person} (não entra)</span>
@@ -844,6 +850,7 @@
 
     function renderSummary(balances) {
       const summaryContainer = document.getElementById("summary-container");
+      if (!summaryContainer) return;
       summaryContainer.innerHTML = "";
 
       PARTICIPANTS.forEach(person => {
@@ -873,6 +880,7 @@
 
     function openEditModal() {
       const modalBody = document.getElementById("modal-body");
+      if (!modalBody) return;
       modalBody.innerHTML = "";
 
       EXPENSES.forEach(exp => {
@@ -928,7 +936,7 @@
     }
 
     function resetToDefaults() {
-      if (confirm("Tem certeza que deseja restaurar as informações para o padrão inicial?")) {
+      if (confirm("Tem a certeza de que deseja restaurar as informações para o padrão inicial?")) {
         EXPENSES = JSON.parse(JSON.stringify(DEFAULT_EXPENSES));
         PAYMENTS = {};
         closeEditModal();
@@ -942,13 +950,13 @@
       if (event.target === modal) closeEditModal();
     };
 
-    // Renderiza primeiro os dados locais para tela nunca ficar em branco
+    // 1. Inicializa o ecrã imediatamente
     loadLocal();
     render();
 
-    // Em seguida sincroniza com a nuvem e fica monitorando a cada 3 segundos
+    // 2. Procura atualizações na nuvem logo de seguida
     syncFromCloud();
-    setInterval(syncFromCloud, 3000);
+    setInterval(syncFromCloud, 4000);
   </script>
 </body>
 </html>
