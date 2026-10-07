@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Divisão Roça 2.0 🌾</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --accent: #22c55e;
+      --border: #334155;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body { background-color: var(--bg); color: var(--text); padding: 16px; display: flex; justify-content: center; }
+    .container { width: 100%; max-width: 650px; }
+    header { text-align: center; margin-bottom: 20px; }
+    h1 { font-size: 1.6rem; color: #f59e0b; margin-bottom: 6px; }
+    p.sub { font-size: 0.9rem; color: var(--muted); }
+    
+    .expense-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px;
+      margin-bottom: 16px;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.2);
+    }
+    .expense-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+      margin-bottom: 10px;
+    }
+    .expense-title { font-weight: 700; font-size: 1.1rem; display: flex; align-items: center; gap: 6px; }
+    .expense-val { font-size: 0.95rem; font-weight: 600; color: #38bdf8; }
+    .pix-box {
+      font-size: 0.8rem;
+      background: rgba(0,0,0,0.25);
+      border-radius: 6px;
+      padding: 6px 10px;
+      margin-bottom: 12px;
+      color: var(--muted);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .pix-box strong { color: var(--text); }
+    .copy-btn {
+      background: #3b82f6;
+      border: none;
+      color: #fff;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      cursor: pointer;
+    }
+
+    .people-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 8px;
+    }
+    .person-chip {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #0f172a;
+      border: 1px solid var(--border);
+      padding: 6px 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      user-select: none;
+      font-size: 0.85rem;
+      transition: all 0.15s ease;
+    }
+    .person-chip.paid {
+      background: rgba(34, 197, 94, 0.15);
+      border-color: var(--accent);
+      color: #86efac;
+    }
+    .person-chip input { cursor: pointer; accent-color: var(--accent); }
+    .excluded-tag { font-size: 0.75rem; color: #64748b; font-style: italic; }
+
+    .summary-card {
+      background: #1e1b4b;
+      border: 1px solid #4338ca;
+      border-radius: 12px;
+      padding: 16px;
+      margin-top: 24px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <h1>🌾 Roça 2.0 (30/10 a 02/11)</h1>
+      <p class="sub">Marque conforme for pagando o PIX para cada responsável</p>
+    </header>
+
+    <div id="expenses-container"></div>
+
+    <div class="summary-card">
+      <h3 style="margin-bottom: 8px; color: #a5b4fc;">Dica rápida</h3>
+      <p style="font-size: 0.85rem; color: #c7d2fe;">
+        Ao marcar ou desmarcar uma caixa, o status fica salvo automaticamente para você acompanhar os pagamentos.
+      </p>
+    </div>
+  </div>
+
+  <script>
+    const PARTICIPANTS = [
+      "Matheus", "Paulinho", "Guilherme", "Gustavo", 
+      "Emiliano", "Alexandre", "Thiago", "Lucas", "Jeferson"
+    ];
+
+    const EXPENSES = [
+      {
+        id: "chopp",
+        name: "🍺 Chopp",
+        total: "R$ 1.090,00",
+        perPerson: "R$ 121,11",
+        responsible: "Paulinho",
+        pix: "61992727661",
+        pixDisplay: "61 99272-7661",
+        excluded: []
+      },
+      {
+        id: "carros",
+        name: "🚗 Carros",
+        total: "R$ 1.373,34",
+        perPerson: "R$ 171,67",
+        responsible: "Paulinho",
+        pix: "61992727661",
+        pixDisplay: "61 99272-7661",
+        excluded: ["Jeferson"]
+      },
+      {
+        id: "narguile",
+        name: "💨 Narguilé",
+        total: "A Definir",
+        perPerson: "A Definir",
+        responsible: "Steffano Santos",
+        pix: "",
+        pixDisplay: "A definir",
+        excluded: ["Jeferson"]
+      },
+      {
+        id: "costela",
+        name: "🥩 Costela",
+        total: "A Definir",
+        perPerson: "A Definir",
+        responsible: "Alexandre",
+        pix: "",
+        pixDisplay: "A definir",
+        excluded: []
+      },
+      {
+        id: "comidas",
+        name: "🍽️ Comidas",
+        total: "A Definir",
+        perPerson: "A Definir",
+        responsible: "Jeferson",
+        pix: "61982355635",
+        pixDisplay: "61 98235-5635",
+        excluded: []
+      },
+      {
+        id: "combustivel",
+        name: "⛽ Combustível",
+        total: "A Definir",
+        perPerson: "A Definir",
+        responsible: "Jeferson",
+        pix: "61982355635",
+        pixDisplay: "61 98235-5635",
+        excluded: []
+      }
+    ];
+
+    function copyPix(key) {
+      if (!key) return;
+      navigator.clipboard.writeText(key);
+      alert("Chave PIX copiada: " + key);
+    }
+
+    function togglePay(expId, person) {
+      const stateKey = `roca_${expId}_${person}`;
+      const isPaid = localStorage.getItem(stateKey) === 'true';
+      localStorage.setItem(stateKey, !isPaid);
+      render();
+    }
+
+    function render() {
+      const container = document.getElementById("expenses-container");
+      container.innerHTML = "";
+
+      EXPENSES.forEach(exp => {
+        const card = document.createElement("div");
+        card.className = "expense-card";
+
+        const hasPix = exp.pix.length > 0;
+        const copyBtn = hasPix ? `<button class="copy-btn" onclick="copyPix('${exp.pix}')">Copiar PIX</button>` : '';
+
+        let peopleHtml = "";
+        PARTICIPANTS.forEach(person => {
+          if (exp.excluded.includes(person)) {
+            peopleHtml += `
+              <div class="person-chip" style="opacity: 0.4; cursor: not-allowed;">
+                <span class="excluded-tag">${person} (não entra)</span>
+              </div>
+            `;
+          } else {
+            const isPaid = localStorage.getItem(`roca_${exp.id}_${person}`) === 'true';
+            peopleHtml += `
+              <label class="person-chip ${isPaid ? 'paid' : ''}">
+                <input type="checkbox" ${isPaid ? 'checked' : ''} onchange="togglePay('${exp.id}', '${person}')">
+                <span>${person}</span>
+              </label>
+            `;
+          }
+        });
+
+        card.innerHTML = `
+          <div class="expense-header">
+            <span class="expense-title">${exp.name}</span>
+            <span class="expense-val">${exp.perPerson} / pessoa</span>
+          </div>
+          <div class="pix-box">
+            <span>Resp: <strong>${exp.responsible}</strong> | PIX: <strong>${exp.pixDisplay}</strong></span>
+            ${copyBtn}
+          </div>
+          <div class="people-grid">
+            ${peopleHtml}
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    render();
+  </script>
+</body>
+</html>
