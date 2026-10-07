@@ -5,6 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Divisão Roça 2.0 🌾</title>
 
+  <!-- Firebase Scripts Oficiais -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
   <style>
     :root {
       --bg: #0f172a;
@@ -228,7 +232,7 @@
     .text-paid { color: #86efac; font-weight: 600; }
     .text-pending { color: #f87171; font-weight: 600; }
 
-    /* Rodapé com botão alinhado à esquerda */
+    /* Rodapé: Botão alinhado à esquerda */
     .footer-section {
       margin-top: 24px;
       display: flex;
@@ -378,7 +382,7 @@
     <div class="top-bar">
       <div class="sync-badge" id="sync-badge">
         <span class="status-dot" id="sync-dot"></span>
-        <span id="sync-text">Sincronizado</span>
+        <span id="sync-text">Conectando...</span>
       </div>
 
       <button class="action-btn-top" onclick="openEditModal()">
@@ -404,7 +408,7 @@
       </p>
     </div>
 
-    <!-- Rodapé da Página: Botão Copiar Relatório no canto esquerdo -->
+    <!-- Rodapé: Copiar Relatório -->
     <div class="footer-section">
       <button class="whatsapp-footer-btn" onclick="copyWhatsAppReport()">
         📋 Copiar Relatório para WhatsApp
@@ -429,7 +433,8 @@
   </div>
 
   <script>
-    const FIREBASE_URL = "https://roca-2-exemplo-default-rtdb.firebaseio.com/roca_data.json";
+    // URL do seu banco Realtime Database configurada:
+    const FIREBASE_DATABASE_URL = "https://roca2-37116-default-rtdb.firebaseio.com";
 
     const PARTICIPANTS = [
       "Matheus", "Paulinho", "Guilherme", "Gustavo", 
@@ -495,6 +500,7 @@
 
     let EXPENSES = JSON.parse(JSON.stringify(DEFAULT_EXPENSES));
     let PAYMENTS = {};
+    let dbRef = null;
 
     function setSyncStatus(state, msg) {
       const dot = document.getElementById("sync-dot");
@@ -509,7 +515,7 @@
         dot.classList.add("offline");
         text.textContent = msg || "Offline (salvo local)";
       } else {
-        text.textContent = msg || "Sincronizado";
+        text.textContent = msg || "Sincronizado na nuvem";
       }
     }
 
@@ -529,70 +535,51 @@
       localStorage.setItem("roca_payments_data", JSON.stringify(PAYMENTS));
     }
 
-    async function syncToCloud() {
-      saveLocal();
-      if (!navigator.onLine) {
-        setSyncStatus("offline");
-        return;
-      }
-      if (!FIREBASE_URL || FIREBASE_URL.includes("roca-2-exemplo")) {
-        setSyncStatus("online", "Salvo no aparelho");
-        return;
-      }
-
-      setSyncStatus("syncing", "Salvando...");
+    function initFirebase() {
       try {
-        const res = await fetch(FIREBASE_URL, {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            expenses: EXPENSES,
-            payments: PAYMENTS,
-            lastUpdated: new Date().toISOString()
-          })
-        });
-        if (res.ok) {
-          setSyncStatus("online", "Sincronizado na nuvem");
-        } else {
-          setSyncStatus("offline", "Erro ao conectar");
-        }
-      } catch (err) {
-        setSyncStatus("offline", "Offline (salvo local)");
-      }
-    }
+        const app = firebase.initializeApp({ databaseURL: FIREBASE_DATABASE_URL });
+        const db = firebase.database(app);
+        dbRef = db.ref("roca_dados_compartilhados");
 
-    async function syncFromCloud() {
-      if (!navigator.onLine) {
-        setSyncStatus("offline");
-        return;
-      }
-      if (!FIREBASE_URL || FIREBASE_URL.includes("roca-2-exemplo")) return;
-
-      try {
-        const res = await fetch(FIREBASE_URL);
-        if (res.ok) {
-          const data = await res.json();
-          if (data && data.expenses) {
-            EXPENSES = data.expenses;
-            PAYMENTS = data.payments || {};
+        // Escuta atualizações de qualquer dispositivo em tempo real
+        dbRef.on("value", (snapshot) => {
+          const val = snapshot.val();
+          if (val) {
+            if (val.expenses) EXPENSES = val.expenses;
+            PAYMENTS = val.payments || {};
             saveLocal();
             render();
-            setSyncStatus("online", "Sincronizado");
+            setSyncStatus("online", "Sincronizado na nuvem");
+          } else {
+            // Se o banco estiver vazio pela 1ª vez, carrega os padrões e salva
+            syncToCloud();
           }
-        }
+        }, (error) => {
+          console.warn("Erro Firebase:", error);
+          setSyncStatus("offline", "Ajuste as Regras do Firebase");
+        });
       } catch (err) {
-        setSyncStatus("offline", "Offline (salvo local)");
+        console.error(err);
+        setSyncStatus("offline", "Erro de conexão");
       }
     }
 
-    window.addEventListener('online', () => {
-      setSyncStatus("syncing", "Reconectando...");
-      syncToCloud();
-      syncFromCloud();
-    });
-    window.addEventListener('offline', () => {
-      setSyncStatus("offline");
-    });
+    function syncToCloud() {
+      saveLocal();
+      if (!dbRef) return;
+
+      setSyncStatus("syncing", "Salvando na nuvem...");
+      dbRef.set({
+        expenses: EXPENSES,
+        payments: PAYMENTS,
+        lastUpdated: new Date().toISOString()
+      }).then(() => {
+        setSyncStatus("online", "Sincronizado na nuvem");
+      }).catch((err) => {
+        console.error("Falha ao gravar no Firebase:", err);
+        setSyncStatus("offline", "Erro nas Regras do Banco");
+      });
+    }
 
     function formatBRL(val) {
       return (val || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
@@ -940,9 +927,7 @@
     // Inicialização
     loadLocal();
     render();
-    syncFromCloud();
-
-    setInterval(syncFromCloud, 5000);
+    initFirebase();
   </script>
 </body>
 </html>
