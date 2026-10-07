@@ -421,21 +421,13 @@
   <script>
     const FIREBASE_ENDPOINT = "https://roca2-37116-default-rtdb.firebaseio.com/dados_compartilhados.json";
 
+    // Participantes em estrita ordem alfabética
     const PARTICIPANTS = [
-      "Matheus", "Paulinho", "Guilherme", "Gustavo", 
-      "Emiliano", "Alexandre", "Thiago", "Lucas", "Jeferson"
+      "Alexandre", "Emiliano", "Guilherme", "Gustavo",
+      "Jeferson", "Lucas", "Matheus", "Paulinho", "Thiago"
     ];
 
     const DEFAULT_EXPENSES = [
-      {
-        id: "chopp",
-        name: "🍺 Chopp",
-        total: 1090.00,
-        responsible: "Paulinho",
-        pix: "61992727661",
-        pixDisplay: "61 99272-7661",
-        excluded: []
-      },
       {
         id: "carros",
         name: "🚗 Carros",
@@ -446,21 +438,21 @@
         excluded: ["Jeferson"]
       },
       {
-        id: "narguile",
-        name: "💨 Narguilé",
-        total: null,
-        responsible: "Steffano Santos",
-        pix: "",
-        pixDisplay: "A definir",
-        excluded: ["Jeferson"]
+        id: "chopp",
+        name: "🍺 Chopp",
+        total: 1090.00,
+        responsible: "Paulinho",
+        pix: "61992727661",
+        pixDisplay: "61 99272-7661",
+        excluded: []
       },
       {
-        id: "costela",
-        name: "🥩 Costela",
+        id: "combustivel",
+        name: "⛽ Combustível",
         total: null,
-        responsible: "Alexandre",
-        pix: "",
-        pixDisplay: "A definir",
+        responsible: "Jeferson",
+        pix: "61982355635",
+        pixDisplay: "61 98235-5635",
         excluded: []
       },
       {
@@ -473,13 +465,22 @@
         excluded: []
       },
       {
-        id: "combustivel",
-        name: "⛽ Combustível",
+        id: "costela",
+        name: "🥩 Costela",
         total: null,
-        responsible: "Jeferson",
-        pix: "61982355635",
-        pixDisplay: "61 98235-5635",
+        responsible: "Alexandre",
+        pix: "",
+        pixDisplay: "A definir",
         excluded: []
+      },
+      {
+        id: "narguile",
+        name: "💨 Narguilé",
+        total: null,
+        responsible: "Steffano Santos",
+        pix: "",
+        pixDisplay: "A definir",
+        excluded: ["Jeferson"]
       }
     ];
 
@@ -619,13 +620,17 @@
       report += `📋 *DESPESAS E ARRECADAÇÃO:*\n`;
       
       const balances = {};
-      PARTICIPANTS.forEach(p => {
+      const sortedParticipants = [...PARTICIPANTS].sort((a, b) => a.localeCompare(b, 'pt-BR'));
+      sortedParticipants.forEach(p => {
         balances[p] = { totalOwed: 0, totalPaid: 0 };
       });
 
-      EXPENSES.forEach(exp => {
+      // Ordena despesas alfabeticamente para o relatório
+      const sortedExpenses = [...EXPENSES].sort((a, b) => a.name.localeCompare(b.name, 'pt-BR'));
+
+      sortedExpenses.forEach(exp => {
         const excluded = exp.excluded || [];
-        const activePeople = PARTICIPANTS.filter(p => !excluded.includes(p));
+        const activePeople = sortedParticipants.filter(p => !excluded.includes(p));
         const activeCount = activePeople.length;
         const hasDefined = typeof exp.total === 'number' && exp.total > 0 && activeCount > 0;
         const perPersonVal = hasDefined ? exp.total / activeCount : 0;
@@ -647,6 +652,9 @@
           }
         });
 
+        // Ordena alfabeticamente quem falta pagar
+        pendingNames.sort((a, b) => a.localeCompare(b, 'pt-BR'));
+
         report += `• *${exp.name}*`;
         if (hasDefined) {
           report += ` (${formatBRL(perPersonVal)}/pessoa)\n`;
@@ -665,7 +673,7 @@
       report += `------------------------------------\n`;
       report += `👤 *RESUMO INDIVIDUAL (QUANTO FALTA):*\n`;
 
-      PARTICIPANTS.forEach(person => {
+      sortedParticipants.forEach(person => {
         const { totalOwed, totalPaid } = balances[person];
         const pending = Math.max(0, totalOwed - totalPaid);
 
@@ -680,13 +688,20 @@
 
       report += `\n------------------------------------\n`;
       report += `🔑 *CHAVES PIX PARA PAGAMENTO:*\n`;
-      const addedPix = new Set();
-      EXPENSES.forEach(exp => {
-        if (exp.pix && exp.pix.trim() && !addedPix.has(exp.pix)) {
-          addedPix.add(exp.pix);
-          report += `• ${exp.responsible}: \`${exp.pixDisplay || exp.pix}\`\n`;
+      
+      const addedPix = new Map();
+      sortedExpenses.forEach(exp => {
+        if (exp.pix && exp.pix.trim() && !addedPix.has(exp.responsible)) {
+          addedPix.set(exp.responsible, exp.pixDisplay || exp.pix);
         }
       });
+
+      // Ordena as chaves PIX pelo nome do responsável
+      Array.from(addedPix.entries())
+        .sort((a, b) => a[0].localeCompare(b[0], 'pt-BR'))
+        .forEach(([resp, key]) => {
+          report += `• ${resp}: \`${key}\`\n`;
+        });
 
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(report).then(() => {
@@ -719,11 +734,15 @@
       container.innerHTML = "";
 
       const balances = {};
-      PARTICIPANTS.forEach(p => {
+      const sortedParticipants = [...PARTICIPANTS].sort((a, b) => a.localeCompare(b, 'pt-BR'));
+      sortedParticipants.forEach(p => {
         balances[p] = { totalOwed: 0, totalPaid: 0 };
       });
 
-      EXPENSES.forEach(exp => {
+      // Ordena despesas por nome
+      const sortedExpenses = [...EXPENSES].sort((a, b) => a.name.localeCompare(b.name, 'pt-BR'));
+
+      sortedExpenses.forEach(exp => {
         const card = document.createElement("div");
         card.className = "expense-card";
 
@@ -731,7 +750,7 @@
         const copyBtn = hasPix ? `<button class="copy-btn" onclick="copyPix('${exp.pix}')">Copiar PIX</button>` : '';
 
         const excluded = exp.excluded || [];
-        const activePeople = PARTICIPANTS.filter(p => !excluded.includes(p));
+        const activePeople = sortedParticipants.filter(p => !excluded.includes(p));
         const activeCount = activePeople.length;
         
         let perPersonVal = 0;
@@ -748,7 +767,8 @@
         let paidCountInExp = 0;
         let peopleHtml = "";
 
-        PARTICIPANTS.forEach(person => {
+        // Renderiza cada participante em ordem alfabética
+        sortedParticipants.forEach(person => {
           if (excluded.includes(person)) {
             peopleHtml += `
               <div class="person-chip" style="opacity: 0.4; cursor: not-allowed;">
@@ -837,15 +857,16 @@
         container.appendChild(card);
       });
 
-      renderSummary(balances);
+      renderSummary(balances, sortedParticipants);
     }
 
-    function renderSummary(balances) {
+    function renderSummary(balances, sortedParticipants) {
       const summaryContainer = document.getElementById("summary-container");
       if (!summaryContainer) return;
       summaryContainer.innerHTML = "";
 
-      PARTICIPANTS.forEach(person => {
+      // Exibe resumo estritamente em ordem alfabética
+      sortedParticipants.forEach(person => {
         const { totalOwed, totalPaid } = balances[person];
         const pending = Math.max(0, totalOwed - totalPaid);
         const isFullyPaid = totalOwed > 0 && pending < 0.01;
@@ -875,7 +896,10 @@
       if (!modalBody) return;
       modalBody.innerHTML = "";
 
-      EXPENSES.forEach(exp => {
+      // Ordena alfabeticamente no modal
+      const sortedExpenses = [...EXPENSES].sort((a, b) => a.name.localeCompare(b.name, 'pt-BR'));
+
+      sortedExpenses.forEach(exp => {
         const item = document.createElement("div");
         item.className = "edit-item-card";
         item.innerHTML = `
@@ -911,15 +935,18 @@
 
     function saveExpensesFromModal() {
       EXPENSES.forEach(exp => {
-        const totalInput = document.getElementById(`modal_total_${exp.id}`).value.trim();
-        const respInput = document.getElementById(`modal_resp_${exp.id}`).value.trim();
-        const pixInput = document.getElementById(`modal_pix_${exp.id}`).value.trim();
-        const dispInput = document.getElementById(`modal_disp_${exp.id}`).value.trim();
+        const totalInput = document.getElementById(`modal_total_${exp.id}`);
+        const respInput = document.getElementById(`modal_resp_${exp.id}`);
+        const pixInput = document.getElementById(`modal_pix_${exp.id}`);
+        const dispInput = document.getElementById(`modal_disp_${exp.id}`);
 
-        exp.total = totalInput !== "" && !isNaN(totalInput) ? parseFloat(totalInput) : null;
-        exp.responsible = respInput || "A definir";
-        exp.pix = pixInput;
-        exp.pixDisplay = dispInput || pixInput || "A definir";
+        if (totalInput) {
+          const val = totalInput.value.trim();
+          exp.total = val !== "" && !isNaN(val) ? parseFloat(val) : null;
+        }
+        if (respInput) exp.responsible = respInput.value.trim() || "A definir";
+        if (pixInput) exp.pix = pixInput.value.trim();
+        if (dispInput) exp.pixDisplay = dispInput.value.trim() || exp.pix || "A definir";
       });
 
       closeEditModal();
