@@ -350,6 +350,10 @@
   </div>
 
   <script>
+    // Cole a URL do seu Realtime Database do Firebase (com final .json)
+    // Exemplo: "https://roca-2-exemplo-default-rtdb.firebaseio.com/roca_data.json"
+    const FIREBASE_URL = "https://roca-2-exemplo-default-rtdb.firebaseio.com/roca_data.json";
+
     const PARTICIPANTS = [
       "Matheus", "Paulinho", "Guilherme", "Gustavo", 
       "Emiliano", "Alexandre", "Thiago", "Lucas", "Jeferson"
@@ -412,20 +416,61 @@
       }
     ];
 
-    // Carrega dados salvos ou os padrões iniciais
-    function loadExpenses() {
-      const saved = localStorage.getItem("roca_expenses_data");
-      if (saved) {
-        try {
-          return JSON.parse(saved);
-        } catch (e) {
-          return JSON.parse(JSON.stringify(DEFAULT_EXPENSES));
-        }
+    let EXPENSES = JSON.parse(JSON.stringify(DEFAULT_EXPENSES));
+    let PAYMENTS = {};
+
+    function loadLocal() {
+      const savedExp = localStorage.getItem("roca_expenses_data");
+      if (savedExp) {
+        try { EXPENSES = JSON.parse(savedExp); } catch(e) {}
       }
-      return JSON.parse(JSON.stringify(DEFAULT_EXPENSES));
+      const savedPay = localStorage.getItem("roca_payments_data");
+      if (savedPay) {
+        try { PAYMENTS = JSON.parse(savedPay); } catch(e) {}
+      }
     }
 
-    let EXPENSES = loadExpenses();
+    function saveLocal() {
+      localStorage.setItem("roca_expenses_data", JSON.stringify(EXPENSES));
+      localStorage.setItem("roca_payments_data", JSON.stringify(PAYMENTS));
+    }
+
+    // Nuvem: Salva o estado completo no endpoint JSON
+    async function syncToCloud() {
+      saveLocal();
+      if (!FIREBASE_URL || FIREBASE_URL.includes("roca-2-exemplo")) return;
+      try {
+        await fetch(FIREBASE_URL, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            expenses: EXPENSES,
+            payments: PAYMENTS
+          })
+        });
+      } catch (err) {
+        console.warn("Aviso ao salvar na nuvem:", err);
+      }
+    }
+
+    // Nuvem: Puxa o estado atualizado
+    async function syncFromCloud() {
+      if (!FIREBASE_URL || FIREBASE_URL.includes("roca-2-exemplo")) return;
+      try {
+        const res = await fetch(FIREBASE_URL);
+        if (res.ok) {
+          const data = await res.json();
+          if (data && data.expenses) {
+            EXPENSES = data.expenses;
+            PAYMENTS = data.payments || {};
+            saveLocal();
+            render();
+          }
+        }
+      } catch (err) {
+        console.warn("Aviso ao sincronizar da nuvem:", err);
+      }
+    }
 
     function formatBRL(val) {
       return val.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
@@ -438,10 +483,10 @@
     }
 
     function togglePay(expId, person) {
-      const stateKey = `roca_${expId}_${person}`;
-      const isPaid = localStorage.getItem(stateKey) === 'true';
-      localStorage.setItem(stateKey, !isPaid);
+      const key = `${expId}_${person}`;
+      PAYMENTS[key] = !PAYMENTS[key];
       render();
+      syncToCloud();
     }
 
     function render() {
@@ -485,7 +530,8 @@
               </div>
             `;
           } else {
-            const isPaid = localStorage.getItem(`roca_${exp.id}_${person}`) === 'true';
+            const key = `${exp.id}_${person}`;
+            const isPaid = !!PAYMENTS[key];
             
             if (isPaid) {
               paidCountInExp++;
@@ -597,7 +643,6 @@
       });
     }
 
-    // Modal de Edição
     function openEditModal() {
       const modalBody = document.getElementById("modal-body");
       modalBody.innerHTML = "";
@@ -649,21 +694,21 @@
         exp.pixDisplay = dispInput || pixInput || "A definir";
       });
 
-      localStorage.setItem("roca_expenses_data", JSON.stringify(EXPENSES));
       closeEditModal();
       render();
+      syncToCloud();
     }
 
     function resetToDefaults() {
-      if (confirm("Tem certeza que deseja restaurar as informações de despesas para o padrão inicial?")) {
+      if (confirm("Tem certeza que deseja restaurar as informações para o padrão inicial?")) {
         EXPENSES = JSON.parse(JSON.stringify(DEFAULT_EXPENSES));
-        localStorage.removeItem("roca_expenses_data");
+        PAYMENTS = {};
         closeEditModal();
         render();
+        syncToCloud();
       }
     }
 
-    // Fecha o modal ao clicar fora da caixa
     window.onclick = function(event) {
       const modal = document.getElementById("edit-modal");
       if (event.target === modal) {
@@ -671,7 +716,13 @@
       }
     };
 
+    // Inicialização
+    loadLocal();
     render();
+    syncFromCloud();
+
+    // Sincroniza da nuvem automaticamente a cada 5 segundos
+    setInterval(syncFromCloud, 5000);
   </script>
 </body>
 </html>
