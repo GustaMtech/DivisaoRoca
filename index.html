@@ -20,6 +20,28 @@
     h1 { font-size: 1.6rem; color: #f59e0b; margin-bottom: 6px; }
     p.sub { font-size: 0.9rem; color: var(--muted); }
     
+    .top-actions {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+    .edit-btn-top {
+      background: #334155;
+      color: #f8fafc;
+      border: 1px solid var(--border);
+      padding: 7px 14px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.15s ease;
+    }
+    .edit-btn-top:hover {
+      background: #475569;
+    }
+
     .expense-card {
       background: var(--card-bg);
       border: 1px solid var(--border);
@@ -37,7 +59,44 @@
       margin-bottom: 10px;
     }
     .expense-title { font-weight: 700; font-size: 1.1rem; display: flex; align-items: center; gap: 6px; }
-    .expense-val { font-size: 0.95rem; font-weight: 600; color: #38bdf8; }
+    .expense-val { font-size: 0.95rem; font-weight: 600; color: #38bdf8; text-align: right; }
+    .expense-status-row {
+      font-size: 0.78rem;
+      margin-top: 3px;
+      display: flex;
+      gap: 8px;
+      justify-content: flex-end;
+    }
+
+    /* Barra de progresso */
+    .progress-wrapper {
+      margin-bottom: 10px;
+    }
+    .progress-bar-bg {
+      width: 100%;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      background: var(--accent);
+      border-radius: 999px;
+      width: 0%;
+      transition: width 0.25s ease;
+    }
+    .progress-bar-fill.complete {
+      background: #10b981;
+    }
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.72rem;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
     .pix-box {
       font-size: 0.8rem;
       background: rgba(0,0,0,0.25);
@@ -86,13 +145,164 @@
     .person-chip input { cursor: pointer; accent-color: var(--accent); }
     .excluded-tag { font-size: 0.75rem; color: #64748b; font-style: italic; }
 
+    /* Painel de Resumo Consolidado */
     .summary-card {
       background: #1e1b4b;
       border: 1px solid #4338ca;
       border-radius: 12px;
       padding: 16px;
       margin-top: 24px;
-      text-align: center;
+    }
+    .summary-header {
+      font-size: 1.1rem;
+      color: #a5b4fc;
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .summary-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .summary-row {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid #312e81;
+      padding: 10px 12px;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.9rem;
+    }
+    .summary-row.fully-paid {
+      border-color: var(--accent);
+      background: rgba(34, 197, 94, 0.08);
+    }
+    .summary-details {
+      text-align: right;
+      font-size: 0.8rem;
+    }
+    .text-paid { color: #86efac; font-weight: 600; }
+    .text-pending { color: #f87171; font-weight: 600; }
+
+    /* Modal de Edição */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(4px);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      padding: 16px;
+      z-index: 1000;
+    }
+    .modal-overlay.active {
+      display: flex;
+    }
+    .modal-content {
+      background: #1e293b;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      max-width: 580px;
+      width: 100%;
+      max-height: 85vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    }
+    .modal-header {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .modal-header h3 { font-size: 1.1rem; color: #f59e0b; }
+    .close-modal-btn {
+      background: transparent;
+      border: none;
+      color: var(--muted);
+      font-size: 1.3rem;
+      cursor: pointer;
+    }
+    .modal-body {
+      padding: 14px 16px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .edit-item-card {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 12px;
+    }
+    .edit-item-title {
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #38bdf8;
+      font-size: 0.95rem;
+    }
+    .edit-form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .form-group label {
+      font-size: 0.72rem;
+      color: var(--muted);
+    }
+    .form-group input {
+      background: #1e293b;
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 6px 8px;
+      border-radius: 6px;
+      font-size: 0.82rem;
+    }
+    .form-group input:focus {
+      outline: none;
+      border-color: #38bdf8;
+    }
+    .modal-footer {
+      padding: 12px 16px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #192231;
+      border-radius: 0 0 12px 12px;
+    }
+    .btn-secondary {
+      background: transparent;
+      border: 1px solid #475569;
+      color: #94a3b8;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      cursor: pointer;
+    }
+    .btn-primary {
+      background: var(--accent);
+      border: none;
+      color: #0f172a;
+      font-weight: 700;
+      padding: 6px 16px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      cursor: pointer;
     }
   </style>
 </head>
@@ -104,13 +314,38 @@
       <p class="sub">Marque conforme for pagando o PIX para cada responsável</p>
     </header>
 
+    <div class="top-actions">
+      <button class="edit-btn-top" onclick="openEditModal()">
+        ⚙️ Editar Gastos / PIX
+      </button>
+    </div>
+
     <div id="expenses-container"></div>
 
+    <!-- Painel de Resumo por Participante -->
     <div class="summary-card">
-      <h3 style="margin-bottom: 8px; color: #a5b4fc;">Dica rápida</h3>
-      <p style="font-size: 0.85rem; color: #c7d2fe;">
-        Ao marcar ou desmarcar uma caixa, o status fica salvo automaticamente para você acompanhar os pagamentos.
+      <div class="summary-header">
+        <span>📊 Resumo por Participante</span>
+      </div>
+      <div id="summary-container" class="summary-list"></div>
+      <p style="font-size: 0.75rem; color: #a5b4fc; text-align: center; margin-top: 12px;">
+        * Itens sem valor preenchido não entram na soma até que o valor seja definido.
       </p>
+    </div>
+  </div>
+
+  <!-- Modal de Edição -->
+  <div id="edit-modal" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Editar Gastos e Chaves PIX</h3>
+        <button class="close-modal-btn" onclick="closeEditModal()">&times;</button>
+      </div>
+      <div class="modal-body" id="modal-body"></div>
+      <div class="modal-footer">
+        <button class="btn-secondary" onclick="resetToDefaults()">Restaurar Padrões</button>
+        <button class="btn-primary" onclick="saveExpensesFromModal()">Salvar Alterações</button>
+      </div>
     </div>
   </div>
 
@@ -120,12 +355,11 @@
       "Emiliano", "Alexandre", "Thiago", "Lucas", "Jeferson"
     ];
 
-    const EXPENSES = [
+    const DEFAULT_EXPENSES = [
       {
         id: "chopp",
         name: "🍺 Chopp",
-        total: "R$ 1.090,00",
-        perPerson: "R$ 121,11",
+        total: 1090.00,
         responsible: "Paulinho",
         pix: "61992727661",
         pixDisplay: "61 99272-7661",
@@ -134,8 +368,7 @@
       {
         id: "carros",
         name: "🚗 Carros",
-        total: "R$ 1.373,34",
-        perPerson: "R$ 171,67",
+        total: 1373.34,
         responsible: "Paulinho",
         pix: "61992727661",
         pixDisplay: "61 99272-7661",
@@ -144,8 +377,7 @@
       {
         id: "narguile",
         name: "💨 Narguilé",
-        total: "A Definir",
-        perPerson: "A Definir",
+        total: null,
         responsible: "Steffano Santos",
         pix: "",
         pixDisplay: "A definir",
@@ -154,8 +386,7 @@
       {
         id: "costela",
         name: "🥩 Costela",
-        total: "A Definir",
-        perPerson: "A Definir",
+        total: null,
         responsible: "Alexandre",
         pix: "",
         pixDisplay: "A definir",
@@ -164,8 +395,7 @@
       {
         id: "comidas",
         name: "🍽️ Comidas",
-        total: "A Definir",
-        perPerson: "A Definir",
+        total: null,
         responsible: "Jeferson",
         pix: "61982355635",
         pixDisplay: "61 98235-5635",
@@ -174,14 +404,32 @@
       {
         id: "combustivel",
         name: "⛽ Combustível",
-        total: "A Definir",
-        perPerson: "A Definir",
+        total: null,
         responsible: "Jeferson",
         pix: "61982355635",
         pixDisplay: "61 98235-5635",
         excluded: []
       }
     ];
+
+    // Carrega dados salvos ou os padrões iniciais
+    function loadExpenses() {
+      const saved = localStorage.getItem("roca_expenses_data");
+      if (saved) {
+        try {
+          return JSON.parse(saved);
+        } catch (e) {
+          return JSON.parse(JSON.stringify(DEFAULT_EXPENSES));
+        }
+      }
+      return JSON.parse(JSON.stringify(DEFAULT_EXPENSES));
+    }
+
+    let EXPENSES = loadExpenses();
+
+    function formatBRL(val) {
+      return val.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    }
 
     function copyPix(key) {
       if (!key) return;
@@ -200,14 +448,35 @@
       const container = document.getElementById("expenses-container");
       container.innerHTML = "";
 
+      const balances = {};
+      PARTICIPANTS.forEach(p => {
+        balances[p] = { totalOwed: 0, totalPaid: 0 };
+      });
+
       EXPENSES.forEach(exp => {
         const card = document.createElement("div");
         card.className = "expense-card";
 
-        const hasPix = exp.pix.length > 0;
+        const hasPix = exp.pix && exp.pix.trim().length > 0;
         const copyBtn = hasPix ? `<button class="copy-btn" onclick="copyPix('${exp.pix}')">Copiar PIX</button>` : '';
 
+        const activePeople = PARTICIPANTS.filter(p => !exp.excluded.includes(p));
+        const activeCount = activePeople.length;
+        
+        let perPersonVal = 0;
+        let perPersonText = "A Definir";
+        let totalText = "A Definir";
+        let hasDefinedValue = typeof exp.total === 'number' && exp.total > 0 && activeCount > 0;
+
+        if (hasDefinedValue) {
+          perPersonVal = exp.total / activeCount;
+          perPersonText = `${formatBRL(perPersonVal)} / pessoa`;
+          totalText = formatBRL(exp.total);
+        }
+
+        let paidCountInExp = 0;
         let peopleHtml = "";
+
         PARTICIPANTS.forEach(person => {
           if (exp.excluded.includes(person)) {
             peopleHtml += `
@@ -217,6 +486,18 @@
             `;
           } else {
             const isPaid = localStorage.getItem(`roca_${exp.id}_${person}`) === 'true';
+            
+            if (isPaid) {
+              paidCountInExp++;
+            }
+
+            if (perPersonVal > 0) {
+              balances[person].totalOwed += perPersonVal;
+              if (isPaid) {
+                balances[person].totalPaid += perPersonVal;
+              }
+            }
+
             peopleHtml += `
               <label class="person-chip ${isPaid ? 'paid' : ''}">
                 <input type="checkbox" ${isPaid ? 'checked' : ''} onchange="togglePay('${exp.id}', '${person}')">
@@ -226,13 +507,55 @@
           }
         });
 
+        let statusHtml = '';
+        let progressHtml = '';
+
+        if (hasDefinedValue) {
+          const paidAmount = perPersonVal * paidCountInExp;
+          const pendingAmount = Math.max(0, exp.total - paidAmount);
+          const percent = activeCount > 0 ? Math.round((paidCountInExp / activeCount) * 100) : 0;
+          const isComplete = percent >= 100;
+
+          statusHtml = `
+            <div class="expense-status-row">
+              <span>Pago: <strong class="text-paid">${formatBRL(paidAmount)}</strong></span>
+              <span>Pendente: <strong class="text-pending">${formatBRL(pendingAmount)}</strong></span>
+            </div>
+          `;
+
+          progressHtml = `
+            <div class="progress-wrapper">
+              <div class="progress-bar-bg">
+                <div class="progress-bar-fill ${isComplete ? 'complete' : ''}" style="width: ${percent}%;"></div>
+              </div>
+              <div class="progress-label">
+                <span>${paidCountInExp} de ${activeCount} pagos</span>
+                <span>${percent}% arrecadado</span>
+              </div>
+            </div>
+          `;
+        } else {
+          statusHtml = `
+            <div class="expense-status-row">
+              <span style="color: var(--muted);">Valores pendentes de definição</span>
+            </div>
+          `;
+        }
+
         card.innerHTML = `
           <div class="expense-header">
-            <span class="expense-title">${exp.name}</span>
-            <span class="expense-val">${exp.perPerson} / pessoa</span>
+            <div>
+              <span class="expense-title">${exp.name}</span>
+              <span style="font-size: 0.8rem; color: var(--muted);">${totalText} (${activeCount} pessoas)</span>
+            </div>
+            <div>
+              <div class="expense-val">${perPersonText}</div>
+              ${statusHtml}
+            </div>
           </div>
+          ${progressHtml}
           <div class="pix-box">
-            <span>Resp: <strong>${exp.responsible}</strong> | PIX: <strong>${exp.pixDisplay}</strong></span>
+            <span>Resp: <strong>${exp.responsible || 'A definir'}</strong> | PIX: <strong>${exp.pixDisplay || exp.pix || 'A definir'}</strong></span>
             ${copyBtn}
           </div>
           <div class="people-grid">
@@ -241,7 +564,112 @@
         `;
         container.appendChild(card);
       });
+
+      renderSummary(balances);
     }
+
+    function renderSummary(balances) {
+      const summaryContainer = document.getElementById("summary-container");
+      summaryContainer.innerHTML = "";
+
+      PARTICIPANTS.forEach(person => {
+        const { totalOwed, totalPaid } = balances[person];
+        const pending = Math.max(0, totalOwed - totalPaid);
+        const isFullyPaid = totalOwed > 0 && pending < 0.01;
+
+        const row = document.createElement("div");
+        row.className = `summary-row ${isFullyPaid ? 'fully-paid' : ''}`;
+
+        row.innerHTML = `
+          <div>
+            <strong>${person}</strong>
+            ${isFullyPaid ? '<span style="color: #86efac; font-size: 0.8rem; margin-left: 6px;">✓ Quitado</span>' : ''}
+          </div>
+          <div class="summary-details">
+            <div>Total: <strong>${formatBRL(totalOwed)}</strong></div>
+            <div>
+              Pago: <span class="text-paid">${formatBRL(totalPaid)}</span> | 
+              Pendente: <span class="text-pending">${formatBRL(pending)}</span>
+            </div>
+          </div>
+        `;
+        summaryContainer.appendChild(row);
+      });
+    }
+
+    // Modal de Edição
+    function openEditModal() {
+      const modalBody = document.getElementById("modal-body");
+      modalBody.innerHTML = "";
+
+      EXPENSES.forEach(exp => {
+        const item = document.createElement("div");
+        item.className = "edit-item-card";
+        item.innerHTML = `
+          <div class="edit-item-title">${exp.name}</div>
+          <div class="edit-form-grid">
+            <div class="form-group">
+              <label>Valor Total (R$)</label>
+              <input type="number" step="0.01" id="modal_total_${exp.id}" value="${exp.total !== null ? exp.total : ''}" placeholder="Ex: 500.00">
+            </div>
+            <div class="form-group">
+              <label>Responsável</label>
+              <input type="text" id="modal_resp_${exp.id}" value="${exp.responsible || ''}" placeholder="Nome">
+            </div>
+            <div class="form-group">
+              <label>Chave PIX (só dígitos ou chave direta)</label>
+              <input type="text" id="modal_pix_${exp.id}" value="${exp.pix || ''}" placeholder="Ex: 61999999999">
+            </div>
+            <div class="form-group">
+              <label>Exibição do PIX</label>
+              <input type="text" id="modal_disp_${exp.id}" value="${exp.pixDisplay || ''}" placeholder="Ex: 61 99999-9999">
+            </div>
+          </div>
+        `;
+        modalBody.appendChild(item);
+      });
+
+      document.getElementById("edit-modal").classList.add("active");
+    }
+
+    function closeEditModal() {
+      document.getElementById("edit-modal").classList.remove("active");
+    }
+
+    function saveExpensesFromModal() {
+      EXPENSES.forEach(exp => {
+        const totalInput = document.getElementById(`modal_total_${exp.id}`).value.trim();
+        const respInput = document.getElementById(`modal_resp_${exp.id}`).value.trim();
+        const pixInput = document.getElementById(`modal_pix_${exp.id}`).value.trim();
+        const dispInput = document.getElementById(`modal_disp_${exp.id}`).value.trim();
+
+        exp.total = totalInput !== "" && !isNaN(totalInput) ? parseFloat(totalInput) : null;
+        exp.responsible = respInput || "A definir";
+        exp.pix = pixInput;
+        exp.pixDisplay = dispInput || pixInput || "A definir";
+      });
+
+      localStorage.setItem("roca_expenses_data", JSON.stringify(EXPENSES));
+      closeEditModal();
+      render();
+    }
+
+    function resetToDefaults() {
+      if (confirm("Tem certeza que deseja restaurar as informações de despesas para o padrão inicial?")) {
+        EXPENSES = JSON.parse(JSON.stringify(DEFAULT_EXPENSES));
+        localStorage.removeItem("roca_expenses_data");
+        closeEditModal();
+        render();
+      }
+    }
+
+    // Fecha o modal ao clicar fora da caixa
+    window.onclick = function(event) {
+      const modal = document.getElementById("edit-modal");
+      if (event.target === modal) {
+        closeEditModal();
+      }
+    };
 
     render();
   </script>
