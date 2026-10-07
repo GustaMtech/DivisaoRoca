@@ -378,7 +378,7 @@
     <div class="top-bar">
       <div class="sync-badge" id="sync-badge">
         <span class="status-dot" id="sync-dot"></span>
-        <span id="sync-text">A carregar...</span>
+        <span id="sync-text">Conectando...</span>
       </div>
 
       <button class="action-btn-top" onclick="openEditModal()">
@@ -495,6 +495,8 @@
 
     let EXPENSES = JSON.parse(JSON.stringify(DEFAULT_EXPENSES));
     let PAYMENTS = {};
+    let isSaving = false;
+    let hasLoadedCloudOnce = false;
 
     function setSyncStatus(state, msg) {
       const dot = document.getElementById("sync-dot");
@@ -504,10 +506,10 @@
       dot.className = "status-dot";
       if (state === "syncing") {
         dot.classList.add("syncing");
-        text.textContent = msg || "A sincronizar...";
+        text.textContent = msg || "Sincronizando...";
       } else if (state === "offline") {
         dot.classList.add("offline");
-        text.textContent = msg || "Offline (guardado localmente)";
+        text.textContent = msg || "Offline (salvo local)";
       } else {
         text.textContent = msg || "Sincronizado na nuvem";
       }
@@ -536,18 +538,20 @@
     }
 
     async function syncToCloud() {
+      isSaving = true;
       saveLocal();
       if (!navigator.onLine) {
         setSyncStatus("offline");
+        isSaving = false;
         return;
       }
 
-      setSyncStatus("syncing", "A guardar na nuvem...");
+      setSyncStatus("syncing", "Salvando na nuvem...");
       try {
         const payload = JSON.stringify({
           expenses: EXPENSES,
           payments: PAYMENTS,
-          lastUpdated: new Date().toISOString()
+          lastUpdated: Date.now()
         });
 
         const res = await fetch(FIREBASE_ENDPOINT, {
@@ -558,22 +562,23 @@
 
         if (res.ok) {
           setSyncStatus("online", "Sincronizado na nuvem");
+          hasLoadedCloudOnce = true;
         } else {
-          setSyncStatus("offline", "Ajuste as Regras no Firebase");
+          setSyncStatus("offline", "Ajuste Regras no Firebase");
         }
       } catch (err) {
-        setSyncStatus("offline", "Offline (guardado localmente)");
+        setSyncStatus("offline", "Offline (salvo local)");
+      } finally {
+        setTimeout(() => { isSaving = false; }, 400);
       }
     }
 
     async function syncFromCloud() {
-      if (!navigator.onLine) {
-        setSyncStatus("offline");
-        return;
-      }
+      // Não sobrescreve os dados locais se o usuário estiver salvando no momento
+      if (isSaving || !navigator.onLine) return;
 
       try {
-        const res = await fetch(FIREBASE_ENDPOINT);
+        const res = await fetch(FIREBASE_ENDPOINT + "?t=" + Date.now());
         if (res.ok) {
           const data = await res.json();
           if (data && Array.isArray(data.expenses) && data.expenses.length > 0) {
@@ -582,21 +587,20 @@
             saveLocal();
             render();
             setSyncStatus("online", "Sincronizado na nuvem");
-          } else if (data === null) {
-            // Nuvem vazia: envia a base inicial
+            hasLoadedCloudOnce = true;
+          } else if (data === null && !hasLoadedCloudOnce) {
+            // Nuvem está virgem pela primeira vez: envia a base sem limpar
             syncToCloud();
           }
-        } else {
-          setSyncStatus("offline", "Ajuste as Regras no Firebase");
         }
       } catch (err) {
-        setSyncStatus("offline", "Offline (guardado localmente)");
+        setSyncStatus("offline", "Offline (salvo local)");
       }
     }
 
     window.addEventListener('online', () => {
-      setSyncStatus("syncing", "A reconectar...");
-      syncFromCloud().then(syncToCloud);
+      setSyncStatus("syncing", "Reconectando...");
+      syncFromCloud();
     });
     window.addEventListener('offline', () => {
       setSyncStatus("offline");
@@ -936,7 +940,7 @@
     }
 
     function resetToDefaults() {
-      if (confirm("Tem a certeza de que deseja restaurar as informações para o padrão inicial?")) {
+      if (confirm("Tem certeza de que deseja restaurar as informações para o padrão inicial?")) {
         EXPENSES = JSON.parse(JSON.stringify(DEFAULT_EXPENSES));
         PAYMENTS = {};
         closeEditModal();
@@ -950,13 +954,15 @@
       if (event.target === modal) closeEditModal();
     };
 
-    // 1. Inicializa o ecrã imediatamente
+    // Inicialização robusta:
     loadLocal();
     render();
 
-    // 2. Procura atualizações na nuvem logo de seguida
+    // Busca dados atualizados na nuvem
     syncFromCloud();
-    setInterval(syncFromCloud, 4000);
+
+    // Sincroniza periodicamente apenas para leitura (a cada 5 segundos)
+    setInterval(syncFromCloud, 5000);
   </script>
 </body>
 </html>
