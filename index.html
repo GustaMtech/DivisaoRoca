@@ -2,19 +2,8 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Divisão Roça 2.0 🌾</title>
-
-  <!-- PWA Meta Tags (iOS e Android) -->
-  <meta name="theme-color" content="#0f172a" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="apple-mobile-web-app-title" content="Roça 2.0" />
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌾</text></svg>">
-  <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌾</text></svg>">
-
-  <!-- Manifest PWA Injetado Dinamicamente -->
-  <link rel="manifest" id="pwa-manifest">
 
   <style>
     :root {
@@ -32,7 +21,6 @@
       padding: 0 16px 32px 16px; 
       display: flex; 
       justify-content: center; 
-      -webkit-tap-highlight-color: transparent; 
     }
     .container { width: 100%; max-width: 650px; position: relative; }
     
@@ -419,7 +407,7 @@
     <!-- Rodapé da Página: Botão Copiar Relatório no canto esquerdo -->
     <div class="footer-section">
       <button class="whatsapp-footer-btn" onclick="copyWhatsAppReport()">
-        📋 Copiar Relatório Atualizado
+        📋 Copiar Relatório para WhatsApp
       </button>
     </div>
 
@@ -441,35 +429,6 @@
   </div>
 
   <script>
-    // PWA Manifest Inline
-    (function setupPWA() {
-      const manifest = {
-        name: "Divisão Roça 2.0",
-        short_name: "Roça 2.0",
-        start_url: ".",
-        display: "standalone",
-        background_color: "#0f172a",
-        theme_color: "#0f172a",
-        icons: [{
-          src: "data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌾</text></svg>",
-          sizes: "192x192 512x512",
-          type: "image/svg+xml"
-        }]
-      };
-      const manifestBlob = new Blob([JSON.stringify(manifest)], { type: 'application/json' });
-      document.getElementById('pwa-manifest').setAttribute('href', URL.createObjectURL(manifestBlob));
-
-      if ('serviceWorker' in navigator && (window.location.protocol === 'https:' || window.location.hostname === 'localhost')) {
-        const swCode = `
-          self.addEventListener('install', e => self.skipWaiting());
-          self.addEventListener('activate', e => self.clients.claim());
-          self.addEventListener('fetch', e => e.respondWith(fetch(e.request).catch(() => caches.match(e.request))));
-        `;
-        const blob = new Blob([swCode], { type: 'text/javascript' });
-        navigator.serviceWorker.register(URL.createObjectURL(blob)).catch(() => {});
-      }
-    })();
-
     const FIREBASE_URL = "https://roca-2-exemplo-default-rtdb.firebaseio.com/roca_data.json";
 
     const PARTICIPANTS = [
@@ -652,13 +611,11 @@
       syncToCloud();
     }
 
-    // Copia o relatório formatado sem abrir o WhatsApp
     function copyWhatsAppReport() {
       let report = `🌾 *STATUS DE PAGAMENTOS - ROÇA 2.0* 🌾\n`;
       report += `📅 *Período:* 30/10 a 02/11\n`;
       report += `------------------------------------\n\n`;
 
-      // Seção 1: Progresso por Despesa
       report += `📋 *DESPESAS E ARRECADAÇÃO:*\n`;
       
       const balances = {};
@@ -704,7 +661,6 @@
         report += `\n`;
       });
 
-      // Seção 2: Resumo Individual
       report += `------------------------------------\n`;
       report += `👤 *RESUMO INDIVIDUAL (QUANTO FALTA):*\n`;
 
@@ -721,7 +677,6 @@
         }
       });
 
-      // Seção 3: Chaves PIX
       report += `\n------------------------------------\n`;
       report += `🔑 *CHAVES PIX PARA PAGAMENTO:*\n`;
       const addedPix = new Set();
