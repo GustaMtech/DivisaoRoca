@@ -168,6 +168,28 @@
       cursor: pointer;
     }
 
+    /* Botão especial da Lista de Compras dentro de Comidas */
+    .checklist-btn {
+      width: 100%;
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      color: #38bdf8;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 0.83rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+    .checklist-btn:hover {
+      background: rgba(56, 189, 248, 0.22);
+    }
+
     .people-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
@@ -228,7 +250,7 @@
     .text-paid { color: #86efac; font-weight: 600; }
     .text-pending { color: #f87171; font-weight: 600; }
 
-    /* Rodapé: Botão alinhado à esquerda */
+    /* Rodapé */
     .footer-section {
       margin-top: 24px;
       display: flex;
@@ -252,11 +274,8 @@
     .whatsapp-footer-btn:hover {
       background: rgba(34, 197, 94, 0.25);
     }
-    .whatsapp-footer-btn:active {
-      transform: scale(0.98);
-    }
 
-    /* Modal */
+    /* Modais */
     .modal-overlay {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
@@ -300,7 +319,7 @@
       overflow-y: auto;
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      gap: 10px;
     }
     .edit-item-card {
       background: #0f172a;
@@ -359,6 +378,42 @@
       font-size: 0.85rem;
       cursor: pointer;
     }
+
+    /* Estilos do Checklist de Compras */
+    .grocery-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #0f172a;
+      border: 1px solid var(--border);
+      padding: 10px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.15s ease;
+    }
+    .grocery-item.bought {
+      background: rgba(34, 197, 94, 0.1);
+      border-color: rgba(34, 197, 94, 0.4);
+    }
+    .grocery-item.bought .grocery-text {
+      text-decoration: line-through;
+      color: #64748b;
+    }
+    .grocery-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .grocery-qty {
+      font-size: 0.8rem;
+      background: #1e293b;
+      border: 1px solid var(--border);
+      color: #38bdf8;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-weight: 600;
+    }
   </style>
 </head>
 <body>
@@ -404,7 +459,7 @@
 
   </div>
 
-  <!-- Modal de Edição -->
+  <!-- Modal de Edição de Gastos -->
   <div id="edit-modal" class="modal-overlay">
     <div class="modal-content">
       <div class="modal-header">
@@ -418,6 +473,23 @@
     </div>
   </div>
 
+  <!-- Modal da Lista de Compras (Comidas) -->
+  <div id="grocery-modal" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div>
+          <h3 style="color: #38bdf8;">🛒 Lista de Compras (Comidas)</h3>
+          <span id="grocery-counter" style="font-size: 0.75rem; color: var(--muted);"></span>
+        </div>
+        <button class="close-modal-btn" onclick="closeGroceryModal()">&times;</button>
+      </div>
+      <div class="modal-body" id="grocery-list-container"></div>
+      <div class="modal-footer">
+        <button class="btn-primary" onclick="closeGroceryModal()">Fechar Lista</button>
+      </div>
+    </div>
+  </div>
+
   <script>
     const FIREBASE_ENDPOINT = "https://roca2-37116-default-rtdb.firebaseio.com/dados_compartilhados.json";
 
@@ -427,6 +499,7 @@
       "Jeferson", "Lucas", "Matheus", "Paulinho", "Thiago"
     ];
 
+    // Despesas em estrita ordem alfabética
     const DEFAULT_EXPENSES = [
       {
         id: "carros",
@@ -484,10 +557,45 @@
       }
     ];
 
+    // Itens da planilha organizados em estrita ordem alfabética
+    const GROCERY_ITEMS = [
+      { id: "alho", name: "Alho", qty: "1 pote" },
+      { id: "arroz", name: "Arroz", qty: "1 pct" },
+      { id: "batata", name: "Batata", qty: "" },
+      { id: "cafe", name: "Café", qty: "1 pct" },
+      { id: "calabresa", name: "Calabresa", qty: "3 uni" },
+      { id: "cebola", name: "Cebola", qty: "" },
+      { id: "cenoura", name: "Cenoura", qty: "" },
+      { id: "desinfetante", name: "Desinfetante", qty: "1 l" },
+      { id: "descartaveis", name: "Descartáveis", qty: "" },
+      { id: "feijao_carioca", name: "Feijão Carioca", qty: "1 pct" },
+      { id: "feijao_corda", name: "Feijão de Corda", qty: "1 pct" },
+      { id: "leite", name: "Leite", qty: "5" },
+      { id: "macarrao", name: "Macarrão", qty: "1 kg" },
+      { id: "molho_tomate", name: "Molho de Tomate", qty: "3" },
+      { id: "mussarela", name: "Mussarela", qty: "500 gm" },
+      { id: "oleo", name: "Óleo", qty: "1 l" },
+      { id: "ovo", name: "Ovo", qty: "30 uni" },
+      { id: "pao_forma", name: "Pão de Forma", qty: "3 pct" },
+      { id: "pao_queijo", name: "Pão de Queijo", qty: "200 uni" },
+      { id: "papel_higienico", name: "Papel Higiênico", qty: "1 pct" },
+      { id: "pimentao", name: "Pimentão", qty: "" },
+      { id: "presunto", name: "Presunto", qty: "gm" },
+      { id: "qboa", name: "Qboa", qty: "1 l" },
+      { id: "saco_lixo", name: "Saco de Lixo Grande", qty: "1 pct" },
+      { id: "sal_grosso", name: "Sal Grosso", qty: "1 pote" },
+      { id: "tomate", name: "Tomate", qty: "" }
+    ].sort((a, b) => a.name.localeCompare(b.name, 'pt-BR'));
+
     let EXPENSES = JSON.parse(JSON.stringify(DEFAULT_EXPENSES));
     let PAYMENTS = {};
+    let GROCERY_STATUS = {}; // Guarda { id_item: true/false }
     let isSaving = false;
     let hasLoadedCloudOnce = false;
+
+    function cleanName(name) {
+      return name.replace(/[^\w\sÀ-ÿ]/gi, '').trim();
+    }
 
     function setSyncStatus(state, msg) {
       const dot = document.getElementById("sync-dot");
@@ -519,12 +627,18 @@
         const savedPay = localStorage.getItem("roca_payments_data");
         if (savedPay) PAYMENTS = JSON.parse(savedPay) || {};
       } catch(e) {}
+
+      try {
+        const savedGroc = localStorage.getItem("roca_grocery_data");
+        if (savedGroc) GROCERY_STATUS = JSON.parse(savedGroc) || {};
+      } catch(e) {}
     }
 
     function saveLocal() {
       try {
         localStorage.setItem("roca_expenses_data", JSON.stringify(EXPENSES));
         localStorage.setItem("roca_payments_data", JSON.stringify(PAYMENTS));
+        localStorage.setItem("roca_grocery_data", JSON.stringify(GROCERY_STATUS));
       } catch(e) {}
     }
 
@@ -542,6 +656,7 @@
         const payload = JSON.stringify({
           expenses: EXPENSES,
           payments: PAYMENTS,
+          grocery: GROCERY_STATUS,
           lastUpdated: Date.now()
         });
 
@@ -574,8 +689,10 @@
           if (data && Array.isArray(data.expenses) && data.expenses.length > 0) {
             EXPENSES = data.expenses;
             PAYMENTS = data.payments || {};
+            GROCERY_STATUS = data.grocery || {};
             saveLocal();
             render();
+            renderGroceryList();
             setSyncStatus("online", "Sincronizado na nuvem");
             hasLoadedCloudOnce = true;
           } else if (data === null && !hasLoadedCloudOnce) {
@@ -612,6 +729,53 @@
       syncToCloud();
     }
 
+    // Alterna status de compra de um item da lista
+    function toggleGroceryItem(itemId) {
+      GROCERY_STATUS[itemId] = !GROCERY_STATUS[itemId];
+      renderGroceryList();
+      render(); // Atualiza contador no botão de Comidas
+      syncToCloud();
+    }
+
+    function openGroceryModal() {
+      renderGroceryList();
+      document.getElementById("grocery-modal").classList.add("active");
+    }
+
+    function closeGroceryModal() {
+      document.getElementById("grocery-modal").classList.remove("active");
+    }
+
+    function renderGroceryList() {
+      const container = document.getElementById("grocery-list-container");
+      if (!container) return;
+      container.innerHTML = "";
+
+      let boughtCount = 0;
+      GROCERY_ITEMS.forEach(item => {
+        const isBought = !!GROCERY_STATUS[item.id];
+        if (isBought) boughtCount++;
+
+        const row = document.createElement("div");
+        row.className = `grocery-item ${isBought ? 'bought' : ''}`;
+        row.onclick = () => toggleGroceryItem(item.id);
+
+        row.innerHTML = `
+          <div class="grocery-left">
+            <input type="checkbox" ${isBought ? 'checked' : ''} style="cursor: pointer; accent-color: var(--accent);" onclick="event.stopPropagation(); toggleGroceryItem('${item.id}')">
+            <span class="grocery-text" style="font-weight: 500;">${item.name}</span>
+          </div>
+          ${item.qty ? `<span class="grocery-qty">${item.qty}</span>` : ''}
+        `;
+        container.appendChild(row);
+      });
+
+      const counter = document.getElementById("grocery-counter");
+      if (counter) {
+        counter.textContent = `${boughtCount} de ${GROCERY_ITEMS.length} itens comprados`;
+      }
+    }
+
     function copyWhatsAppReport() {
       let report = `🌾 *STATUS DE PAGAMENTOS - ROÇA 2.0* 🌾\n`;
       report += `📅 *Período:* 30/10 a 02/11\n`;
@@ -625,8 +789,7 @@
         balances[p] = { totalOwed: 0, totalPaid: 0 };
       });
 
-      // Ordena despesas alfabeticamente para o relatório
-      const sortedExpenses = [...EXPENSES].sort((a, b) => a.name.localeCompare(b.name, 'pt-BR'));
+      const sortedExpenses = [...EXPENSES].sort((a, b) => cleanName(a.name).localeCompare(cleanName(b.name), 'pt-BR'));
 
       sortedExpenses.forEach(exp => {
         const excluded = exp.excluded || [];
@@ -652,7 +815,6 @@
           }
         });
 
-        // Ordena alfabeticamente quem falta pagar
         pendingNames.sort((a, b) => a.localeCompare(b, 'pt-BR'));
 
         report += `• *${exp.name}*`;
@@ -696,7 +858,6 @@
         }
       });
 
-      // Ordena as chaves PIX pelo nome do responsável
       Array.from(addedPix.entries())
         .sort((a, b) => a[0].localeCompare(b[0], 'pt-BR'))
         .forEach(([resp, key]) => {
@@ -739,8 +900,7 @@
         balances[p] = { totalOwed: 0, totalPaid: 0 };
       });
 
-      // Ordena despesas por nome
-      const sortedExpenses = [...EXPENSES].sort((a, b) => a.name.localeCompare(b.name, 'pt-BR'));
+      const sortedExpenses = [...EXPENSES].sort((a, b) => cleanName(a.name).localeCompare(cleanName(b.name), 'pt-BR'));
 
       sortedExpenses.forEach(exp => {
         const card = document.createElement("div");
@@ -767,7 +927,6 @@
         let paidCountInExp = 0;
         let peopleHtml = "";
 
-        // Renderiza cada participante em ordem alfabética
         sortedParticipants.forEach(person => {
           if (excluded.includes(person)) {
             peopleHtml += `
@@ -834,6 +993,17 @@
           `;
         }
 
+        // Se for o card de comidas, adiciona o botão de abrir o checklist
+        let checklistBtnHtml = '';
+        if (exp.id === 'comidas') {
+          const boughtTotal = Object.values(GROCERY_STATUS).filter(Boolean).length;
+          checklistBtnHtml = `
+            <button class="checklist-btn" onclick="openGroceryModal()">
+              📝 Ver Lista de Compras (${boughtTotal}/${GROCERY_ITEMS.length} comprados)
+            </button>
+          `;
+        }
+
         card.innerHTML = `
           <div class="expense-header">
             <div>
@@ -846,6 +1016,7 @@
             </div>
           </div>
           ${progressHtml}
+          ${checklistBtnHtml}
           <div class="pix-box">
             <span>Resp: <strong>${exp.responsible || 'A definir'}</strong> | PIX: <strong>${exp.pixDisplay || exp.pix || 'A definir'}</strong></span>
             ${copyBtn}
@@ -865,7 +1036,6 @@
       if (!summaryContainer) return;
       summaryContainer.innerHTML = "";
 
-      // Exibe resumo estritamente em ordem alfabética
       sortedParticipants.forEach(person => {
         const { totalOwed, totalPaid } = balances[person];
         const pending = Math.max(0, totalOwed - totalPaid);
@@ -896,8 +1066,7 @@
       if (!modalBody) return;
       modalBody.innerHTML = "";
 
-      // Ordena alfabeticamente no modal
-      const sortedExpenses = [...EXPENSES].sort((a, b) => a.name.localeCompare(b.name, 'pt-BR'));
+      const sortedExpenses = [...EXPENSES].sort((a, b) => cleanName(a.name).localeCompare(cleanName(b.name), 'pt-BR'));
 
       sortedExpenses.forEach(exp => {
         const item = document.createElement("div");
@@ -955,8 +1124,10 @@
     }
 
     window.onclick = function(event) {
-      const modal = document.getElementById("edit-modal");
-      if (event.target === modal) closeEditModal();
+      const editModal = document.getElementById("edit-modal");
+      const grocModal = document.getElementById("grocery-modal");
+      if (event.target === editModal) closeEditModal();
+      if (event.target === grocModal) closeGroceryModal();
     };
 
     // Inicialização
