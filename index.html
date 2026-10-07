@@ -5,10 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Divisão Roça 2.0 🌾</title>
 
-  <!-- Firebase Scripts Oficiais -->
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
-
   <style>
     :root {
       --bg: #0f172a;
@@ -433,8 +429,8 @@
   </div>
 
   <script>
-    // URL do seu banco Realtime Database configurada:
-    const FIREBASE_DATABASE_URL = "https://roca2-37116-default-rtdb.firebaseio.com";
+    // Endpoint REST direto do seu Firebase
+    const FIREBASE_ENDPOINT = "https://roca2-37116-default-rtdb.firebaseio.com/dados_compartilhados.json";
 
     const PARTICIPANTS = [
       "Matheus", "Paulinho", "Guilherme", "Gustavo", 
@@ -500,7 +496,6 @@
 
     let EXPENSES = JSON.parse(JSON.stringify(DEFAULT_EXPENSES));
     let PAYMENTS = {};
-    let dbRef = null;
 
     function setSyncStatus(state, msg) {
       const dot = document.getElementById("sync-dot");
@@ -535,51 +530,74 @@
       localStorage.setItem("roca_payments_data", JSON.stringify(PAYMENTS));
     }
 
-    function initFirebase() {
-      try {
-        const app = firebase.initializeApp({ databaseURL: FIREBASE_DATABASE_URL });
-        const db = firebase.database(app);
-        dbRef = db.ref("roca_dados_compartilhados");
+    // Salva na nuvem via PUT direto do Firebase REST
+    async function syncToCloud() {
+      saveLocal();
+      if (!navigator.onLine) {
+        setSyncStatus("offline");
+        return;
+      }
 
-        // Escuta atualizações de qualquer dispositivo em tempo real
-        dbRef.on("value", (snapshot) => {
-          const val = snapshot.val();
-          if (val) {
-            if (val.expenses) EXPENSES = val.expenses;
-            PAYMENTS = val.payments || {};
-            saveLocal();
-            render();
-            setSyncStatus("online", "Sincronizado na nuvem");
-          } else {
-            // Se o banco estiver vazio pela 1ª vez, carrega os padrões e salva
-            syncToCloud();
-          }
-        }, (error) => {
-          console.warn("Erro Firebase:", error);
-          setSyncStatus("offline", "Ajuste as Regras do Firebase");
+      setSyncStatus("syncing", "Salvando na nuvem...");
+      try {
+        const payload = JSON.stringify({
+          expenses: EXPENSES,
+          payments: PAYMENTS,
+          lastUpdated: new Date().toISOString()
         });
+
+        const res = await fetch(FIREBASE_ENDPOINT, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: payload
+        });
+
+        if (res.ok) {
+          setSyncStatus("online", "Sincronizado na nuvem");
+        } else {
+          setSyncStatus("offline", "Ajuste Regras no Firebase");
+        }
       } catch (err) {
-        console.error(err);
-        setSyncStatus("offline", "Erro de conexão");
+        setSyncStatus("offline", "Offline (salvo local)");
       }
     }
 
-    function syncToCloud() {
-      saveLocal();
-      if (!dbRef) return;
+    // Puxa da nuvem via GET do Firebase REST
+    async function syncFromCloud() {
+      if (!navigator.onLine) {
+        setSyncStatus("offline");
+        return;
+      }
 
-      setSyncStatus("syncing", "Salvando na nuvem...");
-      dbRef.set({
-        expenses: EXPENSES,
-        payments: PAYMENTS,
-        lastUpdated: new Date().toISOString()
-      }).then(() => {
-        setSyncStatus("online", "Sincronizado na nuvem");
-      }).catch((err) => {
-        console.error("Falha ao gravar no Firebase:", err);
-        setSyncStatus("offline", "Erro nas Regras do Banco");
-      });
+      try {
+        const res = await fetch(FIREBASE_ENDPOINT);
+        if (res.ok) {
+          const data = await res.json();
+          if (data && data.expenses) {
+            EXPENSES = data.expenses;
+            PAYMENTS = data.payments || {};
+            saveLocal();
+            render();
+            setSyncStatus("online", "Sincronizado na nuvem");
+          } else if (data === null) {
+            // Se o banco estiver zerado pela primeira vez, grava os dados iniciais
+            syncToCloud();
+          }
+        } else {
+          setSyncStatus("offline", "Ajuste Regras no Firebase");
+        }
+      } catch (err) {
+        setSyncStatus("offline", "Offline (salvo local)");
+      }
     }
+
+    window.addEventListener('online', () => {
+      setSyncStatus("syncing", "Reconectando...");
+      syncFromCloud().then(syncToCloud);
+    });
+    window.addEventListener('offline', () => {
+      setSyncStatus("offline");
+    });
 
     function formatBRL(val) {
       return (val || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
@@ -924,10 +942,13 @@
       if (event.target === modal) closeEditModal();
     };
 
-    // Inicialização
+    // Renderiza primeiro os dados locais para tela nunca ficar em branco
     loadLocal();
     render();
-    initFirebase();
+
+    // Em seguida sincroniza com a nuvem e fica monitorando a cada 3 segundos
+    syncFromCloud();
+    setInterval(syncFromCloud, 3000);
   </script>
 </body>
 </html>
