@@ -589,7 +589,7 @@
 
     let EXPENSES = JSON.parse(JSON.stringify(DEFAULT_EXPENSES));
     let PAYMENTS = {};
-    let GROCERY_STATUS = {}; // Guarda { id_item: true/false }
+    let GROCERY_STATUS = {};
     let isSaving = false;
     let hasLoadedCloudOnce = false;
 
@@ -729,11 +729,10 @@
       syncToCloud();
     }
 
-    // Alterna status de compra de um item da lista
     function toggleGroceryItem(itemId) {
       GROCERY_STATUS[itemId] = !GROCERY_STATUS[itemId];
       renderGroceryList();
-      render(); // Atualiza contador no botão de Comidas
+      render();
       syncToCloud();
     }
 
@@ -910,8 +909,10 @@
         const copyBtn = hasPix ? `<button class="copy-btn" onclick="copyPix('${exp.pix}')">Copiar PIX</button>` : '';
 
         const excluded = exp.excluded || [];
-        const activePeople = sortedParticipants.filter(p => !excluded.includes(p));
-        const activeCount = activePeople.length;
+        // Separa quem participa e quem não entra na soma
+        const activeList = sortedParticipants.filter(p => !excluded.includes(p));
+        const excludedList = sortedParticipants.filter(p => excluded.includes(p));
+        const activeCount = activeList.length;
         
         let perPersonVal = 0;
         let perPersonText = "A Definir";
@@ -927,35 +928,37 @@
         let paidCountInExp = 0;
         let peopleHtml = "";
 
-        sortedParticipants.forEach(person => {
-          if (excluded.includes(person)) {
-            peopleHtml += `
-              <div class="person-chip" style="opacity: 0.4; cursor: not-allowed;">
-                <span class="excluded-tag">${person} (não entra)</span>
-              </div>
-            `;
-          } else {
-            const key = `${exp.id}_${person}`;
-            const isPaid = !!PAYMENTS[key];
-            
-            if (isPaid) {
-              paidCountInExp++;
-            }
-
-            if (perPersonVal > 0) {
-              balances[person].totalOwed += perPersonVal;
-              if (isPaid) {
-                balances[person].totalPaid += perPersonVal;
-              }
-            }
-
-            peopleHtml += `
-              <label class="person-chip ${isPaid ? 'paid' : ''}">
-                <input type="checkbox" ${isPaid ? 'checked' : ''} onchange="togglePay('${exp.id}', '${person}')">
-                <span>${person}</span>
-              </label>
-            `;
+        // 1. Participantes ativos primeiro (em ordem alfabética)
+        activeList.forEach(person => {
+          const key = `${exp.id}_${person}`;
+          const isPaid = !!PAYMENTS[key];
+          
+          if (isPaid) {
+            paidCountInExp++;
           }
+
+          if (perPersonVal > 0) {
+            balances[person].totalOwed += perPersonVal;
+            if (isPaid) {
+              balances[person].totalPaid += perPersonVal;
+            }
+          }
+
+          peopleHtml += `
+            <label class="person-chip ${isPaid ? 'paid' : ''}">
+              <input type="checkbox" ${isPaid ? 'checked' : ''} onchange="togglePay('${exp.id}', '${person}')">
+              <span>${person}</span>
+            </label>
+          `;
+        });
+
+        // 2. Participantes que não entram na soma ficam abaixo (no final)
+        excludedList.forEach(person => {
+          peopleHtml += `
+            <div class="person-chip" style="opacity: 0.4; cursor: not-allowed;">
+              <span class="excluded-tag">${person} (não entra)</span>
+            </div>
+          `;
         });
 
         let statusHtml = '';
@@ -993,7 +996,6 @@
           `;
         }
 
-        // Se for o card de comidas, adiciona o botão de abrir o checklist
         let checklistBtnHtml = '';
         if (exp.id === 'comidas') {
           const boughtTotal = Object.values(GROCERY_STATUS).filter(Boolean).length;
