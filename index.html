@@ -574,7 +574,6 @@
     }
 
     async function syncFromCloud() {
-      // Não sobrescreve os dados locais se o usuário estiver salvando no momento
       if (isSaving || !navigator.onLine) return;
 
       try {
@@ -589,7 +588,6 @@
             setSyncStatus("online", "Sincronizado na nuvem");
             hasLoadedCloudOnce = true;
           } else if (data === null && !hasLoadedCloudOnce) {
-            // Nuvem está virgem pela primeira vez: envia a base sem limpar
             syncToCloud();
           }
         }
@@ -939,10 +937,11 @@
       syncToCloud();
     }
 
+    // Restaura APENAS os valores e chaves PIX (mantém os pagamentos intocados)
     function resetToDefaults() {
-      if (confirm("Tem certeza de que deseja restaurar as informações para o padrão inicial?")) {
+      if (confirm("Deseja restaurar as configurações dos gastos e chaves PIX para o padrão? (Os pagamentos já marcados serão mantidos)")) {
         EXPENSES = JSON.parse(JSON.stringify(DEFAULT_EXPENSES));
-        PAYMENTS = {};
+        // Linha PAYMENTS = {}; removida para preservar as caixas marcadas
         closeEditModal();
         render();
         syncToCloud();
@@ -954,14 +953,11 @@
       if (event.target === modal) closeEditModal();
     };
 
-    // Inicialização robusta:
+    // Inicialização
     loadLocal();
     render();
 
-    // Busca dados atualizados na nuvem
     syncFromCloud();
-
-    // Sincroniza periodicamente apenas para leitura (a cada 5 segundos)
     setInterval(syncFromCloud, 5000);
   </script>
 </body>
