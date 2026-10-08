@@ -2,39 +2,69 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <meta name="theme-color" content="#0f172a" />
+  <meta name="description" content="Dashboard de Gestão Financeira e Coordenação - Roça 2.0" />
   <title>Divisão Roça 2.0 🌾</title>
 
   <style>
+    /* ==========================================================================
+       1. DESIGN TOKENS & RESET
+       ========================================================================== */
     :root {
-      --bg: #0f172a;
-      --card-bg: #1e293b;
-      --text: #f8fafc;
-      --muted: #94a3b8;
-      --accent: #22c55e;
-      --border: #334155;
+      --color-bg-primary: #0f172a;
+      --color-bg-surface: #1e293b;
+      --color-bg-elevated: #334155;
+      --color-bg-overlay: rgba(15, 23, 42, 0.85);
+
+      --color-text-main: #f8fafc;
+      --color-text-muted: #94a3b8;
+      --color-accent-amber: #f59e0b;
+      --color-accent-sky: #38bdf8;
+      --color-accent-emerald: #22c55e;
+      --color-accent-rose: #f87171;
+
+      --color-border: #334155;
+      --radius-sm: 6px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+      --radius-xl: 14px;
+
+      --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+      --shadow-lg: 0 16px 32px rgba(0, 0, 0, 0.5);
+
+      --transition-fast: 0.15s ease;
+      --transition-normal: 0.2s ease;
+      --container-max-width: 860px;
     }
-    * { 
-      box-sizing: border-box; 
-      margin: 0; 
-      padding: 0; 
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
-    body { 
-      background-color: var(--bg); 
-      color: var(--text); 
-      padding: 0 16px 40px 16px; 
-      display: flex; 
-      justify-content: center; 
+
+    body {
+      background-color: var(--color-bg-primary);
+      color: var(--color-text-main);
+      padding: 0 16px 40px;
+      display: flex;
+      justify-content: center;
       min-height: 100vh;
+      line-height: 1.5;
     }
-    .container { 
-      width: 100%; 
-      max-width: 860px; 
-      position: relative; 
+
+    .container {
+      width: 100%;
+      max-width: var(--container-max-width);
+      position: relative;
     }
-    
-    /* Barra Superior Fixa */
+
+    /* ==========================================================================
+       2. COMPONENTES: NAVEGAÇÃO & TOPO
+       ========================================================================== */
     .top-bar {
       position: sticky;
       top: 0;
@@ -46,73 +76,103 @@
       justify-content: space-between;
       align-items: center;
       padding: 12px 6px;
-      border-bottom: 1px solid var(--border);
+      border-bottom: 1px solid var(--color-border);
       margin-bottom: 20px;
-      gap: 8px;
     }
-    .top-bar-left {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .menu-btn {
-      background: #1e293b;
-      border: 1px solid var(--border);
-      color: #f8fafc;
+
+    .btn-icon {
+      background: var(--color-bg-surface);
+      border: 1px solid var(--color-border);
+      color: var(--color-text-main);
       font-size: 1.25rem;
-      line-height: 1;
       width: 38px;
       height: 38px;
-      border-radius: 8px;
+      border-radius: var(--radius-md);
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: all 0.2s ease;
+      transition: background-color var(--transition-normal);
     }
-    .menu-btn:hover { background: #334155; }
 
-    .action-btn-top {
-      background: #334155;
-      color: #f8fafc;
-      border: 1px solid var(--border);
+    .btn-icon:hover {
+      background: var(--color-bg-elevated);
+    }
+
+    .btn-primary {
+      background: var(--color-accent-emerald);
+      border: none;
+      color: var(--color-bg-primary);
+      font-weight: 700;
+      padding: 8px 20px;
+      border-radius: var(--radius-md);
+      font-size: 0.88rem;
+      cursor: pointer;
+      transition: opacity var(--transition-normal);
+    }
+
+    .btn-primary:hover {
+      opacity: 0.9;
+    }
+
+    .btn-secondary {
+      background: var(--color-bg-elevated);
+      color: var(--color-text-main);
+      border: 1px solid var(--color-border);
       padding: 7px 14px;
-      border-radius: 8px;
+      border-radius: var(--radius-md);
       font-size: 0.85rem;
       font-weight: 500;
       cursor: pointer;
       display: flex;
       align-items: center;
       gap: 6px;
-      transition: all 0.2s ease;
+      transition: background-color var(--transition-normal);
       white-space: nowrap;
     }
-    .action-btn-top:hover {
+
+    .btn-secondary:hover {
       background: #475569;
     }
 
-    header { text-align: center; margin-bottom: 16px; }
-    h1 { font-size: clamp(1.4rem, 4vw, 1.8rem); color: #f59e0b; margin-bottom: 6px; }
-    p.sub { font-size: clamp(0.82rem, 2.5vw, 0.95rem); color: var(--muted); }
+    header {
+      text-align: center;
+      margin-bottom: 16px;
+    }
 
-    /* Caixa do Contador */
+    header h1 {
+      font-size: clamp(1.4rem, 4vw, 1.8rem);
+      color: var(--color-accent-amber);
+      margin-bottom: 4px;
+    }
+
+    header p {
+      font-size: clamp(0.82rem, 2.5vw, 0.95rem);
+      color: var(--color-text-muted);
+    }
+
+    /* ==========================================================================
+       3. COMPONENTES: CONTAGEM DECRESCENTE
+       ========================================================================== */
     .countdown-card {
       background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.9));
       border: 1px solid rgba(245, 158, 11, 0.3);
-      border-radius: 12px;
+      border-radius: var(--radius-lg);
       padding: 14px;
       margin-bottom: 18px;
       text-align: center;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+      box-shadow: var(--shadow-md);
     }
+
     .countdown-title {
       font-size: 0.85rem;
       font-weight: 600;
-      color: #f59e0b;
+      color: var(--color-accent-amber);
       margin-bottom: 8px;
       letter-spacing: 0.5px;
       text-transform: uppercase;
     }
+
     .countdown-grid {
       display: flex;
       justify-content: center;
@@ -120,48 +180,68 @@
       gap: 8px;
       flex-wrap: wrap;
     }
+
     .countdown-unit {
-      background: #0f172a;
-      border: 1px solid var(--border);
-      border-radius: 8px;
+      background: var(--color-bg-primary);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
       padding: 6px 12px;
       min-width: 65px;
       display: flex;
       flex-direction: column;
       align-items: center;
     }
+
     .countdown-number {
       font-size: 1.25rem;
       font-weight: 700;
-      color: #38bdf8;
+      color: var(--color-accent-sky);
     }
+
     .countdown-label {
       font-size: 0.68rem;
-      color: var(--muted);
+      color: var(--color-text-muted);
       text-transform: uppercase;
     }
 
-    /* Cartões de Despesas */
+    /* ==========================================================================
+       4. COMPONENTES: CARTÕES DE DESPESAS
+       ========================================================================== */
     .expense-card {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 12px;
+      background: var(--color-bg-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
       padding: clamp(12px, 3vw, 18px);
       margin-bottom: 16px;
-      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.2);
+      box-shadow: var(--shadow-md);
     }
+
     .expense-header {
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
-      border-bottom: 1px solid var(--border);
+      border-bottom: 1px solid var(--color-border);
       padding-bottom: 10px;
       margin-bottom: 12px;
       gap: 12px;
       flex-wrap: wrap;
     }
-    .expense-title { font-weight: 700; font-size: 1.15rem; display: flex; align-items: center; gap: 6px; }
-    .expense-val { font-size: 1rem; font-weight: 600; color: #38bdf8; text-align: right; }
+
+    .expense-title {
+      font-weight: 700;
+      font-size: 1.15rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .expense-val {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--color-accent-sky);
+      text-align: right;
+    }
+
     .expense-status-row {
       font-size: 0.8rem;
       margin-top: 4px;
@@ -171,7 +251,10 @@
       flex-wrap: wrap;
     }
 
-    .progress-wrapper { margin-bottom: 12px; }
+    .progress-wrapper {
+      margin-bottom: 12px;
+    }
+
     .progress-bar-bg {
       width: 100%;
       height: 7px;
@@ -179,55 +262,64 @@
       border-radius: 999px;
       overflow: hidden;
     }
+
     .progress-bar-fill {
       height: 100%;
-      background: var(--accent);
+      background: var(--color-accent-emerald);
       border-radius: 999px;
       width: 0%;
       transition: width 0.25s ease;
     }
-    .progress-bar-fill.complete { background: #10b981; }
+
+    .progress-bar-fill.complete {
+      background: #10b981;
+    }
+
     .progress-label {
       display: flex;
       justify-content: space-between;
       font-size: 0.75rem;
-      color: var(--muted);
+      color: var(--color-text-muted);
       margin-top: 5px;
     }
 
     .pix-box {
       font-size: 0.85rem;
-      background: rgba(0,0,0,0.25);
-      border-radius: 8px;
+      background: rgba(0, 0, 0, 0.25);
+      border-radius: var(--radius-md);
       padding: 8px 12px;
       margin-bottom: 14px;
-      color: var(--muted);
+      color: var(--color-text-muted);
       display: flex;
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
       gap: 8px;
     }
-    .pix-box strong { color: var(--text); }
+
+    .pix-box strong {
+      color: var(--color-text-main);
+    }
+
     .copy-btn {
       background: #3b82f6;
       border: none;
       color: #fff;
       padding: 4px 10px;
-      border-radius: 6px;
+      border-radius: var(--radius-sm);
       font-size: 0.78rem;
       font-weight: 500;
       cursor: pointer;
       white-space: nowrap;
     }
 
-    .checklist-btn {
+    .checklist-trigger-btn {
       width: 100%;
       background: rgba(56, 189, 248, 0.12);
       border: 1px solid rgba(56, 189, 248, 0.35);
-      color: #38bdf8;
+      color: var(--color-accent-sky);
       padding: 10px 14px;
-      border-radius: 8px;
+      border-radius: var(--radius-md);
       font-size: 0.88rem;
       font-weight: 600;
       cursor: pointer;
@@ -236,48 +328,63 @@
       justify-content: center;
       align-items: center;
       gap: 6px;
-      transition: all 0.2s ease;
+      transition: background var(--transition-normal);
     }
-    .checklist-btn:hover { background: rgba(56, 189, 248, 0.22); }
+
+    .checklist-trigger-btn:hover {
+      background: rgba(56, 189, 248, 0.22);
+    }
 
     .people-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
       gap: 8px;
     }
+
     .person-chip {
       display: flex;
       align-items: center;
       gap: 8px;
-      background: #0f172a;
-      border: 1px solid var(--border);
+      background: var(--color-bg-primary);
+      border: 1px solid var(--color-border);
       padding: 8px 12px;
-      border-radius: 8px;
+      border-radius: var(--radius-md);
       cursor: pointer;
       user-select: none;
       font-size: 0.88rem;
-      transition: all 0.15s ease;
+      transition: all var(--transition-fast);
     }
+
     .person-chip.paid {
       background: rgba(34, 197, 94, 0.15);
-      border-color: var(--accent);
+      border-color: var(--color-accent-emerald);
       color: #86efac;
     }
-    .person-chip input { 
-      cursor: pointer; 
-      accent-color: var(--accent); 
-      width: 16px; 
-      height: 16px; 
-    }
-    .excluded-tag { font-size: 0.78rem; color: #64748b; font-style: italic; }
 
+    .person-chip input {
+      cursor: pointer;
+      accent-color: var(--color-accent-emerald);
+      width: 16px;
+      height: 16px;
+    }
+
+    .excluded-tag {
+      font-size: 0.78rem;
+      color: #64748b;
+      font-style: italic;
+    }
+
+    /* ==========================================================================
+       5. COMPONENTES: RESUMO & RODAPÉ
+       ========================================================================== */
     .summary-card {
       background: #1e1b4b;
       border: 1px solid #4338ca;
-      border-radius: 12px;
+      border-radius: var(--radius-lg);
       padding: clamp(14px, 3vw, 20px);
       margin-top: 24px;
     }
+
     .summary-header {
       font-size: 1.15rem;
       color: #a5b4fc;
@@ -286,85 +393,108 @@
       justify-content: space-between;
       align-items: center;
     }
-    .summary-list { 
-      display: grid; 
+
+    .summary-list {
+      display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 10px; 
+      gap: 10px;
     }
+
     .summary-row {
       background: rgba(15, 23, 42, 0.6);
       border: 1px solid #312e81;
       padding: 10px 14px;
-      border-radius: 8px;
+      border-radius: var(--radius-md);
       display: flex;
       justify-content: space-between;
       align-items: center;
       font-size: 0.92rem;
       gap: 10px;
     }
+
     .summary-row.fully-paid {
-      border-color: var(--accent);
+      border-color: var(--color-accent-emerald);
       background: rgba(34, 197, 94, 0.08);
     }
-    .summary-details { text-align: right; font-size: 0.82rem; white-space: nowrap; }
-    .text-paid { color: #86efac; font-weight: 600; }
-    .text-pending { color: #f87171; font-weight: 600; }
 
-    /* Rodapé */
-    .footer-section {
+    .summary-details {
+      text-align: right;
+      font-size: 0.82rem;
+      white-space: nowrap;
+    }
+
+    .text-paid { color: #86efac; font-weight: 600; }
+    .text-pending { color: var(--color-accent-rose); font-weight: 600; }
+
+    footer.footer-section {
       margin-top: 26px;
       display: flex;
       justify-content: flex-start;
       align-items: center;
     }
-    .whatsapp-footer-btn {
+
+    .btn-action-report {
       background: rgba(34, 197, 94, 0.15);
       border: 1px solid rgba(34, 197, 94, 0.4);
       color: #86efac;
       padding: 10px 16px;
-      border-radius: 8px;
+      border-radius: var(--radius-md);
       font-size: 0.88rem;
       font-weight: 600;
       cursor: pointer;
       display: flex;
       align-items: center;
       gap: 8px;
-      transition: all 0.2s ease;
+      transition: background var(--transition-normal);
     }
-    .whatsapp-footer-btn:hover { background: rgba(34, 197, 94, 0.25); }
 
-    /* Drawer / Menu Lateral */
+    .btn-action-report:hover {
+      background: rgba(34, 197, 94, 0.25);
+    }
+
+    /* ==========================================================================
+       6. COMPONENTES: PAINEL LATERAL (DRAWER) & MODAIS
+       ========================================================================== */
     .drawer-overlay {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.6);
+      background: rgba(0, 0, 0, 0.6);
       backdrop-filter: blur(4px);
       z-index: 1000;
       display: none;
     }
+
     .drawer-overlay.active { display: block; }
+
     .drawer-menu {
       position: fixed;
       top: 0; left: -300px;
       width: 280px;
       height: 100%;
-      background: #1e293b;
-      border-right: 1px solid var(--border);
+      background: var(--color-bg-surface);
+      border-right: 1px solid var(--color-border);
       z-index: 1001;
       transition: left 0.3s ease;
       display: flex;
       flex-direction: column;
-      box-shadow: 10px 0 25px rgba(0,0,0,0.5);
+      box-shadow: var(--shadow-lg);
     }
+
     .drawer-menu.active { left: 0; }
+
     .drawer-header {
       padding: 18px 20px;
-      border-bottom: 1px solid var(--border);
+      border-bottom: 1px solid var(--color-border);
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
-    .drawer-header h3 { font-size: 1.15rem; color: #f59e0b; }
+
+    .drawer-header h3 {
+      font-size: 1.15rem;
+      color: var(--color-accent-amber);
+    }
+
     .drawer-nav {
       padding: 16px 12px;
       display: flex;
@@ -373,10 +503,11 @@
       flex: 1;
       overflow-y: auto;
     }
+
     .drawer-btn {
-      background: #0f172a;
-      border: 1px solid var(--border);
-      color: #f8fafc;
+      background: var(--color-bg-primary);
+      border: 1px solid var(--color-border);
+      color: var(--color-text-main);
       padding: 12px 14px;
       border-radius: 10px;
       font-size: 0.95rem;
@@ -386,19 +517,19 @@
       gap: 10px;
       cursor: pointer;
       text-align: left;
-      transition: all 0.2s ease;
-    }
-    .drawer-btn:hover {
-      background: #334155;
-      border-color: #38bdf8;
-      color: #38bdf8;
+      transition: all var(--transition-normal);
     }
 
-    /* Modais Gerais */
+    .drawer-btn:hover {
+      background: var(--color-bg-elevated);
+      border-color: var(--color-accent-sky);
+      color: var(--color-accent-sky);
+    }
+
     .modal-overlay {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(15, 23, 42, 0.85);
+      background: var(--color-bg-overlay);
       backdrop-filter: blur(6px);
       display: none;
       justify-content: center;
@@ -406,35 +537,44 @@
       padding: 14px;
       z-index: 1100;
     }
+
     .modal-overlay.active { display: flex; }
+
     .modal-content {
-      background: #1e293b;
-      border: 1px solid var(--border);
-      border-radius: 14px;
+      background: var(--color-bg-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
       max-width: 680px;
       width: 100%;
       max-height: 88vh;
       display: flex;
       flex-direction: column;
-      box-shadow: 0 16px 32px rgba(0,0,0,0.5);
+      box-shadow: var(--shadow-lg);
     }
+
     .modal-header {
       padding: 16px 20px;
-      border-bottom: 1px solid var(--border);
+      border-bottom: 1px solid var(--color-border);
       display: flex;
       justify-content: space-between;
       align-items: center;
       gap: 10px;
     }
-    .modal-header h3 { font-size: 1.15rem; color: #f59e0b; }
+
+    .modal-header h3 {
+      font-size: 1.15rem;
+      color: var(--color-accent-amber);
+    }
+
     .close-modal-btn {
       background: transparent;
       border: none;
-      color: var(--muted);
+      color: var(--color-text-muted);
       font-size: 1.5rem;
       cursor: pointer;
       line-height: 1;
     }
+
     .modal-body {
       padding: 16px 20px;
       overflow-y: auto;
@@ -442,30 +582,21 @@
       flex-direction: column;
       gap: 12px;
     }
+
     .modal-footer {
       padding: 14px 20px;
-      border-top: 1px solid var(--border);
+      border-top: 1px solid var(--color-border);
       display: flex;
       justify-content: flex-end;
       align-items: center;
       background: #192231;
-      border-radius: 0 0 14px 14px;
-    }
-    .btn-primary {
-      background: var(--accent);
-      border: none;
-      color: #0f172a;
-      font-weight: 700;
-      padding: 8px 20px;
-      border-radius: 8px;
-      font-size: 0.88rem;
-      cursor: pointer;
+      border-radius: 0 0 var(--radius-xl) var(--radius-xl);
     }
 
-    /* Modal de Fotos */
+    /* Utilitários dos Modais */
     .photo-upload-box {
-      background: #0f172a;
-      border: 2px dashed var(--border);
+      background: var(--color-bg-primary);
+      border: 2px dashed var(--color-border);
       border-radius: 10px;
       padding: 18px;
       text-align: center;
@@ -474,25 +605,29 @@
       align-items: center;
       gap: 10px;
     }
+
     .photo-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
       gap: 10px;
       margin-top: 10px;
     }
+
     .photo-item {
       position: relative;
-      border-radius: 8px;
+      border-radius: var(--radius-md);
       overflow: hidden;
       aspect-ratio: 1;
-      background: #0f172a;
-      border: 1px solid var(--border);
+      background: var(--color-bg-primary);
+      border: 1px solid var(--color-border);
     }
+
     .photo-item img {
       width: 100%;
       height: 100%;
       object-fit: cover;
     }
+
     .photo-delete-btn {
       position: absolute;
       top: 5px;
@@ -508,20 +643,20 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.5);
-      transition: transform 0.15s ease, background 0.15s ease;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+      transition: transform var(--transition-fast), background-color var(--transition-fast);
     }
+
     .photo-delete-btn:hover {
       background: #dc2626;
       transform: scale(1.1);
     }
+
     .photo-uploader-tag {
       position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: rgba(0,0,0,0.7);
-      color: #f8fafc;
+      bottom: 0; left: 0; right: 0;
+      background: rgba(0, 0, 0, 0.7);
+      color: var(--color-text-main);
       font-size: 0.68rem;
       padding: 3px 6px;
       white-space: nowrap;
@@ -529,27 +664,43 @@
       text-overflow: ellipsis;
     }
 
-    /* Grids dos Modais */
     .edit-item-card {
-      background: #0f172a;
-      border: 1px solid var(--border);
+      background: var(--color-bg-primary);
+      border: 1px solid var(--color-border);
       border-radius: 10px;
       padding: 12px 14px;
     }
-    .edit-item-title { font-weight: 600; margin-bottom: 10px; color: #38bdf8; font-size: 0.98rem; }
+
+    .edit-item-title {
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: var(--color-accent-sky);
+      font-size: 0.98rem;
+    }
+
     .edit-form-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
       gap: 10px;
     }
-    .form-group { display: flex; flex-direction: column; gap: 4px; }
-    .form-group label { font-size: 0.74rem; color: var(--muted); }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .form-group label {
+      font-size: 0.74rem;
+      color: var(--color-text-muted);
+    }
+
     .form-group input, .form-group select {
-      background: #1e293b;
-      border: 1px solid var(--border);
-      color: var(--text);
+      background: var(--color-bg-surface);
+      border: 1px solid var(--color-border);
+      color: var(--color-text-main);
       padding: 8px 10px;
-      border-radius: 6px;
+      border-radius: var(--radius-sm);
       font-size: 0.85rem;
     }
 
@@ -558,57 +709,67 @@
       grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
       gap: 10px;
     }
+
     .grocery-item {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      background: #0f172a;
-      border: 1px solid var(--border);
+      background: var(--color-bg-primary);
+      border: 1px solid var(--color-border);
       padding: 10px 14px;
-      border-radius: 8px;
+      border-radius: var(--radius-md);
       cursor: pointer;
       user-select: none;
-      transition: all 0.15s ease;
+      transition: all var(--transition-fast);
       gap: 10px;
     }
+
     .grocery-item.bought {
       background: rgba(34, 197, 94, 0.1);
       border-color: rgba(34, 197, 94, 0.4);
     }
-    .grocery-item.bought .grocery-text { text-decoration: line-through; color: #64748b; }
-    .grocery-left { display: flex; align-items: center; gap: 10px; }
+
+    .grocery-item.bought .grocery-text {
+      text-decoration: line-through;
+      color: #64748b;
+    }
+
+    .grocery-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
     .grocery-qty {
       font-size: 0.78rem;
-      background: #1e293b;
-      border: 1px solid var(--border);
-      color: #38bdf8;
+      background: var(--color-bg-surface);
+      border: 1px solid var(--color-border);
+      color: var(--color-accent-sky);
       padding: 3px 8px;
-      border-radius: 6px;
+      border-radius: var(--radius-sm);
       font-weight: 600;
       white-space: nowrap;
     }
 
-    /* Adicionar Item na Bagagem */
-    .add-luggage-box {
+    .add-input-box {
       display: flex;
       gap: 8px;
       margin-top: 10px;
     }
-    .add-luggage-box input {
+
+    .add-input-box input {
       flex: 1;
-      background: #0f172a;
-      border: 1px solid var(--border);
-      color: #f8fafc;
+      background: var(--color-bg-primary);
+      border: 1px solid var(--color-border);
+      color: var(--color-text-main);
       padding: 9px 12px;
-      border-radius: 8px;
+      border-radius: var(--radius-md);
       font-size: 0.88rem;
     }
-    .add-luggage-box button {
-      white-space: nowrap;
-    }
 
+    /* Media Queries */
     @media (max-width: 540px) {
-      body { padding: 0 10px 30px 10px; }
+      body { padding: 0 10px 30px; }
       .expense-header { flex-direction: column; align-items: stretch; gap: 6px; }
       .expense-val { text-align: left; }
       .expense-status-row { justify-content: flex-start; }
@@ -621,52 +782,38 @@
 </head>
 <body>
 
-  <!-- Menu Lateral / Drawer -->
-  <div class="drawer-overlay" id="drawer-overlay" onclick="toggleDrawer(false)"></div>
-  <aside class="drawer-menu" id="drawer-menu">
+  <!-- Menu Lateral (Drawer) -->
+  <div class="drawer-overlay" id="drawer-overlay" onclick="App.ui.toggleDrawer(false)"></div>
+  <aside class="drawer-menu" id="drawer-menu" aria-label="Menu Principal">
     <div class="drawer-header">
       <h3>Opções Roça 2.0 🌾</h3>
-      <button class="close-modal-btn" onclick="toggleDrawer(false)">&times;</button>
+      <button class="close-modal-btn" onclick="App.ui.toggleDrawer(false)" aria-label="Fechar">&times;</button>
     </div>
-    <div class="drawer-nav">
-      <button class="drawer-btn" onclick="toggleDrawer(false); openPhotosModal();">
-        📸 Fotos da Roça
-      </button>
-      <button class="drawer-btn" onclick="toggleDrawer(false); openSpotifyModal();">
-        🎵 Playlist Spotify
-      </button>
-      <button class="drawer-btn" onclick="toggleDrawer(false); openLuggageModal();">
-        🎒 Quem Leva o Quê?
-      </button>
-      <button class="drawer-btn" onclick="toggleDrawer(false); openGroceryModal();">
-        🛒 Lista de Compras
-      </button>
-      <button class="drawer-btn" onclick="toggleDrawer(false); openEditModal();">
-        ⚙️ Editar Gastos / PIX
-      </button>
-    </div>
+    <nav class="drawer-nav">
+      <button class="drawer-btn" onclick="App.ui.toggleDrawer(false); App.ui.openModal('photos-modal');">📸 Fotos da Roça</button>
+      <button class="drawer-btn" onclick="App.ui.toggleDrawer(false); App.ui.openModal('spotify-modal');">🎵 Playlist Spotify</button>
+      <button class="drawer-btn" onclick="App.ui.toggleDrawer(false); App.ui.openModal('luggage-modal');">🎒 Quem Leva o Quê?</button>
+      <button class="drawer-btn" onclick="App.ui.toggleDrawer(false); App.ui.openModal('grocery-modal');">🛒 Lista de Compras</button>
+      <button class="drawer-btn" onclick="App.ui.toggleDrawer(false); App.ui.openModal('edit-modal');">⚙️ Editar Gastos / PIX</button>
+    </nav>
   </aside>
 
+  <!-- Estrutura Principal -->
   <div class="container">
-    
-    <!-- Barra Superior Fixa -->
-    <div class="top-bar">
+    <header class="top-bar">
       <div class="top-bar-left">
-        <button class="menu-btn" onclick="toggleDrawer(true)" title="Menu de opções">☰</button>
+        <button class="btn-icon" onclick="App.ui.toggleDrawer(true)" title="Menu de opções" aria-label="Abrir Menu">☰</button>
       </div>
-
-      <button class="action-btn-top" onclick="openEditModal()">
-        ⚙️ Gastos / PIX
-      </button>
-    </div>
+      <button class="btn-secondary" onclick="App.ui.openModal('edit-modal')">⚙️ Gastos / PIX</button>
+    </header>
 
     <header>
       <h1>🌾 Roça 2.0 (30/10 a 02/11)</h1>
-      <p class="sub">Marque conforme for pagando o PIX para cada responsável</p>
+      <p>Marque conforme for pagando o PIX para cada responsável</p>
     </header>
 
-    <!-- Caixa do Contador Decrescente -->
-    <div class="countdown-card">
+    <!-- Caixa do Contador -->
+    <section class="countdown-card" aria-label="Contagem Regressiva">
       <div class="countdown-title">⏳ Contagem Regressiva para a Partida</div>
       <div class="countdown-grid" id="countdown-grid">
         <div class="countdown-unit">
@@ -689,12 +836,13 @@
       <div id="countdown-finished" style="display: none; color: #86efac; font-weight: 700; font-size: 1rem;">
         🍻 Chegou a hora da Roça 2.0! Partiu!
       </div>
-    </div>
+    </section>
 
-    <div id="expenses-container"></div>
+    <!-- Lista de Despesas -->
+    <main id="expenses-container" aria-label="Lista de Despesas"></main>
 
     <!-- Resumo dos Participantes -->
-    <div class="summary-card">
+    <section class="summary-card" aria-label="Resumo Consolidado">
       <div class="summary-header">
         <span>📊 Resumo por Participante</span>
       </div>
@@ -702,49 +850,47 @@
       <p style="font-size: 0.78rem; color: #a5b4fc; text-align: center; margin-top: 14px;">
         * Itens sem valor preenchido não entram na soma até que o valor seja definido.
       </p>
-    </div>
+    </section>
 
     <!-- Rodapé -->
     <footer class="footer-section">
-      <button class="whatsapp-footer-btn" onclick="copyWhatsAppReport()">
+      <button class="btn-action-report" onclick="App.reports.copyWhatsAppReport()">
         📋 Gerar Relatório de Atualizações
       </button>
     </footer>
-
   </div>
 
-  <!-- Modal 1: Fotos da Roça -->
-  <div id="photos-modal" class="modal-overlay">
+  <!-- MODAIS -->
+  <div id="photos-modal" class="modal-overlay" role="dialog" aria-modal="true">
     <div class="modal-content">
       <div class="modal-header">
-        <h3 style="color: #38bdf8;">📸 Fotos da Roça</h3>
-        <button class="close-modal-btn" onclick="closePhotosModal()">&times;</button>
+        <h3 style="color: var(--color-accent-sky);">📸 Fotos da Roça</h3>
+        <button class="close-modal-btn" onclick="App.ui.closeModal('photos-modal')">&times;</button>
       </div>
       <div class="modal-body">
         <div class="photo-upload-box">
-          <p style="font-size: 0.88rem; color: var(--muted);">Tire uma foto na hora ou escolha da galeria para salvar no mural do grupo:</p>
+          <p style="font-size: 0.88rem; color: var(--color-text-muted);">Tire uma foto na hora ou escolha da galeria:</p>
           <div style="display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; width: 100%;">
-            <select id="photo-sender-select" style="background:#1e293b; border:1px solid var(--border); color:#f8fafc; padding:8px; border-radius:6px; font-size:0.85rem;">
+            <select id="photo-sender-select">
               <option value="">Quem tirou a foto?</option>
             </select>
-            <input type="file" id="photo-file-input" accept="image/*" style="display: none;" onchange="handlePhotoUpload(event)">
-            <button class="btn-primary" onclick="triggerPhotoPick()">➕ Adicionar Foto</button>
+            <input type="file" id="photo-file-input" accept="image/*" style="display: none;" onchange="App.photos.handleUpload(event)">
+            <button class="btn-primary" onclick="App.photos.triggerFileInput()">➕ Adicionar Foto</button>
           </div>
         </div>
         <div class="photo-grid" id="photos-container"></div>
       </div>
       <div class="modal-footer">
-        <button class="btn-primary" onclick="closePhotosModal()">Fechar</button>
+        <button class="btn-primary" onclick="App.ui.closeModal('photos-modal')">Fechar</button>
       </div>
     </div>
   </div>
 
-  <!-- Modal 2: Playlist Spotify -->
-  <div id="spotify-modal" class="modal-overlay">
+  <div id="spotify-modal" class="modal-overlay" role="dialog" aria-modal="true">
     <div class="modal-content">
       <div class="modal-header">
-        <h3 style="color: #22c55e;">🎵 Playlist Oficial da Roça</h3>
-        <button class="close-modal-btn" onclick="closeSpotifyModal()">&times;</button>
+        <h3 style="color: var(--color-accent-emerald);">🎵 Playlist Oficial da Roça</h3>
+        <button class="close-modal-btn" onclick="App.ui.closeModal('spotify-modal')">&times;</button>
       </div>
       <div class="modal-body">
         <iframe 
@@ -757,911 +903,840 @@
         </iframe>
       </div>
       <div class="modal-footer">
-        <button class="btn-primary" onclick="closeSpotifyModal()">Fechar</button>
+        <button class="btn-primary" onclick="App.ui.closeModal('spotify-modal')">Fechar</button>
       </div>
     </div>
   </div>
 
-  <!-- Modal 3: Quem Leva o Quê? -->
-  <div id="luggage-modal" class="modal-overlay">
+  <div id="luggage-modal" class="modal-overlay" role="dialog" aria-modal="true">
     <div class="modal-content">
       <div class="modal-header">
-        <h3 style="color: #f59e0b;">🎒 Quem Leva o Quê? (Bagagem Comum)</h3>
-        <button class="close-modal-btn" onclick="closeLuggageModal()">&times;</button>
+        <h3 style="color: var(--color-accent-amber);">🎒 Quem Leva o Quê?</h3>
+        <button class="close-modal-btn" onclick="App.ui.closeModal('luggage-modal')">&times;</button>
       </div>
       <div class="modal-body">
-        <p style="font-size:0.82rem; color:var(--muted); margin-bottom:8px;">Itens extras importantes para a viagem:</p>
+        <p style="font-size:0.82rem; color:var(--color-text-muted); margin-bottom:8px;">Itens extras para a viagem:</p>
         <div id="luggage-container" style="display:flex; flex-direction:column; gap:8px;"></div>
-        
-        <!-- Formulário para adicionar mais itens à bagagem -->
-        <div class="add-luggage-box">
-          <input type="text" id="new-luggage-input" placeholder="Ex: Bola de vôlei, Lanterna..." onkeydown="if(event.key==='Enter') addNewLuggageItem()">
-          <button class="btn-primary" onclick="addNewLuggageItem()">➕ Adicionar</button>
+        <div class="add-input-box">
+          <input type="text" id="new-luggage-input" placeholder="Ex: Bola de vôlei, Lanterna..." onkeydown="if(event.key==='Enter') App.luggage.addItem()">
+          <button class="btn-primary" onclick="App.luggage.addItem()">➕ Adicionar</button>
         </div>
       </div>
       <div class="modal-footer">
-        <button class="btn-primary" onclick="closeLuggageModal()">Salvar e Fechar</button>
+        <button class="btn-primary" onclick="App.ui.closeModal('luggage-modal')">Salvar e Fechar</button>
       </div>
     </div>
   </div>
 
-  <!-- Modal 4: Edição de Gastos e Chaves PIX -->
-  <div id="edit-modal" class="modal-overlay">
+  <div id="edit-modal" class="modal-overlay" role="dialog" aria-modal="true">
     <div class="modal-content">
       <div class="modal-header">
         <h3>Editar Gastos e Chaves PIX</h3>
-        <button class="close-modal-btn" onclick="closeEditModal()">&times;</button>
+        <button class="close-modal-btn" onclick="App.ui.closeModal('edit-modal')">&times;</button>
       </div>
       <div class="modal-body" id="modal-body"></div>
       <div class="modal-footer">
-        <button class="btn-primary" onclick="saveExpensesFromModal()">Salvar Alterações</button>
+        <button class="btn-primary" onclick="App.expenses.saveFromModal()">Salvar Alterações</button>
       </div>
     </div>
   </div>
 
-  <!-- Modal 5: Lista de Compras -->
-  <div id="grocery-modal" class="modal-overlay">
+  <div id="grocery-modal" class="modal-overlay" role="dialog" aria-modal="true">
     <div class="modal-content">
       <div class="modal-header">
         <div>
-          <h3 style="color: #38bdf8;">🛒 Lista de Compras (Comidas)</h3>
-          <span id="grocery-counter" style="font-size: 0.78rem; color: var(--muted);"></span>
+          <h3 style="color: var(--color-accent-sky);">🛒 Lista de Compras</h3>
+          <span id="grocery-counter" style="font-size: 0.78rem; color: var(--color-text-muted);"></span>
         </div>
-        <button class="close-modal-btn" onclick="closeGroceryModal()">&times;</button>
+        <button class="close-modal-btn" onclick="App.ui.closeModal('grocery-modal')">&times;</button>
       </div>
       <div class="modal-body">
         <div class="grocery-grid" id="grocery-list-container"></div>
       </div>
       <div class="modal-footer">
-        <button class="btn-primary" onclick="closeGroceryModal()">Fechar Lista</button>
+        <button class="btn-primary" onclick="App.ui.closeModal('grocery-modal')">Fechar Lista</button>
       </div>
     </div>
   </div>
 
+  <!-- ==========================================================================
+       7. CAMADA JAVASCRIPT ARQUITETURADA
+       ========================================================================== -->
   <script>
-    const FIREBASE_ENDPOINT = "https://roca2-37116-default-rtdb.firebaseio.com/dados_compartilhados.json";
+    /**
+     * Módulo Central da Aplicação (Namespace Pattern)
+     */
+    const App = (() => {
+      'use strict';
 
-    const PARTICIPANTS = [
-      "Alexandre", "Emiliano", "Guilherme", "Gustavo",
-      "Jeferson", "Lucas", "Matheus", "Paulinho", "Thiago"
-    ];
+      /* --- CONFIGURAÇÕES & CONSTANTES --- */
+      const CONFIG = {
+        FIREBASE_ENDPOINT: "https://roca2-37116-default-rtdb.firebaseio.com/dados_compartilhados.json",
+        SYNC_INTERVAL_MS: 5000,
+        COUNTDOWN_TARGET: { month: 9, day: 30, hour: 8 } // Outubro é índice 9
+      };
 
-    const DEFAULT_EXPENSES = [
-      {
-        id: "carros",
-        name: "🚗 Carros",
-        total: 1373.34,
-        responsible: "Paulinho",
-        pix: "61992727661",
-        pixDisplay: "61 99272-7661",
-        excluded: ["Jeferson"]
-      },
-      {
-        id: "chopp",
-        name: "🍺 Chopp",
-        total: 1090.00,
-        responsible: "Paulinho",
-        pix: "61992727661",
-        pixDisplay: "61 99272-7661",
-        excluded: []
-      },
-      {
-        id: "combustivel",
-        name: "⛽ Combustível",
-        total: null,
-        responsible: "Jeferson",
-        pix: "61982355635",
-        pixDisplay: "61 98235-5635",
-        excluded: []
-      },
-      {
-        id: "comidas",
-        name: "🍽️ Comidas",
-        total: null,
-        responsible: "Jeferson",
-        pix: "61982355635",
-        pixDisplay: "61 98235-5635",
-        excluded: []
-      },
-      {
-        id: "costela",
-        name: "🥩 Costela",
-        total: null,
-        responsible: "Alexandre",
-        pix: "",
-        pixDisplay: "A definir",
-        excluded: []
-      },
-      {
-        id: "narguile",
-        name: "💨 Narguilé",
-        total: null,
-        responsible: "Steffano Santos",
-        pix: "",
-        pixDisplay: "A definir",
-        excluded: ["Jeferson"]
-      }
-    ];
+      const PARTICIPANTS = Object.freeze([
+        "Alexandre", "Emiliano", "Guilherme", "Gustavo",
+        "Jeferson", "Lucas", "Matheus", "Paulinho", "Thiago"
+      ]);
 
-    const GROCERY_ITEMS = [
-      { id: "alho", name: "Alho", qty: "1 pote" },
-      { id: "arroz", name: "Arroz", qty: "1 pct" },
-      { id: "batata", name: "Batata", qty: "" },
-      { id: "cafe", name: "Café", qty: "1 pct" },
-      { id: "calabresa", name: "Calabresa", qty: "3 uni" },
-      { id: "cebola", name: "Cebola", qty: "" },
-      { id: "cenoura", name: "Cenoura", qty: "" },
-      { id: "desinfetante", name: "Desinfetante", qty: "1 l" },
-      { id: "descartaveis", name: "Descartáveis", qty: "" },
-      { id: "feijao_carioca", name: "Feijão Carioca", qty: "1 pct" },
-      { id: "feijao_corda", name: "Feijão de Corda", qty: "1 pct" },
-      { id: "leite", name: "Leite", qty: "5" },
-      { id: "macarrao", name: "Macarrão", qty: "1 kg" },
-      { id: "molho_tomate", name: "Molho de Tomate", qty: "3" },
-      { id: "mussarela", name: "Mussarela", qty: "500 gm" },
-      { id: "oleo", name: "Óleo", qty: "1 l" },
-      { id: "ovo", name: "Ovo", qty: "30 uni" },
-      { id: "pao_forma", name: "Pão de Forma", qty: "3 pct" },
-      { id: "pao_queijo", name: "Pão de Queijo", qty: "200 uni" },
-      { id: "papel_higienico", name: "Papel Higiênico", qty: "1 pct" },
-      { id: "pimentao", name: "Pimentão", qty: "" },
-      { id: "presunto", name: "Presunto", qty: "gm" },
-      { id: "qboa", name: "Qboa", qty: "1 l" },
-      { id: "saco_lixo", name: "Saco de Lixo Grande", qty: "1 pct" },
-      { id: "sal_grosso", name: "Sal Grosso", qty: "1 pote" },
-      { id: "tomate", name: "Tomate", qty: "" }
-    ].sort((a, b) => a.name.localeCompare(b.name, 'pt-BR'));
+      const DEFAULT_EXPENSES = [
+        { id: "carros", name: "🚗 Carros", total: 1373.34, responsible: "Paulinho", pix: "61992727661", pixDisplay: "61 99272-7661", excluded: ["Jeferson"] },
+        { id: "chopp", name: "🍺 Chopp", total: 1090.00, responsible: "Paulinho", pix: "61992727661", pixDisplay: "61 99272-7661", excluded: [] },
+        { id: "combustivel", name: "⛽ Combustível", total: null, responsible: "Jeferson", pix: "61982355635", pixDisplay: "61 98235-5635", excluded: [] },
+        { id: "comidas", name: "🍽️ Comidas", total: null, responsible: "Jeferson", pix: "61982355635", pixDisplay: "61 98235-5635", excluded: [] },
+        { id: "costela", name: "🥩 Costela", total: null, responsible: "Alexandre", pix: "", pixDisplay: "A definir", excluded: [] },
+        { id: "narguile", name: "💨 Narguilé", total: null, responsible: "Steffano Santos", pix: "", pixDisplay: "A definir", excluded: ["Jeferson"] }
+      ];
 
-    const DEFAULT_LUGGAGE = [
-      { id: "caixa_som", name: "🔊 Caixa de Som Bluetooth", assigned: "" },
-      { id: "baralho", name: "🃏 Baralho / Dominó / Truco", assigned: "" },
-      { id: "grelha", name: "🥩 Grelha e Espetos extras", assigned: "" },
-      { id: "extensao", name: "🔌 Extensão de Tomada e Tês", assigned: "" },
-      { id: "repelente", name: "🦟 Repelente e Protetor Solar", assigned: "" },
-      { id: "gelo", name: "🧊 Cooler / Caixa Térmica", assigned: "" }
-    ];
+      const GROCERY_ITEMS = [
+        { id: "alho", name: "Alho", qty: "1 pote" },
+        { id: "arroz", name: "Arroz", qty: "1 pct" },
+        { id: "batata", name: "Batata", qty: "" },
+        { id: "cafe", name: "Café", qty: "1 pct" },
+        { id: "calabresa", name: "Calabresa", qty: "3 uni" },
+        { id: "cebola", name: "Cebola", qty: "" },
+        { id: "cenoura", name: "Cenoura", qty: "" },
+        { id: "desinfetante", name: "Desinfetante", qty: "1 l" },
+        { id: "descartaveis", name: "Descartáveis", qty: "" },
+        { id: "feijao_carioca", name: "Feijão Carioca", qty: "1 pct" },
+        { id: "feijao_corda", name: "Feijão de Corda", qty: "1 pct" },
+        { id: "leite", name: "Leite", qty: "5" },
+        { id: "macarrao", name: "Macarrão", qty: "1 kg" },
+        { id: "molho_tomate", name: "Molho de Tomate", qty: "3" },
+        { id: "mussarela", name: "Mussarela", qty: "500 gm" },
+        { id: "oleo", name: "Óleo", qty: "1 l" },
+        { id: "ovo", name: "Ovo", qty: "30 uni" },
+        { id: "pao_forma", name: "Pão de Forma", qty: "3 pct" },
+        { id: "pao_queijo", name: "Pão de Queijo", qty: "200 uni" },
+        { id: "papel_higienico", name: "Papel Higiênico", qty: "1 pct" },
+        { id: "pimentao", name: "Pimentão", qty: "" },
+        { id: "presunto", name: "Presunto", qty: "gm" },
+        { id: "qboa", name: "Qboa", qty: "1 l" },
+        { id: "saco_lixo", name: "Saco de Lixo Grande", qty: "1 pct" },
+        { id: "sal_grosso", name: "Sal Grosso", qty: "1 pote" },
+        { id: "tomate", name: "Tomate", qty: "" }
+      ].sort((a, b) => a.name.localeCompare(b.name, 'pt-BR'));
 
-    let EXPENSES = JSON.parse(JSON.stringify(DEFAULT_EXPENSES));
-    let PAYMENTS = {};
-    let GROCERY_STATUS = {};
-    let LUGGAGE = JSON.parse(JSON.stringify(DEFAULT_LUGGAGE));
-    let PHOTOS = [];
-    let isSaving = false;
-    let hasLoadedCloudOnce = false;
+      const DEFAULT_LUGGAGE = [
+        { id: "caixa_som", name: "🔊 Caixa de Som Bluetooth", assigned: "" },
+        { id: "baralho", name: "🃏 Baralho / Dominó / Truco", assigned: "" },
+        { id: "grelha", name: "🥩 Grelha e Espetos extras", assigned: "" },
+        { id: "extensao", name: "🔌 Extensão de Tomada e Tês", assigned: "" },
+        { id: "repelente", name: "🦟 Repelente e Protetor Solar", assigned: "" },
+        { id: "gelo", name: "🧊 Cooler / Caixa Térmica", assigned: "" }
+      ];
 
-    // Menu Drawer
-    function toggleDrawer(open) {
-      const drawer = document.getElementById("drawer-menu");
-      const overlay = document.getElementById("drawer-overlay");
-      if (open) {
-        drawer.classList.add("active");
-        overlay.classList.add("active");
-      } else {
-        drawer.classList.remove("active");
-        overlay.classList.remove("active");
-      }
-    }
+      /* --- ESTADO REATIVO --- */
+      const state = {
+        expenses: JSON.parse(JSON.stringify(DEFAULT_EXPENSES)),
+        payments: {},
+        grocery: {},
+        luggage: JSON.parse(JSON.stringify(DEFAULT_LUGGAGE)),
+        photos: [],
+        isSaving: false,
+        hasLoadedCloudOnce: false
+      };
 
-    // Contador Regressivo
-    function updateCountdown() {
-      const now = new Date();
-      let currentYear = now.getFullYear();
-      let targetDate = new Date(currentYear, 9, 30, 8, 0, 0);
-
-      if (now.getTime() > targetDate.getTime() + (4 * 24 * 60 * 60 * 1000)) {
-        targetDate = new Date(currentYear + 1, 9, 30, 8, 0, 0);
-      }
-
-      const diff = targetDate.getTime() - now.getTime();
-      const grid = document.getElementById("countdown-grid");
-      const finished = document.getElementById("countdown-finished");
-
-      if (diff <= 0 && diff > -(4 * 24 * 60 * 60 * 1000)) {
-        if (grid) grid.style.display = "none";
-        if (finished) finished.style.display = "block";
-        return;
-      }
-
-      if (grid) grid.style.display = "flex";
-      if (finished) finished.style.display = "none";
-
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-      const minutes = Math.floor((diff / 1000 / 60) % 60);
-      const seconds = Math.floor((diff / 1000) % 60);
-
-      const dEl = document.getElementById("cd-days");
-      const hEl = document.getElementById("cd-hours");
-      const mEl = document.getElementById("cd-minutes");
-      const sEl = document.getElementById("cd-seconds");
-
-      if (dEl) dEl.textContent = String(days).padStart(2, '0');
-      if (hEl) hEl.textContent = String(hours).padStart(2, '0');
-      if (mEl) mEl.textContent = String(minutes).padStart(2, '0');
-      if (sEl) sEl.textContent = String(seconds).padStart(2, '0');
-    }
-
-    function cleanName(name) {
-      return name.replace(/[^\w\sÀ-ÿ]/gi, '').trim();
-    }
-
-    function loadLocal() {
-      try {
-        const savedExp = localStorage.getItem("roca_expenses_data");
-        if (savedExp) {
-          const parsed = JSON.parse(savedExp);
-          if (Array.isArray(parsed) && parsed.length > 0) EXPENSES = parsed;
-        }
-      } catch(e) {}
-
-      try {
-        const savedPay = localStorage.getItem("roca_payments_data");
-        if (savedPay) PAYMENTS = JSON.parse(savedPay) || {};
-      } catch(e) {}
-
-      try {
-        const savedGroc = localStorage.getItem("roca_grocery_data");
-        if (savedGroc) GROCERY_STATUS = JSON.parse(savedGroc) || {};
-      } catch(e) {}
-
-      try {
-        const savedLug = localStorage.getItem("roca_luggage_data");
-        if (savedLug) LUGGAGE = JSON.parse(savedLug) || DEFAULT_LUGGAGE;
-      } catch(e) {}
-
-      try {
-        const savedPhotos = localStorage.getItem("roca_photos_data");
-        if (savedPhotos) PHOTOS = JSON.parse(savedPhotos) || [];
-      } catch(e) {}
-    }
-
-    function saveLocal() {
-      try {
-        localStorage.setItem("roca_expenses_data", JSON.stringify(EXPENSES));
-        localStorage.setItem("roca_payments_data", JSON.stringify(PAYMENTS));
-        localStorage.setItem("roca_grocery_data", JSON.stringify(GROCERY_STATUS));
-        localStorage.setItem("roca_luggage_data", JSON.stringify(LUGGAGE));
-        localStorage.setItem("roca_photos_data", JSON.stringify(PHOTOS));
-      } catch(e) {}
-    }
-
-    async function syncToCloud() {
-      isSaving = true;
-      saveLocal();
-      if (!navigator.onLine) {
-        isSaving = false;
-        return;
-      }
-
-      try {
-        const payload = JSON.stringify({
-          expenses: EXPENSES,
-          payments: PAYMENTS,
-          grocery: GROCERY_STATUS,
-          luggage: LUGGAGE,
-          photos: PHOTOS,
-          lastUpdated: Date.now()
-        });
-
-        const res = await fetch(FIREBASE_ENDPOINT, {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: payload
-        });
-
-        if (res.ok) {
-          hasLoadedCloudOnce = true;
-        }
-      } catch (err) {
-      } finally {
-        setTimeout(() => { isSaving = false; }, 400);
-      }
-    }
-
-    async function syncFromCloud() {
-      if (isSaving || !navigator.onLine) return;
-
-      try {
-        const res = await fetch(FIREBASE_ENDPOINT + "?t=" + Date.now());
-        if (res.ok) {
-          const data = await res.json();
-          if (data && Array.isArray(data.expenses) && data.expenses.length > 0) {
-            EXPENSES = data.expenses;
-            PAYMENTS = data.payments || {};
-            GROCERY_STATUS = data.grocery || {};
-            if (data.luggage) LUGGAGE = data.luggage;
-            if (data.photos) PHOTOS = data.photos;
-            saveLocal();
-            render();
-            renderGroceryList();
-            renderLuggage();
-            renderPhotos();
-            hasLoadedCloudOnce = true;
-          } else if (data === null && !hasLoadedCloudOnce) {
-            syncToCloud();
+      /* --- UTILITÁRIOS --- */
+      const utils = {
+        formatBRL: (val) => (val || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }),
+        cleanName: (name) => name.replace(/[^\w\sÀ-ÿ]/gi, '').trim(),
+        copyToClipboard: async (text, successMsg) => {
+          try {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              await navigator.clipboard.writeText(text);
+              alert(successMsg);
+            } else {
+              throw new Error("Clipboard API indisponível");
+            }
+          } catch {
+            const textarea = document.createElement("textarea");
+            textarea.value = text;
+            textarea.style.position = "fixed";
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+            alert(successMsg);
           }
         }
-      } catch (err) {}
-    }
+      };
 
-    window.addEventListener('online', () => syncFromCloud());
+      /* --- REPOSITÓRIO & SINCRONIZAÇÃO (STORAGE & REST) --- */
+      const repository = {
+        loadLocal: () => {
+          try {
+            const exp = localStorage.getItem("roca_expenses_data");
+            const pay = localStorage.getItem("roca_payments_data");
+            const groc = localStorage.getItem("roca_grocery_data");
+            const lug = localStorage.getItem("roca_luggage_data");
+            const pic = localStorage.getItem("roca_photos_data");
 
-    function formatBRL(val) {
-      return (val || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-    }
+            if (exp) state.expenses = JSON.parse(exp);
+            if (pay) state.payments = JSON.parse(pay);
+            if (groc) state.grocery = JSON.parse(groc);
+            if (lug) state.luggage = JSON.parse(lug);
+            if (pic) state.photos = JSON.parse(pic);
+          } catch (e) {
+            console.error("Falha ao carregar localStorage:", e);
+          }
+        },
 
-    function copyPix(key) {
-      if (!key) return;
-      navigator.clipboard.writeText(key);
-      alert("Chave PIX copiada: " + key);
-    }
+        saveLocal: () => {
+          try {
+            localStorage.setItem("roca_expenses_data", JSON.stringify(state.expenses));
+            localStorage.setItem("roca_payments_data", JSON.stringify(state.payments));
+            localStorage.setItem("roca_grocery_data", JSON.stringify(state.grocery));
+            localStorage.setItem("roca_luggage_data", JSON.stringify(state.luggage));
+            localStorage.setItem("roca_photos_data", JSON.stringify(state.photos));
+          } catch (e) {
+            console.error("Falha ao salvar localStorage:", e);
+          }
+        },
 
-    function togglePay(expId, person) {
-      const key = `${expId}_${person}`;
-      PAYMENTS[key] = !PAYMENTS[key];
-      render();
-      syncToCloud();
-    }
-
-    // Modal: Fotos da Roça
-    function openPhotosModal() {
-      const select = document.getElementById("photo-sender-select");
-      if (select && select.options.length <= 1) {
-        PARTICIPANTS.forEach(p => {
-          const opt = document.createElement("option");
-          opt.value = p;
-          opt.textContent = p;
-          select.appendChild(opt);
-        });
-      }
-      renderPhotos();
-      document.getElementById("photos-modal").classList.add("active");
-    }
-    function closePhotosModal() {
-      document.getElementById("photos-modal").classList.remove("active");
-    }
-    function triggerPhotoPick() {
-      const select = document.getElementById("photo-sender-select");
-      if (!select.value) {
-        alert("Por favor, selecione quem tirou a foto antes de carregar!");
-        return;
-      }
-      document.getElementById("photo-file-input").click();
-    }
-    function handlePhotoUpload(event) {
-      const file = event.target.files[0];
-      if (!file) return;
-
-      const author = document.getElementById("photo-sender-select").value || "Alguém";
-      const reader = new FileReader();
-
-      reader.onload = function(e) {
-        const img = new Image();
-        img.src = e.target.result;
-        img.onload = function() {
-          const canvas = document.createElement("canvas");
-          const MAX_WIDTH = 800;
-          let width = img.width;
-          let height = img.height;
-
-          if (width > MAX_WIDTH) {
-            height *= MAX_WIDTH / width;
-            width = MAX_WIDTH;
+        syncToCloud: async () => {
+          state.isSaving = true;
+          repository.saveLocal();
+          if (!navigator.onLine) {
+            state.isSaving = false;
+            return;
           }
 
-          canvas.width = width;
-          canvas.height = height;
-          const ctx = canvas.getContext("2d");
-          ctx.drawImage(img, 0, 0, width, height);
+          try {
+            const payload = JSON.stringify({
+              expenses: state.expenses,
+              payments: state.payments,
+              grocery: state.grocery,
+              luggage: state.luggage,
+              photos: state.photos,
+              lastUpdated: Date.now()
+            });
 
-          const compressedData = canvas.toDataURL("image/jpeg", 0.65);
-          PHOTOS.unshift({
-            id: "photo_" + Date.now(),
-            url: compressedData,
-            author: author,
-            date: new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })
+            const res = await fetch(CONFIG.FIREBASE_ENDPOINT, {
+              method: "PUT",
+              headers: { "Content-Type": "application/json" },
+              body: payload
+            });
+
+            if (res.ok) state.hasLoadedCloudOnce = true;
+          } catch (err) {
+            console.warn("Erro ao sincronizar com nuvem:", err);
+          } finally {
+            setTimeout(() => { state.isSaving = false; }, 400);
+          }
+        },
+
+        syncFromCloud: async () => {
+          if (state.isSaving || !navigator.onLine) return;
+
+          try {
+            const res = await fetch(`${CONFIG.FIREBASE_ENDPOINT}?t=${Date.now()}`);
+            if (res.ok) {
+              const data = await res.json();
+              if (data && Array.isArray(data.expenses) && data.expenses.length > 0) {
+                state.expenses = data.expenses;
+                state.payments = data.payments || {};
+                state.grocery = data.grocery || {};
+                if (data.luggage) state.luggage = data.luggage;
+                if (data.photos) state.photos = data.photos;
+
+                repository.saveLocal();
+                ui.renderAll();
+                state.hasLoadedCloudOnce = true;
+              } else if (data === null && !state.hasLoadedCloudOnce) {
+                repository.syncToCloud();
+              }
+            }
+          } catch (err) {
+            console.warn("Erro ao buscar dados remotos:", err);
+          }
+        }
+      };
+
+      /* --- SERVIÇOS ESPECÍFICOS --- */
+      const expensesService = {
+        togglePayment: (expId, person) => {
+          const key = `${expId}_${person}`;
+          state.payments[key] = !state.payments[key];
+          ui.renderExpenses();
+          repository.syncToCloud();
+        },
+
+        saveFromModal: () => {
+          state.expenses.forEach(exp => {
+            const totalInput = document.getElementById(`modal_total_${exp.id}`);
+            const respInput = document.getElementById(`modal_resp_${exp.id}`);
+            const pixInput = document.getElementById(`modal_pix_${exp.id}`);
+            const dispInput = document.getElementById(`modal_disp_${exp.id}`);
+
+            if (totalInput) {
+              const val = totalInput.value.trim();
+              exp.total = val !== "" && !isNaN(val) ? parseFloat(val) : null;
+            }
+            if (respInput) exp.responsible = respInput.value.trim() || "A definir";
+            if (pixInput) exp.pix = pixInput.value.trim();
+            if (dispInput) exp.pixDisplay = dispInput.value.trim() || exp.pix || "A definir";
           });
 
-          renderPhotos();
-          syncToCloud();
-          event.target.value = "";
-        };
-      };
-      reader.readAsDataURL(file);
-    }
-    function deletePhoto(photoId) {
-      if (confirm("Deseja realmente apagar esta foto do mural?")) {
-        PHOTOS = PHOTOS.filter(p => p.id !== photoId);
-        renderPhotos();
-        syncToCloud();
-      }
-    }
-    function renderPhotos() {
-      const container = document.getElementById("photos-container");
-      if (!container) return;
-      container.innerHTML = "";
-
-      if (PHOTOS.length === 0) {
-        container.innerHTML = `<p style="grid-column: 1/-1; text-align:center; color:var(--muted); font-size:0.85rem; padding: 20px;">Nenhuma foto enviada ainda. Seja o primeiro a tirar uma foto!</p>`;
-        return;
-      }
-
-      PHOTOS.forEach(photo => {
-        const item = document.createElement("div");
-        item.className = "photo-item";
-        item.innerHTML = `
-          <img src="${photo.url}" alt="Foto" onclick="window.open('${photo.url}')" style="cursor:pointer;" title="Clique para ampliar">
-          <button class="photo-delete-btn" onclick="event.stopPropagation(); deletePhoto('${photo.id}')" title="Excluir foto">🗑️</button>
-          <div class="photo-uploader-tag">📸 ${photo.author} (${photo.date || ''})</div>
-        `;
-        container.appendChild(item);
-      });
-    }
-
-    // Modal: Spotify
-    function openSpotifyModal() { document.getElementById("spotify-modal").classList.add("active"); }
-    function closeSpotifyModal() { document.getElementById("spotify-modal").classList.remove("active"); }
-
-    // Modal: Quem Leva o Quê?
-    function openLuggageModal() {
-      renderLuggage();
-      document.getElementById("luggage-modal").classList.add("active");
-    }
-    function closeLuggageModal() { document.getElementById("luggage-modal").classList.remove("active"); }
-    function renderLuggage() {
-      const container = document.getElementById("luggage-container");
-      if (!container) return;
-      container.innerHTML = "";
-
-      LUGGAGE.forEach(item => {
-        const row = document.createElement("div");
-        row.style.cssText = "display:flex; justify-content:space-between; align-items:center; background:#0f172a; padding:10px 12px; border-radius:8px; border:1px solid var(--border);";
-        
-        let opts = `<option value="">Ninguém ainda</option>`;
-        PARTICIPANTS.forEach(p => {
-          opts += `<option value="${p}" ${item.assigned === p ? 'selected' : ''}>${p}</option>`;
-        });
-
-        row.innerHTML = `
-          <span style="font-weight:500; font-size:0.88rem;">${item.name}</span>
-          <select style="background:#1e293b; border:1px solid var(--border); color:#38bdf8; padding:5px 8px; border-radius:6px; font-size:0.8rem;" onchange="updateLuggageAssign('${item.id}', this.value)">
-            ${opts}
-          </select>
-        `;
-        container.appendChild(row);
-      });
-    }
-    function updateLuggageAssign(id, person) {
-      const found = LUGGAGE.find(i => i.id === id);
-      if (found) {
-        found.assigned = person;
-        saveLocal();
-        syncToCloud();
-      }
-    }
-    function addNewLuggageItem() {
-      const input = document.getElementById("new-luggage-input");
-      const name = input.value.trim();
-      if (!name) return;
-
-      const newItem = {
-        id: "custom_" + Date.now(),
-        name: name.startsWith("🎒") ? name : "🎒 " + name,
-        assigned: ""
+          ui.closeModal('edit-modal');
+          ui.renderExpenses();
+          repository.syncToCloud();
+        }
       };
 
-      LUGGAGE.push(newItem);
-      input.value = "";
-      renderLuggage();
-      saveLocal();
-      syncToCloud();
-    }
+      const photosService = {
+        triggerFileInput: () => {
+          const select = document.getElementById("photo-sender-select");
+          if (!select.value) {
+            alert("Por favor, selecione quem tirou a foto antes de carregar!");
+            return;
+          }
+          document.getElementById("photo-file-input").click();
+        },
 
-    // Modal: Compras
-    function toggleGroceryItem(itemId) {
-      GROCERY_STATUS[itemId] = !GROCERY_STATUS[itemId];
-      renderGroceryList();
-      render();
-      syncToCloud();
-    }
-    function openGroceryModal() {
-      renderGroceryList();
-      document.getElementById("grocery-modal").classList.add("active");
-    }
-    function closeGroceryModal() { document.getElementById("grocery-modal").classList.remove("active"); }
-    function renderGroceryList() {
-      const container = document.getElementById("grocery-list-container");
-      if (!container) return;
-      container.innerHTML = "";
+        handleUpload: (event) => {
+          const file = event.target.files[0];
+          if (!file) return;
 
-      let boughtCount = 0;
-      GROCERY_ITEMS.forEach(item => {
-        const isBought = !!GROCERY_STATUS[item.id];
-        if (isBought) boughtCount++;
+          const author = document.getElementById("photo-sender-select").value || "Alguém";
+          const reader = new FileReader();
 
-        const row = document.createElement("div");
-        row.className = `grocery-item ${isBought ? 'bought' : ''}`;
-        row.onclick = () => toggleGroceryItem(item.id);
+          reader.onload = (e) => {
+            const img = new Image();
+            img.src = e.target.result;
+            img.onload = () => {
+              const canvas = document.createElement("canvas");
+              const MAX_WIDTH = 800;
+              let { width, height } = img;
 
-        row.innerHTML = `
-          <div class="grocery-left">
-            <input type="checkbox" ${isBought ? 'checked' : ''} style="cursor: pointer;" onclick="event.stopPropagation(); toggleGroceryItem('${item.id}')">
-            <span class="grocery-text" style="font-weight: 500;">${item.name}</span>
-          </div>
-          ${item.qty ? `<span class="grocery-qty">${item.qty}</span>` : ''}
-        `;
-        container.appendChild(row);
-      });
+              if (width > MAX_WIDTH) {
+                height *= MAX_WIDTH / width;
+                width = MAX_WIDTH;
+              }
 
-      const counter = document.getElementById("grocery-counter");
-      if (counter) counter.textContent = `${boughtCount} de ${GROCERY_ITEMS.length} itens comprados`;
-    }
+              canvas.width = width;
+              canvas.height = height;
+              const ctx = canvas.getContext("2d");
+              ctx.drawImage(img, 0, 0, width, height);
 
-    function copyWhatsAppReport() {
-      let report = `🌾 *STATUS DE PAGAMENTOS - ROÇA 2.0* 🌾\n`;
-      report += `📅 *Período:* 30/10 a 02/11\n`;
-      report += `------------------------------------\n\n`;
+              const compressedData = canvas.toDataURL("image/jpeg", 0.65);
+              state.photos.unshift({
+                id: `photo_${Date.now()}`,
+                url: compressedData,
+                author,
+                date: new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })
+              });
 
-      report += `📋 *DESPESAS E ARRECADAÇÃO:*\n`;
-      
-      const balances = {};
-      const sortedParticipants = [...PARTICIPANTS].sort((a, b) => a.localeCompare(b, 'pt-BR'));
-      sortedParticipants.forEach(p => {
-        balances[p] = { totalOwed: 0, totalPaid: 0 };
-      });
+              ui.renderPhotos();
+              repository.syncToCloud();
+              event.target.value = "";
+            };
+          };
+          reader.readAsDataURL(file);
+        },
 
-      const sortedExpenses = [...EXPENSES].sort((a, b) => cleanName(a.name).localeCompare(cleanName(b.name), 'pt-BR'));
+        deletePhoto: (photoId) => {
+          if (confirm("Deseja realmente apagar esta foto do mural?")) {
+            state.photos = state.photos.filter(p => p.id !== photoId);
+            ui.renderPhotos();
+            repository.syncToCloud();
+          }
+        }
+      };
 
-      sortedExpenses.forEach(exp => {
-        const excluded = exp.excluded || [];
-        const activePeople = sortedParticipants.filter(p => !excluded.includes(p));
-        const activeCount = activePeople.length;
-        const hasDefined = typeof exp.total === 'number' && exp.total > 0 && activeCount > 0;
-        const perPersonVal = hasDefined ? exp.total / activeCount : 0;
+      const luggageService = {
+        updateAssignment: (id, person) => {
+          const found = state.luggage.find(i => i.id === id);
+          if (found) {
+            found.assigned = person;
+            repository.saveLocal();
+            repository.syncToCloud();
+          }
+        },
 
-        let paidCount = 0;
-        const pendingNames = [];
+        addItem: () => {
+          const input = document.getElementById("new-luggage-input");
+          const name = input.value.trim();
+          if (!name) return;
 
-        activePeople.forEach(person => {
-          const isPaid = !!PAYMENTS[`${exp.id}_${person}`];
-          if (isPaid) {
-            paidCount++;
-          } else {
-            pendingNames.push(person);
+          state.luggage.push({
+            id: `custom_${Date.now()}`,
+            name: name.startsWith("🎒") ? name : `🎒 ${name}`,
+            assigned: ""
+          });
+
+          input.value = "";
+          ui.renderLuggage();
+          repository.saveLocal();
+          repository.syncToCloud();
+        }
+      };
+
+      const groceryService = {
+        toggleItem: (itemId) => {
+          state.grocery[itemId] = !state.grocery[itemId];
+          ui.renderGrocery();
+          ui.renderExpenses();
+          repository.syncToCloud();
+        }
+      };
+
+      const reportsService = {
+        copyWhatsAppReport: () => {
+          let report = `🌾 *STATUS DE PAGAMENTOS - ROÇA 2.0* 🌾\n`;
+          report += `📅 *Período:* 30/10 a 02/11\n`;
+          report += `------------------------------------\n\n`;
+          report += `📋 *DESPESAS E ARRECADAÇÃO:*\n`;
+
+          const balances = {};
+          const sortedParticipants = [...PARTICIPANTS].sort((a, b) => a.localeCompare(b, 'pt-BR'));
+          sortedParticipants.forEach(p => { balances[p] = { totalOwed: 0, totalPaid: 0 }; });
+
+          const sortedExpenses = [...state.expenses].sort((a, b) => utils.cleanName(a.name).localeCompare(utils.cleanName(b.name), 'pt-BR'));
+
+          sortedExpenses.forEach(exp => {
+            const excluded = exp.excluded || [];
+            const activePeople = sortedParticipants.filter(p => !excluded.includes(p));
+            const activeCount = activePeople.length;
+            const hasDefined = typeof exp.total === 'number' && exp.total > 0 && activeCount > 0;
+            const perPersonVal = hasDefined ? exp.total / activeCount : 0;
+
+            let paidCount = 0;
+            const pendingNames = [];
+
+            activePeople.forEach(person => {
+              const isPaid = !!state.payments[`${exp.id}_${person}`];
+              if (isPaid) paidCount++;
+              else pendingNames.push(person);
+
+              if (perPersonVal > 0) {
+                balances[person].totalOwed += perPersonVal;
+                if (isPaid) balances[person].totalPaid += perPersonVal;
+              }
+            });
+
+            pendingNames.sort((a, b) => a.localeCompare(b, 'pt-BR'));
+
+            report += `• *${exp.name}*`;
+            if (hasDefined) {
+              report += ` (${utils.formatBRL(perPersonVal)}/pessoa)\n`;
+              report += `  Progresso: ${paidCount}/${activeCount} pagos\n`;
+              report += pendingNames.length > 0 ? `  ⏳ *Falta:* ${pendingNames.join(", ")}\n` : `  ✅ *100% arrecadado!*\n`;
+            } else {
+              report += ` (Valor a definir)\n`;
+            }
+            report += `\n`;
+          });
+
+          report += `------------------------------------\n`;
+          report += `👤 *RESUMO INDIVIDUAL (QUANTO FALTA):*\n`;
+
+          sortedParticipants.forEach(person => {
+            const { totalOwed, totalPaid } = balances[person];
+            const pending = Math.max(0, totalOwed - totalPaid);
+
+            if (totalOwed === 0) report += `• ${person}: Nenhum valor pendente\n`;
+            else if (pending < 0.01) report += `• *${person}*: ✅ Quitado! (Total: ${utils.formatBRL(totalPaid)})\n`;
+            else report += `• *${person}*: Deve ${utils.formatBRL(pending)} (Pago: ${utils.formatBRL(totalPaid)} / Total: ${utils.formatBRL(totalOwed)})\n`;
+          });
+
+          report += `\n------------------------------------\n`;
+          report += `🔑 *CHAVES PIX PARA PAGAMENTO:*\n`;
+
+          const addedPix = new Map();
+          sortedExpenses.forEach(exp => {
+            if (exp.pix && exp.pix.trim() && !addedPix.has(exp.responsible)) {
+              addedPix.set(exp.responsible, exp.pixDisplay || exp.pix);
+            }
+          });
+
+          Array.from(addedPix.entries())
+            .sort((a, b) => a[0].localeCompare(b[0], 'pt-BR'))
+            .forEach(([resp, key]) => { report += `• ${resp}: \`${key}\`\n`; });
+
+          utils.copyToClipboard(report, "📋 Relatório copiado para a área de transferência!");
+        }
+      };
+
+      /* --- CAMADA DE INTERFACE (VIEW / UI CONTROLLER) --- */
+      const ui = {
+        toggleDrawer: (open) => {
+          document.getElementById("drawer-menu").classList.toggle("active", open);
+          document.getElementById("drawer-overlay").classList.toggle("active", open);
+        },
+
+        openModal: (modalId) => {
+          if (modalId === 'photos-modal') ui.populatePhotoSenders();
+          if (modalId === 'edit-modal') ui.renderEditModal();
+          document.getElementById(modalId)?.classList.add("active");
+        },
+
+        closeModal: (modalId) => {
+          document.getElementById(modalId)?.classList.remove("active");
+        },
+
+        updateCountdown: () => {
+          const now = new Date();
+          let currentYear = now.getFullYear();
+          let targetDate = new Date(currentYear, CONFIG.COUNTDOWN_TARGET.month, CONFIG.COUNTDOWN_TARGET.day, CONFIG.COUNTDOWN_TARGET.hour, 0, 0);
+
+          if (now.getTime() > targetDate.getTime() + (4 * 24 * 60 * 60 * 1000)) {
+            targetDate = new Date(currentYear + 1, CONFIG.COUNTDOWN_TARGET.month, CONFIG.COUNTDOWN_TARGET.day, CONFIG.COUNTDOWN_TARGET.hour, 0, 0);
           }
 
-          if (perPersonVal > 0) {
-            balances[person].totalOwed += perPersonVal;
-            if (isPaid) balances[person].totalPaid += perPersonVal;
-          }
-        });
+          const diff = targetDate.getTime() - now.getTime();
+          const grid = document.getElementById("countdown-grid");
+          const finished = document.getElementById("countdown-finished");
 
-        pendingNames.sort((a, b) => a.localeCompare(b, 'pt-BR'));
-
-        report += `• *${exp.name}*`;
-        if (hasDefined) {
-          report += ` (${formatBRL(perPersonVal)}/pessoa)\n`;
-          report += `  Progresso: ${paidCount}/${activeCount} pagos\n`;
-          if (pendingNames.length > 0) {
-            report += `  ⏳ *Falta:* ${pendingNames.join(", ")}\n`;
-          } else {
-            report += `  ✅ *100% arrecadado!*\n`;
-          }
-        } else {
-          report += ` (Valor a definir)\n`;
-        }
-        report += `\n`;
-      });
-
-      report += `------------------------------------\n`;
-      report += `👤 *RESUMO INDIVIDUAL (QUANTO FALTA):*\n`;
-
-      sortedParticipants.forEach(person => {
-        const { totalOwed, totalPaid } = balances[person];
-        const pending = Math.max(0, totalOwed - totalPaid);
-
-        if (totalOwed === 0) {
-          report += `• ${person}: Nenhum valor pendente\n`;
-        } else if (pending < 0.01) {
-          report += `• *${person}*: ✅ Quitado! (Total: ${formatBRL(totalPaid)})\n`;
-        } else {
-          report += `• *${person}*: Deve ${formatBRL(pending)} (Pago: ${formatBRL(totalPaid)} / Total: ${formatBRL(totalOwed)})\n`;
-        }
-      });
-
-      report += `\n------------------------------------\n`;
-      report += `🔑 *CHAVES PIX PARA PAGAMENTO:*\n`;
-      
-      const addedPix = new Map();
-      sortedExpenses.forEach(exp => {
-        if (exp.pix && exp.pix.trim() && !addedPix.has(exp.responsible)) {
-          addedPix.set(exp.responsible, exp.pixDisplay || exp.pix);
-        }
-      });
-
-      Array.from(addedPix.entries())
-        .sort((a, b) => a[0].localeCompare(b[0], 'pt-BR'))
-        .forEach(([resp, key]) => {
-          report += `• ${resp}: \`${key}\`\n`;
-        });
-
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(report).then(() => {
-          alert("📋 Relatório copiado para a área de transferência!");
-        }).catch(() => fallbackCopy(report));
-      } else {
-        fallbackCopy(report);
-      }
-    }
-
-    function fallbackCopy(text) {
-      const textarea = document.createElement("textarea");
-      textarea.value = text;
-      textarea.style.position = "fixed";
-      document.body.appendChild(textarea);
-      textarea.focus();
-      textarea.select();
-      try {
-        document.execCommand('copy');
-        alert("📋 Relatório copiado com sucesso!");
-      } catch (err) {
-        prompt("Copie o relatório abaixo:", text);
-      }
-      document.body.removeChild(textarea);
-    }
-
-    function render() {
-      const container = document.getElementById("expenses-container");
-      if (!container) return;
-      container.innerHTML = "";
-
-      const balances = {};
-      const sortedParticipants = [...PARTICIPANTS].sort((a, b) => a.localeCompare(b, 'pt-BR'));
-      sortedParticipants.forEach(p => {
-        balances[p] = { totalOwed: 0, totalPaid: 0 };
-      });
-
-      const sortedExpenses = [...EXPENSES].sort((a, b) => cleanName(a.name).localeCompare(cleanName(b.name), 'pt-BR'));
-
-      sortedExpenses.forEach(exp => {
-        const card = document.createElement("div");
-        card.className = "expense-card";
-
-        const hasPix = exp.pix && exp.pix.trim().length > 0;
-        const copyBtn = hasPix ? `<button class="copy-btn" onclick="copyPix('${exp.pix}')">Copiar PIX</button>` : '';
-
-        const excluded = exp.excluded || [];
-        const activeList = sortedParticipants.filter(p => !excluded.includes(p));
-        const excludedList = sortedParticipants.filter(p => excluded.includes(p));
-        const activeCount = activeList.length;
-        
-        let perPersonVal = 0;
-        let perPersonText = "A Definir";
-        let totalText = "A Definir";
-        let hasDefinedValue = typeof exp.total === 'number' && exp.total > 0 && activeCount > 0;
-
-        if (hasDefinedValue) {
-          perPersonVal = exp.total / activeCount;
-          perPersonText = `${formatBRL(perPersonVal)} / pessoa`;
-          totalText = formatBRL(exp.total);
-        }
-
-        let paidCountInExp = 0;
-        let peopleHtml = "";
-
-        activeList.forEach(person => {
-          const key = `${exp.id}_${person}`;
-          const isPaid = !!PAYMENTS[key];
-          
-          if (isPaid) paidCountInExp++;
-
-          if (perPersonVal > 0) {
-            balances[person].totalOwed += perPersonVal;
-            if (isPaid) balances[person].totalPaid += perPersonVal;
+          if (diff <= 0 && diff > -(4 * 24 * 60 * 60 * 1000)) {
+            if (grid) grid.style.display = "none";
+            if (finished) finished.style.display = "block";
+            return;
           }
 
-          peopleHtml += `
-            <label class="person-chip ${isPaid ? 'paid' : ''}">
-              <input type="checkbox" ${isPaid ? 'checked' : ''} onchange="togglePay('${exp.id}', '${person}')">
-              <span>${person}</span>
-            </label>
-          `;
-        });
+          if (grid) grid.style.display = "flex";
+          if (finished) finished.style.display = "none";
 
-        excludedList.forEach(person => {
-          peopleHtml += `
-            <div class="person-chip" style="opacity: 0.4; cursor: not-allowed;">
-              <span class="excluded-tag">${person} (não entra)</span>
-            </div>
-          `;
-        });
+          const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+          const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+          const minutes = Math.floor((diff / 1000 / 60) % 60);
+          const seconds = Math.floor((diff / 1000) % 60);
 
-        let statusHtml = '';
-        let progressHtml = '';
+          document.getElementById("cd-days").textContent = String(days).padStart(2, '0');
+          document.getElementById("cd-hours").textContent = String(hours).padStart(2, '0');
+          document.getElementById("cd-minutes").textContent = String(minutes).padStart(2, '0');
+          document.getElementById("cd-seconds").textContent = String(seconds).padStart(2, '0');
+        },
 
-        if (hasDefinedValue) {
-          const paidAmount = perPersonVal * paidCountInExp;
-          const pendingAmount = Math.max(0, exp.total - paidAmount);
-          const percent = activeCount > 0 ? Math.round((paidCountInExp / activeCount) * 100) : 0;
-          const isComplete = percent >= 100;
+        renderExpenses: () => {
+          const container = document.getElementById("expenses-container");
+          if (!container) return;
+          container.innerHTML = "";
 
-          statusHtml = `
-            <div class="expense-status-row">
-              <span>Pago: <strong class="text-paid">${formatBRL(paidAmount)}</strong></span>
-              <span>Pendente: <strong class="text-pending">${formatBRL(pendingAmount)}</strong></span>
-            </div>
-          `;
+          const balances = {};
+          const sortedParticipants = [...PARTICIPANTS].sort((a, b) => a.localeCompare(b, 'pt-BR'));
+          sortedParticipants.forEach(p => { balances[p] = { totalOwed: 0, totalPaid: 0 }; });
 
-          progressHtml = `
-            <div class="progress-wrapper">
-              <div class="progress-bar-bg">
-                <div class="progress-bar-fill ${isComplete ? 'complete' : ''}" style="width: ${percent}%;"></div>
+          const sortedExpenses = [...state.expenses].sort((a, b) => utils.cleanName(a.name).localeCompare(utils.cleanName(b.name), 'pt-BR'));
+
+          sortedExpenses.forEach(exp => {
+            const card = document.createElement("article");
+            card.className = "expense-card";
+
+            const hasPix = exp.pix && exp.pix.trim().length > 0;
+            const copyBtn = hasPix ? `<button class="copy-btn" onclick="App.utils.copyToClipboard('${exp.pix}', 'Chave PIX copiada: ${exp.pix}')">Copiar PIX</button>` : '';
+
+            const excluded = exp.excluded || [];
+            const activeList = sortedParticipants.filter(p => !excluded.includes(p));
+            const excludedList = sortedParticipants.filter(p => excluded.includes(p));
+            const activeCount = activeList.length;
+
+            let perPersonVal = 0;
+            let perPersonText = "A Definir";
+            let totalText = "A Definir";
+            const hasDefinedValue = typeof exp.total === 'number' && exp.total > 0 && activeCount > 0;
+
+            if (hasDefinedValue) {
+              perPersonVal = exp.total / activeCount;
+              perPersonText = `${utils.formatBRL(perPersonVal)} / pessoa`;
+              totalText = utils.formatBRL(exp.total);
+            }
+
+            let paidCountInExp = 0;
+            let peopleHtml = "";
+
+            activeList.forEach(person => {
+              const key = `${exp.id}_${person}`;
+              const isPaid = !!state.payments[key];
+
+              if (isPaid) paidCountInExp++;
+              if (perPersonVal > 0) {
+                balances[person].totalOwed += perPersonVal;
+                if (isPaid) balances[person].totalPaid += perPersonVal;
+              }
+
+              peopleHtml += `
+                <label class="person-chip ${isPaid ? 'paid' : ''}">
+                  <input type="checkbox" ${isPaid ? 'checked' : ''} onchange="App.expenses.togglePayment('${exp.id}', '${person}')">
+                  <span>${person}</span>
+                </label>
+              `;
+            });
+
+            excludedList.forEach(person => {
+              peopleHtml += `
+                <div class="person-chip" style="opacity: 0.4; cursor: not-allowed;">
+                  <span class="excluded-tag">${person} (não entra)</span>
+                </div>
+              `;
+            });
+
+            let statusHtml = '';
+            let progressHtml = '';
+
+            if (hasDefinedValue) {
+              const paidAmount = perPersonVal * paidCountInExp;
+              const pendingAmount = Math.max(0, exp.total - paidAmount);
+              const percent = activeCount > 0 ? Math.round((paidCountInExp / activeCount) * 100) : 0;
+              const isComplete = percent >= 100;
+
+              statusHtml = `
+                <div class="expense-status-row">
+                  <span>Pago: <strong class="text-paid">${utils.formatBRL(paidAmount)}</strong></span>
+                  <span>Pendente: <strong class="text-pending">${utils.formatBRL(pendingAmount)}</strong></span>
+                </div>
+              `;
+
+              progressHtml = `
+                <div class="progress-wrapper">
+                  <div class="progress-bar-bg">
+                    <div class="progress-bar-fill ${isComplete ? 'complete' : ''}" style="width: ${percent}%;"></div>
+                  </div>
+                  <div class="progress-label">
+                    <span>${paidCountInExp} de ${activeCount} pagos</span>
+                    <span>${percent}% arrecadado</span>
+                  </div>
+                </div>
+              `;
+            } else {
+              statusHtml = `
+                <div class="expense-status-row">
+                  <span style="color: var(--color-text-muted);">Valores pendentes de definição</span>
+                </div>
+              `;
+            }
+
+            let checklistBtnHtml = '';
+            if (exp.id === 'comidas') {
+              const boughtTotal = Object.values(state.grocery).filter(Boolean).length;
+              checklistBtnHtml = `
+                <button class="checklist-trigger-btn" onclick="App.ui.openModal('grocery-modal')">
+                  📝 Ver Lista de Compras (${boughtTotal}/${GROCERY_ITEMS.length} comprados)
+                </button>
+              `;
+            }
+
+            card.innerHTML = `
+              <div class="expense-header">
+                <div>
+                  <span class="expense-title">${exp.name}</span>
+                  <span style="font-size: 0.8rem; color: var(--color-text-muted);">${totalText} (${activeCount} pessoas)</span>
+                </div>
+                <div>
+                  <div class="expense-val">${perPersonText}</div>
+                  ${statusHtml}
+                </div>
               </div>
-              <div class="progress-label">
-                <span>${paidCountInExp} de ${activeCount} pagos</span>
-                <span>${percent}% arrecadado</span>
+              ${progressHtml}
+              ${checklistBtnHtml}
+              <div class="pix-box">
+                <span>Resp: <strong>${exp.responsible || 'A definir'}</strong> | PIX: <strong>${exp.pixDisplay || exp.pix || 'A definir'}</strong></span>
+                ${copyBtn}
               </div>
-            </div>
-          `;
-        } else {
-          statusHtml = `
-            <div class="expense-status-row">
-              <span style="color: var(--muted);">Valores pendentes de definição</span>
-            </div>
-          `;
+              <div class="people-grid">
+                ${peopleHtml}
+              </div>
+            `;
+            container.appendChild(card);
+          });
+
+          ui.renderSummary(balances, sortedParticipants);
+        },
+
+        renderSummary: (balances, sortedParticipants) => {
+          const summaryContainer = document.getElementById("summary-container");
+          if (!summaryContainer) return;
+          summaryContainer.innerHTML = "";
+
+          sortedParticipants.forEach(person => {
+            const { totalOwed, totalPaid } = balances[person];
+            const pending = Math.max(0, totalOwed - totalPaid);
+            const isFullyPaid = totalOwed > 0 && pending < 0.01;
+
+            const row = document.createElement("div");
+            row.className = `summary-row ${isFullyPaid ? 'fully-paid' : ''}`;
+            row.innerHTML = `
+              <div>
+                <strong>${person}</strong>
+                ${isFullyPaid ? '<span style="color: #86efac; font-size: 0.8rem; margin-left: 6px;">✓ Quitado</span>' : ''}
+              </div>
+              <div class="summary-details">
+                <div>Total: <strong>${utils.formatBRL(totalOwed)}</strong></div>
+                <div>
+                  Pago: <span class="text-paid">${utils.formatBRL(totalPaid)}</span> | 
+                  Pendente: <span class="text-pending">${utils.formatBRL(pending)}</span>
+                </div>
+              </div>
+            `;
+            summaryContainer.appendChild(row);
+          });
+        },
+
+        renderGrocery: () => {
+          const container = document.getElementById("grocery-list-container");
+          if (!container) return;
+          container.innerHTML = "";
+
+          let boughtCount = 0;
+          GROCERY_ITEMS.forEach(item => {
+            const isBought = !!state.grocery[item.id];
+            if (isBought) boughtCount++;
+
+            const row = document.createElement("div");
+            row.className = `grocery-item ${isBought ? 'bought' : ''}`;
+            row.onclick = () => groceryService.toggleItem(item.id);
+
+            row.innerHTML = `
+              <div class="grocery-left">
+                <input type="checkbox" ${isBought ? 'checked' : ''} style="cursor: pointer;" onclick="event.stopPropagation(); App.grocery.toggleItem('${item.id}')">
+                <span class="grocery-text" style="font-weight: 500;">${item.name}</span>
+              </div>
+              ${item.qty ? `<span class="grocery-qty">${item.qty}</span>` : ''}
+            `;
+            container.appendChild(row);
+          });
+
+          const counter = document.getElementById("grocery-counter");
+          if (counter) counter.textContent = `${boughtCount} de ${GROCERY_ITEMS.length} itens comprados`;
+        },
+
+        renderLuggage: () => {
+          const container = document.getElementById("luggage-container");
+          if (!container) return;
+          container.innerHTML = "";
+
+          state.luggage.forEach(item => {
+            const row = document.createElement("div");
+            row.style.cssText = "display:flex; justify-content:space-between; align-items:center; background:#0f172a; padding:10px 12px; border-radius:8px; border:1px solid var(--color-border);";
+
+            let opts = `<option value="">Ninguém ainda</option>`;
+            PARTICIPANTS.forEach(p => {
+              opts += `<option value="${p}" ${item.assigned === p ? 'selected' : ''}>${p}</option>`;
+            });
+
+            row.innerHTML = `
+              <span style="font-weight:500; font-size:0.88rem;">${item.name}</span>
+              <select style="background:#1e293b; border:1px solid var(--color-border); color:var(--color-accent-sky); padding:5px 8px; border-radius:6px; font-size:0.8rem;" onchange="App.luggage.updateAssignment('${item.id}', this.value)">
+                ${opts}
+              </select>
+            `;
+            container.appendChild(row);
+          });
+        },
+
+        renderPhotos: () => {
+          const container = document.getElementById("photos-container");
+          if (!container) return;
+          container.innerHTML = "";
+
+          if (state.photos.length === 0) {
+            container.innerHTML = `<p style="grid-column: 1/-1; text-align:center; color:var(--color-text-muted); font-size:0.85rem; padding: 20px;">Nenhuma foto enviada ainda. Seja o primeiro a tirar uma foto!</p>`;
+            return;
+          }
+
+          state.photos.forEach(photo => {
+            const item = document.createElement("div");
+            item.className = "photo-item";
+            item.innerHTML = `
+              <img src="${photo.url}" alt="Foto da Roça" onclick="window.open('${photo.url}')" style="cursor:pointer;" title="Clique para ampliar">
+              <button class="photo-delete-btn" onclick="event.stopPropagation(); App.photos.deletePhoto('${photo.id}')" title="Excluir foto">🗑️</button>
+              <div class="photo-uploader-tag">📸 ${photo.author} (${photo.date || ''})</div>
+            `;
+            container.appendChild(item);
+          });
+        },
+
+        populatePhotoSenders: () => {
+          const select = document.getElementById("photo-sender-select");
+          if (select && select.options.length <= 1) {
+            PARTICIPANTS.forEach(p => {
+              const opt = document.createElement("option");
+              opt.value = p;
+              opt.textContent = p;
+              select.appendChild(opt);
+            });
+          }
+        },
+
+        renderEditModal: () => {
+          const modalBody = document.getElementById("modal-body");
+          if (!modalBody) return;
+          modalBody.innerHTML = "";
+
+          const sortedExpenses = [...state.expenses].sort((a, b) => utils.cleanName(a.name).localeCompare(utils.cleanName(b.name), 'pt-BR'));
+
+          sortedExpenses.forEach(exp => {
+            const item = document.createElement("div");
+            item.className = "edit-item-card";
+            item.innerHTML = `
+              <div class="edit-item-title">${exp.name}</div>
+              <div class="edit-form-grid">
+                <div class="form-group">
+                  <label>Valor Total (R$)</label>
+                  <input type="number" step="0.01" id="modal_total_${exp.id}" value="${exp.total !== null ? exp.total : ''}" placeholder="Ex: 500.00">
+                </div>
+                <div class="form-group">
+                  <label>Responsável</label>
+                  <input type="text" id="modal_resp_${exp.id}" value="${exp.responsible || ''}" placeholder="Nome">
+                </div>
+                <div class="form-group">
+                  <label>Chave PIX (apenas dígitos ou chave)</label>
+                  <input type="text" id="modal_pix_${exp.id}" value="${exp.pix || ''}" placeholder="Ex: 61999999999">
+                </div>
+                <div class="form-group">
+                  <label>Exibição do PIX</label>
+                  <input type="text" id="modal_disp_${exp.id}" value="${exp.pixDisplay || ''}" placeholder="Ex: 61 99999-9999">
+                </div>
+              </div>
+            `;
+            modalBody.appendChild(item);
+          });
+        },
+
+        renderAll: () => {
+          ui.renderExpenses();
+          ui.renderGrocery();
+          ui.renderLuggage();
+          ui.renderPhotos();
         }
+      };
 
-        let checklistBtnHtml = '';
-        if (exp.id === 'comidas') {
-          const boughtTotal = Object.values(GROCERY_STATUS).filter(Boolean).length;
-          checklistBtnHtml = `
-            <button class="checklist-btn" onclick="openGroceryModal()">
-              📝 Ver Lista de Compras (${boughtTotal}/${GROCERY_ITEMS.length} comprados)
-            </button>
-          `;
-        }
+      /* --- INICIALIZAÇÃO CONTROLADA --- */
+      const init = () => {
+        repository.loadLocal();
+        ui.renderAll();
+        ui.updateCountdown();
 
-        card.innerHTML = `
-          <div class="expense-header">
-            <div>
-              <span class="expense-title">${exp.name}</span>
-              <span style="font-size: 0.8rem; color: var(--muted);">${totalText} (${activeCount} pessoas)</span>
-            </div>
-            <div>
-              <div class="expense-val">${perPersonText}</div>
-              ${statusHtml}
-            </div>
-          </div>
-          ${progressHtml}
-          ${checklistBtnHtml}
-          <div class="pix-box">
-            <span>Resp: <strong>${exp.responsible || 'A definir'}</strong> | PIX: <strong>${exp.pixDisplay || exp.pix || 'A definir'}</strong></span>
-            ${copyBtn}
-          </div>
-          <div class="people-grid">
-            ${peopleHtml}
-          </div>
-        `;
-        container.appendChild(card);
-      });
+        setInterval(ui.updateCountdown, 1000);
+        setInterval(repository.syncFromCloud, CONFIG.SYNC_INTERVAL_MS);
 
-      renderSummary(balances, sortedParticipants);
-    }
+        window.addEventListener('online', repository.syncFromCloud);
+        window.addEventListener('click', (event) => {
+          if (event.target.classList.contains('modal-overlay')) {
+            event.target.classList.remove('active');
+          }
+        });
 
-    function renderSummary(balances, sortedParticipants) {
-      const summaryContainer = document.getElementById("summary-container");
-      if (!summaryContainer) return;
-      summaryContainer.innerHTML = "";
+        repository.syncFromCloud();
+      };
 
-      sortedParticipants.forEach(person => {
-        const { totalOwed, totalPaid } = balances[person];
-        const pending = Math.max(0, totalOwed - totalPaid);
-        const isFullyPaid = totalOwed > 0 && pending < 0.01;
+      // API Pública exposta para o escopo global
+      return {
+        init,
+        ui,
+        utils,
+        expenses: expensesService,
+        photos: photosService,
+        luggage: luggageService,
+        grocery: groceryService,
+        reports: reportsService
+      };
+    })();
 
-        const row = document.createElement("div");
-        row.className = `summary-row ${isFullyPaid ? 'fully-paid' : ''}`;
-
-        row.innerHTML = `
-          <div>
-            <strong>${person}</strong>
-            ${isFullyPaid ? '<span style="color: #86efac; font-size: 0.8rem; margin-left: 6px;">✓ Quitado</span>' : ''}
-          </div>
-          <div class="summary-details">
-            <div>Total: <strong>${formatBRL(totalOwed)}</strong></div>
-            <div>
-              Pago: <span class="text-paid">${formatBRL(totalPaid)}</span> | 
-              Pendente: <span class="text-pending">${formatBRL(pending)}</span>
-            </div>
-          </div>
-        `;
-        summaryContainer.appendChild(row);
-      });
-    }
-
-    function openEditModal() {
-      const modalBody = document.getElementById("modal-body");
-      if (!modalBody) return;
-      modalBody.innerHTML = "";
-
-      const sortedExpenses = [...EXPENSES].sort((a, b) => cleanName(a.name).localeCompare(cleanName(b.name), 'pt-BR'));
-
-      sortedExpenses.forEach(exp => {
-        const item = document.createElement("div");
-        item.className = "edit-item-card";
-        item.innerHTML = `
-          <div class="edit-item-title">${exp.name}</div>
-          <div class="edit-form-grid">
-            <div class="form-group">
-              <label>Valor Total (R$)</label>
-              <input type="number" step="0.01" id="modal_total_${exp.id}" value="${exp.total !== null ? exp.total : ''}" placeholder="Ex: 500.00">
-            </div>
-            <div class="form-group">
-              <label>Responsável</label>
-              <input type="text" id="modal_resp_${exp.id}" value="${exp.responsible || ''}" placeholder="Nome">
-            </div>
-            <div class="form-group">
-              <label>Chave PIX (só dígitos ou chave)</label>
-              <input type="text" id="modal_pix_${exp.id}" value="${exp.pix || ''}" placeholder="Ex: 61999999999">
-            </div>
-            <div class="form-group">
-              <label>Exibição do PIX</label>
-              <input type="text" id="modal_disp_${exp.id}" value="${exp.pixDisplay || ''}" placeholder="Ex: 61 99999-9999">
-            </div>
-          </div>
-        `;
-        modalBody.appendChild(item);
-      });
-
-      document.getElementById("edit-modal").classList.add("active");
-    }
-
-    function closeEditModal() {
-      document.getElementById("edit-modal").classList.remove("active");
-    }
-
-    function saveExpensesFromModal() {
-      EXPENSES.forEach(exp => {
-        const totalInput = document.getElementById(`modal_total_${exp.id}`);
-        const respInput = document.getElementById(`modal_resp_${exp.id}`);
-        const pixInput = document.getElementById(`modal_pix_${exp.id}`);
-        const dispInput = document.getElementById(`modal_disp_${exp.id}`);
-
-        if (totalInput) {
-          const val = totalInput.value.trim();
-          exp.total = val !== "" && !isNaN(val) ? parseFloat(val) : null;
-        }
-        if (respInput) exp.responsible = respInput.value.trim() || "A definir";
-        if (pixInput) exp.pix = pixInput.value.trim();
-        if (dispInput) exp.pixDisplay = dispInput.value.trim() || exp.pix || "A definir";
-      });
-
-      closeEditModal();
-      render();
-      syncToCloud();
-    }
-
-    window.onclick = function(event) {
-      const editModal = document.getElementById("edit-modal");
-      const grocModal = document.getElementById("grocery-modal");
-      const photosModal = document.getElementById("photos-modal");
-      const spotModal = document.getElementById("spotify-modal");
-      const lugModal = document.getElementById("luggage-modal");
-
-      if (event.target === editModal) closeEditModal();
-      if (event.target === grocModal) closeGroceryModal();
-      if (event.target === photosModal) closePhotosModal();
-      if (event.target === spotModal) closeSpotifyModal();
-      if (event.target === lugModal) closeLuggageModal();
-    };
-
-    // Inicialização
-    loadLocal();
-    render();
-    updateCountdown();
-    setInterval(updateCountdown, 1000);
-
-    syncFromCloud();
-    setInterval(syncFromCloud, 5000);
+    // Disparo no carregamento do DOM
+    document.addEventListener("DOMContentLoaded", App.init);
   </script>
 </body>
 </html>
