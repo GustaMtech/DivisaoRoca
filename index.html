@@ -92,9 +92,17 @@
       background: #475569;
     }
 
-    header { text-align: center; margin-bottom: 20px; }
+    header { text-align: center; margin-bottom: 16px; }
     h1 { font-size: 1.6rem; color: #f59e0b; margin-bottom: 6px; }
     p.sub { font-size: 0.9rem; color: var(--muted); }
+
+    /* Spotify Widget Container */
+    .spotify-player-wrapper {
+      margin-bottom: 20px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
 
     .expense-card {
       background: var(--card-bg);
@@ -379,7 +387,7 @@
       cursor: pointer;
     }
 
-    /* Estilos do Checklist de Compras */
+    /* Checklist */
     .grocery-item {
       display: flex;
       align-items: center;
@@ -437,6 +445,20 @@
       <p class="sub">Marque conforme for pagando o PIX para cada responsável</p>
     </header>
 
+    <!-- Mini Player do Spotify Embutido -->
+    <div class="spotify-player-wrapper">
+      <iframe 
+        style="border-radius:12px; display:block;" 
+        src="https://open.spotify.com/embed/playlist/3MHVdo7bcslLl2tWs3EjWy?utm_source=generator&theme=0" 
+        width="100%" 
+        height="152" 
+        frameBorder="0" 
+        allowfullscreen="" 
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+        loading="lazy">
+      </iframe>
+    </div>
+
     <div id="expenses-container"></div>
 
     <!-- Painel de Resumo por Participante -->
@@ -453,7 +475,7 @@
     <!-- Rodapé: Copiar Relatório -->
     <div class="footer-section">
       <button class="whatsapp-footer-btn" onclick="copyWhatsAppReport()">
-        📋 Gerar Relatório de Atualizações
+        📋 Copiar Relatório para WhatsApp
       </button>
     </div>
 
@@ -557,7 +579,7 @@
       }
     ];
 
-    // Itens da planilha organizados em estrita ordem alfabética
+    // Itens da planilha organizados em ordem alfabética
     const GROCERY_ITEMS = [
       { id: "alho", name: "Alho", qty: "1 pote" },
       { id: "arroz", name: "Arroz", qty: "1 pct" },
@@ -909,7 +931,6 @@
         const copyBtn = hasPix ? `<button class="copy-btn" onclick="copyPix('${exp.pix}')">Copiar PIX</button>` : '';
 
         const excluded = exp.excluded || [];
-        // Separa quem participa e quem não entra na soma
         const activeList = sortedParticipants.filter(p => !excluded.includes(p));
         const excludedList = sortedParticipants.filter(p => excluded.includes(p));
         const activeCount = activeList.length;
@@ -928,7 +949,7 @@
         let paidCountInExp = 0;
         let peopleHtml = "";
 
-        // 1. Participantes ativos primeiro (em ordem alfabética)
+        // Participantes ativos no topo
         activeList.forEach(person => {
           const key = `${exp.id}_${person}`;
           const isPaid = !!PAYMENTS[key];
@@ -952,7 +973,7 @@
           `;
         });
 
-        // 2. Participantes que não entram na soma ficam abaixo (no final)
+        // Não participantes posicionados abaixo
         excludedList.forEach(person => {
           peopleHtml += `
             <div class="person-chip" style="opacity: 0.4; cursor: not-allowed;">
