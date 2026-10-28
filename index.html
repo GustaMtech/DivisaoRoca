@@ -23,6 +23,7 @@
       --color-accent-sky: #38bdf8;
       --color-accent-emerald: #22c55e;
       --color-accent-rose: #f87171;
+      --color-accent-purple: #a855f7;
 
       --color-border: #334155;
       --radius-sm: 6px;
@@ -94,10 +95,7 @@
       justify-content: center;
       transition: background-color var(--transition-normal);
     }
-
-    .btn-icon:hover {
-      background: var(--color-bg-elevated);
-    }
+    .btn-icon:hover { background: var(--color-bg-elevated); }
 
     .btn-primary {
       background: var(--color-accent-emerald);
@@ -110,10 +108,7 @@
       cursor: pointer;
       transition: opacity var(--transition-normal);
     }
-
-    .btn-primary:hover {
-      opacity: 0.9;
-    }
+    .btn-primary:hover { opacity: 0.9; }
 
     .btn-secondary {
       background: var(--color-bg-elevated);
@@ -127,29 +122,13 @@
       display: flex;
       align-items: center;
       gap: 6px;
-      transition: background-color var(--transition-normal);
       white-space: nowrap;
     }
+    .btn-secondary:hover { background: #475569; }
 
-    .btn-secondary:hover {
-      background: #475569;
-    }
-
-    header {
-      text-align: center;
-      margin-bottom: 16px;
-    }
-
-    header h1 {
-      font-size: clamp(1.4rem, 4vw, 1.8rem);
-      color: var(--color-accent-amber);
-      margin-bottom: 4px;
-    }
-
-    header p {
-      font-size: clamp(0.82rem, 2.5vw, 0.95rem);
-      color: var(--color-text-muted);
-    }
+    header { text-align: center; margin-bottom: 16px; }
+    header h1 { font-size: clamp(1.4rem, 4vw, 1.8rem); color: var(--color-accent-amber); margin-bottom: 4px; }
+    header p { font-size: clamp(0.82rem, 2.5vw, 0.95rem); color: var(--color-text-muted); }
 
     /* ==========================================================================
        3. COMPONENTES: CONTAGEM DECRESCENTE
@@ -163,46 +142,11 @@
       text-align: center;
       box-shadow: var(--shadow-md);
     }
-
-    .countdown-title {
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--color-accent-amber);
-      margin-bottom: 8px;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-    }
-
-    .countdown-grid {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .countdown-unit {
-      background: var(--color-bg-primary);
-      border: 1px solid var(--color-border);
-      border-radius: var(--radius-md);
-      padding: 6px 12px;
-      min-width: 65px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .countdown-number {
-      font-size: 1.25rem;
-      font-weight: 700;
-      color: var(--color-accent-sky);
-    }
-
-    .countdown-label {
-      font-size: 0.68rem;
-      color: var(--color-text-muted);
-      text-transform: uppercase;
-    }
+    .countdown-title { font-size: 0.85rem; font-weight: 600; color: var(--color-accent-amber); margin-bottom: 8px; text-transform: uppercase; }
+    .countdown-grid { display: flex; justify-content: center; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .countdown-unit { background: var(--color-bg-primary); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: 6px 12px; min-width: 65px; display: flex; flex-direction: column; align-items: center; }
+    .countdown-number { font-size: 1.25rem; font-weight: 700; color: var(--color-accent-sky); }
+    .countdown-label { font-size: 0.68rem; color: var(--color-text-muted); text-transform: uppercase; }
 
     /* ==========================================================================
        4. COMPONENTES: CARROSSEL DE FOTOS
@@ -214,708 +158,165 @@
       padding: 16px;
       margin-bottom: 18px;
       box-shadow: var(--shadow-md);
-      display: none; /* Controlado via JS */
+      display: none; 
     }
-
-    .carousel-header-title {
-      font-size: 1.15rem;
-      color: var(--color-accent-sky);
-      margin-bottom: 12px;
-      font-weight: 700;
-      text-align: center;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-    }
-
-    .carousel-container {
-      position: relative;
-      width: 100%;
-      overflow: hidden;
-      border-radius: var(--radius-md);
-      background: #000;
-      aspect-ratio: 4/3;
-      touch-action: pan-y;
-    }
-
-    .carousel-track {
-      display: flex;
-      height: 100%;
-      transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-    }
-
-    .carousel-slide {
-      min-width: 100%;
-      height: 100%;
-      position: relative;
-    }
-
-    .carousel-slide img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-    }
-
-    .carousel-author-tag {
-      position: absolute;
-      bottom: 10px;
-      left: 10px;
-      background: rgba(0, 0, 0, 0.7);
-      color: #fff;
-      padding: 6px 12px;
-      border-radius: 999px;
-      font-size: 0.75rem;
-      backdrop-filter: blur(4px);
-      -webkit-backdrop-filter: blur(4px);
-    }
-
-    .carousel-btn {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background: rgba(15, 23, 42, 0.6);
-      color: white;
-      border: 1px solid rgba(255,255,255,0.1);
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      font-size: 1.2rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 10;
-      transition: all var(--transition-fast);
-    }
-
+    .carousel-header-title { font-size: 1.15rem; color: var(--color-accent-sky); margin-bottom: 12px; font-weight: 700; text-align: center; display: flex; align-items: center; justify-content: center; gap: 8px; }
+    .carousel-container { position: relative; width: 100%; overflow: hidden; border-radius: var(--radius-md); background: #000; aspect-ratio: 4/3; touch-action: pan-y; }
+    .carousel-track { display: flex; height: 100%; transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); }
+    .carousel-slide { min-width: 100%; height: 100%; position: relative; }
+    .carousel-slide img { width: 100%; height: 100%; object-fit: contain; }
+    .carousel-author-tag { position: absolute; bottom: 10px; left: 10px; background: rgba(0, 0, 0, 0.7); color: #fff; padding: 6px 12px; border-radius: 999px; font-size: 0.75rem; backdrop-filter: blur(4px); }
+    .carousel-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(15, 23, 42, 0.6); color: white; border: 1px solid rgba(255,255,255,0.1); width: 36px; height: 36px; border-radius: 50%; font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 10; transition: all var(--transition-fast); }
     .carousel-btn:hover { background: rgba(15, 23, 42, 0.9); scale: 1.05; }
     .carousel-btn.prev { left: 10px; }
     .carousel-btn.next { right: 10px; }
-
-    .carousel-indicators {
-      display: flex;
-      justify-content: center;
-      gap: 8px;
-      margin-top: 14px;
-      flex-wrap: wrap;
-    }
-
-    .carousel-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--color-border);
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .carousel-dot.active {
-      background: var(--color-accent-sky);
-      transform: scale(1.3);
-    }
+    .carousel-indicators { display: flex; justify-content: center; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
+    .carousel-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--color-border); cursor: pointer; transition: all 0.3s ease; }
+    .carousel-dot.active { background: var(--color-accent-sky); transform: scale(1.3); }
 
     /* ==========================================================================
-       5. COMPONENTES: CARTÕES DE DESPESAS
+       5. COMPONENTES: DASHBOARD & GRÁFICOS (NOVO)
        ========================================================================== */
-    .expense-card {
+    .dashboard-card {
       background: var(--color-bg-surface);
       border: 1px solid var(--color-border);
-      border-radius: var(--radius-lg);
-      padding: clamp(12px, 3vw, 18px);
-      margin-bottom: 16px;
-      box-shadow: var(--shadow-md);
-    }
-
-    .expense-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      border-bottom: 1px solid var(--color-border);
-      padding-bottom: 10px;
-      margin-bottom: 12px;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-
-    .expense-title {
-      font-weight: 700;
-      font-size: 1.15rem;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .expense-val {
-      font-size: 1rem;
-      font-weight: 600;
-      color: var(--color-accent-sky);
-      text-align: right;
-    }
-
-    .expense-status-row {
-      font-size: 0.8rem;
-      margin-top: 4px;
-      display: flex;
-      gap: 10px;
-      justify-content: flex-end;
-      flex-wrap: wrap;
-    }
-
-    .progress-wrapper {
-      margin-bottom: 12px;
-    }
-
-    .progress-bar-bg {
-      width: 100%;
-      height: 7px;
-      background: rgba(255, 255, 255, 0.08);
-      border-radius: 999px;
-      overflow: hidden;
-    }
-
-    .progress-bar-fill {
-      height: 100%;
-      background: var(--color-accent-emerald);
-      border-radius: 999px;
-      width: 0%;
-      transition: width 0.25s ease;
-    }
-
-    .progress-bar-fill.complete {
-      background: #10b981;
-    }
-
-    .progress-label {
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.75rem;
-      color: var(--color-text-muted);
-      margin-top: 5px;
-    }
-
-    .pix-box {
-      font-size: 0.85rem;
-      background: rgba(0, 0, 0, 0.25);
-      border-radius: var(--radius-md);
-      padding: 8px 12px;
-      margin-bottom: 14px;
-      color: var(--color-text-muted);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .pix-box strong {
-      color: var(--color-text-main);
-    }
-
-    .copy-btn {
-      background: #3b82f6;
-      border: none;
-      color: #fff;
-      padding: 4px 10px;
-      border-radius: var(--radius-sm);
-      font-size: 0.78rem;
-      font-weight: 500;
-      cursor: pointer;
-      white-space: nowrap;
-    }
-
-    .checklist-trigger-btn {
-      width: 100%;
-      background: rgba(56, 189, 248, 0.12);
-      border: 1px solid rgba(56, 189, 248, 0.35);
-      color: var(--color-accent-sky);
-      padding: 10px 14px;
-      border-radius: var(--radius-md);
-      font-size: 0.88rem;
-      font-weight: 600;
-      cursor: pointer;
-      margin-bottom: 14px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 6px;
-      transition: background var(--transition-normal);
-    }
-
-    .checklist-trigger-btn:hover {
-      background: rgba(56, 189, 248, 0.22);
-    }
-
-    .people-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-      gap: 8px;
-    }
-
-    .person-chip {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      background: var(--color-bg-primary);
-      border: 1px solid var(--color-border);
-      padding: 8px 12px;
-      border-radius: var(--radius-md);
-      cursor: pointer;
-      user-select: none;
-      font-size: 0.88rem;
-      transition: all var(--transition-fast);
-    }
-
-    .person-chip.paid {
-      background: rgba(34, 197, 94, 0.15);
-      border-color: var(--color-accent-emerald);
-      color: #86efac;
-    }
-
-    .person-chip input {
-      cursor: pointer;
-      accent-color: var(--color-accent-emerald);
-      width: 16px;
-      height: 16px;
-    }
-
-    .excluded-tag {
-      font-size: 0.78rem;
-      color: #64748b;
-      font-style: italic;
-    }
-
-    /* ==========================================================================
-       6. COMPONENTES: RESUMO & RODAPÉ
-       ========================================================================== */
-    .summary-card {
-      background: #1e1b4b;
-      border: 1px solid #4338ca;
       border-radius: var(--radius-lg);
       padding: clamp(14px, 3vw, 20px);
       margin-top: 24px;
     }
+    .dashboard-header { font-size: 1.15rem; color: var(--color-accent-sky); margin-bottom: 16px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+    .dashboard-grid { display: grid; grid-template-columns: auto 1fr; gap: 20px; align-items: center; }
+    
+    .donut-chart {
+      width: 140px; height: 140px; border-radius: 50%;
+      background: var(--color-bg-primary); /* Fallback */
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+    .donut-hole {
+      width: 100px; height: 100px; border-radius: 50%;
+      background: var(--color-bg-surface);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+    }
+    .donut-hole span { font-size: 0.75rem; color: var(--color-text-muted); }
+    .donut-hole strong { font-size: 1.1rem; color: var(--color-text-main); }
+    
+    .legend-container { display: flex; flex-direction: column; gap: 8px; }
+    .legend-item { display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; padding: 6px 10px; background: rgba(15, 23, 42, 0.4); border-radius: 6px; }
+    .legend-color-box { width: 12px; height: 12px; border-radius: 3px; display: inline-block; margin-right: 8px; }
 
-    .summary-header {
-      font-size: 1.15rem;
-      color: #a5b4fc;
-      margin-bottom: 14px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    @media (max-width: 480px) {
+      .dashboard-grid { grid-template-columns: 1fr; justify-items: center; text-align: center; }
+      .legend-container { width: 100%; }
     }
 
-    .summary-list {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 10px;
-    }
+    /* ==========================================================================
+       6. COMPONENTES: CARTÕES DE DESPESAS
+       ========================================================================== */
+    .expense-card { background: var(--color-bg-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: clamp(12px, 3vw, 18px); margin-bottom: 16px; box-shadow: var(--shadow-md); }
+    .expense-header { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1px solid var(--color-border); padding-bottom: 10px; margin-bottom: 12px; gap: 12px; flex-wrap: wrap; }
+    .expense-title { font-weight: 700; font-size: 1.15rem; display: flex; align-items: center; gap: 6px; }
+    .expense-val { font-size: 1rem; font-weight: 600; color: var(--color-accent-sky); text-align: right; }
+    .expense-status-row { font-size: 0.8rem; margin-top: 4px; display: flex; gap: 10px; justify-content: flex-end; flex-wrap: wrap; }
+    
+    .progress-wrapper { margin-bottom: 12px; }
+    .progress-bar-bg { width: 100%; height: 7px; background: rgba(255, 255, 255, 0.08); border-radius: 999px; overflow: hidden; }
+    .progress-bar-fill { height: 100%; background: var(--color-accent-emerald); border-radius: 999px; width: 0%; transition: width 0.25s ease; }
+    .progress-bar-fill.complete { background: #10b981; }
+    .progress-label { display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--color-text-muted); margin-top: 5px; }
 
-    .summary-row {
-      background: rgba(15, 23, 42, 0.6);
-      border: 1px solid #312e81;
-      padding: 10px 14px;
-      border-radius: var(--radius-md);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 0.92rem;
-      gap: 10px;
-    }
+    .pix-box { font-size: 0.85rem; background: rgba(0, 0, 0, 0.25); border-radius: var(--radius-md); padding: 8px 12px; margin-bottom: 14px; color: var(--color-text-muted); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+    .pix-box strong { color: var(--color-text-main); }
+    .copy-btn { background: #3b82f6; border: none; color: #fff; padding: 4px 10px; border-radius: var(--radius-sm); font-size: 0.78rem; font-weight: 500; cursor: pointer; white-space: nowrap; }
 
-    .summary-row.fully-paid {
-      border-color: var(--color-accent-emerald);
-      background: rgba(34, 197, 94, 0.08);
-    }
+    .checklist-trigger-btn { width: 100%; background: rgba(56, 189, 248, 0.12); border: 1px solid rgba(56, 189, 248, 0.35); color: var(--color-accent-sky); padding: 10px 14px; border-radius: var(--radius-md); font-size: 0.88rem; font-weight: 600; cursor: pointer; margin-bottom: 14px; display: flex; justify-content: center; align-items: center; gap: 6px; transition: background var(--transition-normal); }
+    .checklist-trigger-btn:hover { background: rgba(56, 189, 248, 0.22); }
 
-    .summary-details {
-      text-align: right;
-      font-size: 0.82rem;
-      white-space: nowrap;
-    }
+    .people-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px; }
+    .person-chip { display: flex; align-items: center; gap: 8px; background: var(--color-bg-primary); border: 1px solid var(--color-border); padding: 8px 12px; border-radius: var(--radius-md); cursor: pointer; user-select: none; font-size: 0.88rem; transition: all var(--transition-fast); }
+    .person-chip.paid { background: rgba(34, 197, 94, 0.15); border-color: var(--color-accent-emerald); color: #86efac; }
+    .person-chip input { cursor: pointer; accent-color: var(--color-accent-emerald); width: 16px; height: 16px; }
+    .excluded-tag { font-size: 0.78rem; color: #64748b; font-style: italic; }
 
+    /* Central de Caronas (Tela Inicial) */
+    .passenger-chip { background: rgba(56, 189, 248, 0.15); color: var(--color-accent-sky); border: 1px solid rgba(56, 189, 248, 0.4); padding: 6px 12px; border-radius: 999px; font-size: 0.85rem; display: flex; align-items: center; gap: 8px; font-weight: 500; }
+    .passenger-chip span { cursor: pointer; color: var(--color-accent-rose); font-weight: bold; font-size: 1.1rem; line-height: 1; padding: 0 2px; }
+    .section-title { font-size: 1.2rem; color: var(--color-accent-amber); margin: 24px 0 14px; padding-bottom: 8px; border-bottom: 1px solid var(--color-border); display: flex; align-items: center; gap: 8px; }
+
+    /* ==========================================================================
+       7. COMPONENTES: RESUMO & ACERTO INTELIGENTE
+       ========================================================================== */
+    .summary-card { background: #1e1b4b; border: 1px solid #4338ca; border-radius: var(--radius-lg); padding: clamp(14px, 3vw, 20px); margin-top: 24px; }
+    .summary-header { font-size: 1.15rem; color: #a5b4fc; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center; }
+    .summary-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 10px; }
+    .summary-row { background: rgba(15, 23, 42, 0.6); border: 1px solid #312e81; padding: 10px 14px; border-radius: var(--radius-md); display: flex; justify-content: space-between; align-items: center; font-size: 0.92rem; gap: 10px; }
+    .summary-row.fully-paid { border-color: var(--color-accent-emerald); background: rgba(34, 197, 94, 0.08); }
+    .summary-details { text-align: right; font-size: 0.82rem; white-space: nowrap; }
     .text-paid { color: #86efac; font-weight: 600; }
     .text-pending { color: var(--color-accent-rose); font-weight: 600; }
 
-    footer.footer-section {
-      margin-top: 26px;
-      display: flex;
-      justify-content: flex-start;
-      align-items: center;
+    .smart-settlement-box {
+      margin-top: 20px; padding-top: 16px; border-top: 1px dashed #4338ca;
     }
+    .settlement-title { font-size: 1rem; color: var(--color-accent-emerald); margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+    .settlement-route { background: rgba(0,0,0,0.2); border: 1px solid #312e81; padding: 8px 12px; border-radius: var(--radius-md); font-size: 0.9rem; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+    .route-arrow { color: var(--color-text-muted); font-size: 1.2rem; }
+    .route-amount { color: #86efac; font-weight: 700; background: rgba(34,197,94,0.15); padding: 2px 8px; border-radius: 4px; }
 
-    .btn-action-report {
-      background: rgba(34, 197, 94, 0.15);
-      border: 1px solid rgba(34, 197, 94, 0.4);
-      color: #86efac;
-      padding: 10px 16px;
-      border-radius: var(--radius-md);
-      font-size: 0.88rem;
-      font-weight: 600;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      transition: background var(--transition-normal);
-    }
-
-    .btn-action-report:hover {
-      background: rgba(34, 197, 94, 0.25);
-    }
+    footer.footer-section { margin-top: 26px; display: flex; justify-content: flex-start; align-items: center; }
+    .btn-action-report { background: rgba(34, 197, 94, 0.15); border: 1px solid rgba(34, 197, 94, 0.4); color: #86efac; padding: 10px 16px; border-radius: var(--radius-md); font-size: 0.88rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: background var(--transition-normal); width: 100%; justify-content: center; }
+    .btn-action-report:hover { background: rgba(34, 197, 94, 0.25); }
 
     /* ==========================================================================
-       7. COMPONENTES: PAINEL LATERAL (DRAWER) & MODAIS
+       8. COMPONENTES: PAINEL LATERAL & MODAIS
        ========================================================================== */
-    .drawer-overlay {
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0, 0, 0, 0.6);
-      backdrop-filter: blur(4px);
-      z-index: 1000;
-      display: none;
-    }
-
+    .drawer-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(4px); z-index: 1000; display: none; }
     .drawer-overlay.active { display: block; }
-
-    .drawer-menu {
-      position: fixed;
-      top: 0; left: -300px;
-      width: 280px;
-      height: 100%;
-      background: var(--color-bg-surface);
-      border-right: 1px solid var(--color-border);
-      z-index: 1001;
-      transition: left 0.3s ease;
-      display: flex;
-      flex-direction: column;
-      box-shadow: var(--shadow-lg);
-    }
-
+    .drawer-menu { position: fixed; top: 0; left: -300px; width: 280px; height: 100%; background: var(--color-bg-surface); border-right: 1px solid var(--color-border); z-index: 1001; transition: left 0.3s ease; display: flex; flex-direction: column; box-shadow: var(--shadow-lg); }
     .drawer-menu.active { left: 0; }
+    .drawer-header { padding: 18px 20px; border-bottom: 1px solid var(--color-border); display: flex; justify-content: space-between; align-items: center; }
+    .drawer-header h3 { font-size: 1.15rem; color: var(--color-accent-amber); }
+    .drawer-nav { padding: 16px 12px; display: flex; flex-direction: column; gap: 10px; flex: 1; overflow-y: auto; }
+    .drawer-btn { background: var(--color-bg-primary); border: 1px solid var(--color-border); color: var(--color-text-main); padding: 12px 14px; border-radius: 10px; font-size: 0.95rem; font-weight: 600; display: flex; align-items: center; gap: 10px; cursor: pointer; text-align: left; transition: all var(--transition-normal); }
+    .drawer-btn:hover { background: var(--color-bg-elevated); border-color: var(--color-accent-sky); color: var(--color-accent-sky); }
 
-    .drawer-header {
-      padding: 18px 20px;
-      border-bottom: 1px solid var(--color-border);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .drawer-header h3 {
-      font-size: 1.15rem;
-      color: var(--color-accent-amber);
-    }
-
-    .drawer-nav {
-      padding: 16px 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      flex: 1;
-      overflow-y: auto;
-    }
-
-    .drawer-btn {
-      background: var(--color-bg-primary);
-      border: 1px solid var(--color-border);
-      color: var(--color-text-main);
-      padding: 12px 14px;
-      border-radius: 10px;
-      font-size: 0.95rem;
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      cursor: pointer;
-      text-align: left;
-      transition: all var(--transition-normal);
-    }
-
-    .drawer-btn:hover {
-      background: var(--color-bg-elevated);
-      border-color: var(--color-accent-sky);
-      color: var(--color-accent-sky);
-    }
-
-    .modal-overlay {
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: var(--color-bg-overlay);
-      backdrop-filter: blur(6px);
-      display: none;
-      justify-content: center;
-      align-items: center;
-      padding: 14px;
-      z-index: 1100;
-    }
-
+    .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: var(--color-bg-overlay); backdrop-filter: blur(6px); display: none; justify-content: center; align-items: center; padding: 14px; z-index: 1100; }
     .modal-overlay.active { display: flex; }
+    .modal-content { background: var(--color-bg-surface); border: 1px solid var(--color-border); border-radius: var(--radius-xl); max-width: 680px; width: 100%; max-height: 88vh; display: flex; flex-direction: column; box-shadow: var(--shadow-lg); }
+    .modal-header { padding: 16px 20px; border-bottom: 1px solid var(--color-border); display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+    .modal-header h3 { font-size: 1.15rem; color: var(--color-accent-amber); }
+    .close-modal-btn { background: transparent; border: none; color: var(--color-text-muted); font-size: 1.5rem; cursor: pointer; line-height: 1; }
+    .modal-body { padding: 16px 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; }
+    .modal-footer { padding: 14px 20px; border-top: 1px solid var(--color-border); display: flex; justify-content: flex-end; align-items: center; background: #192231; border-radius: 0 0 var(--radius-xl) var(--radius-xl); }
 
-    .modal-content {
-      background: var(--color-bg-surface);
-      border: 1px solid var(--color-border);
-      border-radius: var(--radius-xl);
-      max-width: 680px;
-      width: 100%;
-      max-height: 88vh;
-      display: flex;
-      flex-direction: column;
-      box-shadow: var(--shadow-lg);
-    }
+    .edit-item-card { background: var(--color-bg-primary); border: 1px solid var(--color-border); border-radius: 10px; padding: 12px 14px; }
+    .edit-item-title { font-weight: 600; margin-bottom: 10px; color: var(--color-accent-sky); font-size: 0.98rem; }
+    .edit-form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; }
+    .form-group { display: flex; flex-direction: column; gap: 4px; }
+    .form-group label { font-size: 0.74rem; color: var(--color-text-muted); }
+    .form-group input, .form-group select { background: var(--color-bg-surface); border: 1px solid var(--color-border); color: var(--color-text-main); padding: 8px 10px; border-radius: var(--radius-sm); font-size: 0.85rem; }
 
-    .modal-header {
-      padding: 16px 20px;
-      border-bottom: 1px solid var(--color-border);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-    }
+    .grocery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 10px; }
+    .grocery-item { display: flex; align-items: center; justify-content: space-between; background: var(--color-bg-primary); border: 1px solid var(--color-border); padding: 10px 14px; border-radius: var(--radius-md); cursor: pointer; user-select: none; transition: all var(--transition-fast); gap: 10px; }
+    .grocery-item.bought { background: rgba(34, 197, 94, 0.1); border-color: rgba(34, 197, 94, 0.4); }
+    .grocery-item.bought .grocery-text { text-decoration: line-through; color: #64748b; }
+    .grocery-left { display: flex; align-items: center; gap: 10px; }
+    .grocery-qty { font-size: 0.78rem; background: var(--color-bg-surface); border: 1px solid var(--color-border); color: var(--color-accent-sky); padding: 3px 8px; border-radius: var(--radius-sm); font-weight: 600; white-space: nowrap; }
+    .add-input-box { display: flex; gap: 8px; margin-top: 10px; }
+    .add-input-box input { flex: 1; background: var(--color-bg-primary); border: 1px solid var(--color-border); color: var(--color-text-main); padding: 9px 12px; border-radius: var(--radius-md); font-size: 0.88rem; }
 
-    .modal-header h3 {
-      font-size: 1.15rem;
-      color: var(--color-accent-amber);
-    }
+    /* Utilitários Foto Modal */
+    .photo-upload-box { background: var(--color-bg-primary); border: 2px dashed var(--color-border); border-radius: 10px; padding: 18px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+    .photo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 10px; margin-top: 10px; }
+    .photo-item { position: relative; border-radius: var(--radius-md); overflow: hidden; aspect-ratio: 1; background: var(--color-bg-primary); border: 1px solid var(--color-border); }
+    .photo-item img { width: 100%; height: 100%; object-fit: cover; }
+    .photo-delete-btn { position: absolute; top: 5px; right: 5px; background: rgba(239, 68, 68, 0.85); border: none; color: #fff; border-radius: 50%; width: 26px; height: 26px; font-size: 0.75rem; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5); }
+    .photo-uploader-tag { position: absolute; bottom: 0; left: 0; right: 0; background: rgba(0, 0, 0, 0.7); color: var(--color-text-main); font-size: 0.68rem; padding: 3px 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-    .close-modal-btn {
-      background: transparent;
-      border: none;
-      color: var(--color-text-muted);
-      font-size: 1.5rem;
-      cursor: pointer;
-      line-height: 1;
-    }
+    .toast-container { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); z-index: 2000; display: flex; flex-direction: column; gap: 8px; pointer-events: none; }
+    .toast-message { background: #1e293b; color: #f8fafc; border: 1px solid rgba(56, 189, 248, 0.4); padding: 10px 18px; border-radius: 999px; font-size: 0.88rem; font-weight: 500; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6); opacity: 0; transform: translateY(12px) scale(0.95); transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1); display: flex; align-items: center; gap: 8px; }
+    .toast-message.show { opacity: 1; transform: translateY(0) scale(1); }
 
-    .modal-body {
-      padding: 16px 20px;
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .modal-footer {
-      padding: 14px 20px;
-      border-top: 1px solid var(--color-border);
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      background: #192231;
-      border-radius: 0 0 var(--radius-xl) var(--radius-xl);
-    }
-
-    /* Utilitários dos Modais */
-    .photo-upload-box {
-      background: var(--color-bg-primary);
-      border: 2px dashed var(--color-border);
-      border-radius: 10px;
-      padding: 18px;
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .photo-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-      gap: 10px;
-      margin-top: 10px;
-    }
-
-    .photo-item {
-      position: relative;
-      border-radius: var(--radius-md);
-      overflow: hidden;
-      aspect-ratio: 1;
-      background: var(--color-bg-primary);
-      border: 1px solid var(--color-border);
-    }
-
-    .photo-item img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .photo-delete-btn {
-      position: absolute;
-      top: 5px;
-      right: 5px;
-      background: rgba(239, 68, 68, 0.85);
-      border: none;
-      color: #fff;
-      border-radius: 50%;
-      width: 26px;
-      height: 26px;
-      font-size: 0.75rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
-      transition: transform var(--transition-fast), background-color var(--transition-fast);
-    }
-
-    .photo-delete-btn:hover {
-      background: #dc2626;
-      transform: scale(1.1);
-    }
-
-    .photo-uploader-tag {
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      background: rgba(0, 0, 0, 0.7);
-      color: var(--color-text-main);
-      font-size: 0.68rem;
-      padding: 3px 6px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .edit-item-card {
-      background: var(--color-bg-primary);
-      border: 1px solid var(--color-border);
-      border-radius: 10px;
-      padding: 12px 14px;
-    }
-
-    .edit-item-title {
-      font-weight: 600;
-      margin-bottom: 10px;
-      color: var(--color-accent-sky);
-      font-size: 0.98rem;
-    }
-
-    .edit-form-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 10px;
-    }
-
-    .form-group {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-
-    .form-group label {
-      font-size: 0.74rem;
-      color: var(--color-text-muted);
-    }
-
-    .form-group input, .form-group select {
-      background: var(--color-bg-surface);
-      border: 1px solid var(--color-border);
-      color: var(--color-text-main);
-      padding: 8px 10px;
-      border-radius: var(--radius-sm);
-      font-size: 0.85rem;
-    }
-
-    .grocery-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-      gap: 10px;
-    }
-
-    .grocery-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: var(--color-bg-primary);
-      border: 1px solid var(--color-border);
-      padding: 10px 14px;
-      border-radius: var(--radius-md);
-      cursor: pointer;
-      user-select: none;
-      transition: all var(--transition-fast);
-      gap: 10px;
-    }
-
-    .grocery-item.bought {
-      background: rgba(34, 197, 94, 0.1);
-      border-color: rgba(34, 197, 94, 0.4);
-    }
-
-    .grocery-item.bought .grocery-text {
-      text-decoration: line-through;
-      color: #64748b;
-    }
-
-    .grocery-left {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .grocery-qty {
-      font-size: 0.78rem;
-      background: var(--color-bg-surface);
-      border: 1px solid var(--color-border);
-      color: var(--color-accent-sky);
-      padding: 3px 8px;
-      border-radius: var(--radius-sm);
-      font-weight: 600;
-      white-space: nowrap;
-    }
-
-    .add-input-box {
-      display: flex;
-      gap: 8px;
-      margin-top: 10px;
-    }
-
-    .add-input-box input {
-      flex: 1;
-      background: var(--color-bg-primary);
-      border: 1px solid var(--color-border);
-      color: var(--color-text-main);
-      padding: 9px 12px;
-      border-radius: var(--radius-md);
-      font-size: 0.88rem;
-    }
-
-    /* ==========================================================================
-       8. NOTIFICAÇÕES TOAST
-       ========================================================================== */
-    .toast-container {
-      position: fixed;
-      bottom: 24px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 2000;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      pointer-events: none;
-    }
-
-    .toast-message {
-      background: #1e293b;
-      color: #f8fafc;
-      border: 1px solid rgba(56, 189, 248, 0.4);
-      padding: 10px 18px;
-      border-radius: 999px;
-      font-size: 0.88rem;
-      font-weight: 500;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
-      opacity: 0;
-      transform: translateY(12px) scale(0.95);
-      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .toast-message.show {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-    }
-
-    /* Media Queries */
     @media (max-width: 540px) {
       body { padding: 0 10px 30px; }
       .expense-header { flex-direction: column; align-items: stretch; gap: 6px; }
@@ -940,7 +341,6 @@
     <nav class="drawer-nav">
       <button class="drawer-btn" onclick="App.ui.toggleDrawer(false); App.ui.openModal('photos-modal');">📸 Fotos da Roça</button>
       <button class="drawer-btn" onclick="App.ui.toggleDrawer(false); App.ui.openModal('spotify-modal');">🎵 Playlist Spotify</button>
-      <button class="drawer-btn" onclick="App.ui.toggleDrawer(false); App.ui.openModal('rides-modal');">🚗 Central de Caronas</button>
       <button class="drawer-btn" onclick="App.ui.toggleDrawer(false); App.ui.openModal('luggage-modal');">🎒 Quem Leva o Quê?</button>
       <button class="drawer-btn" onclick="App.ui.toggleDrawer(false); App.ui.openModal('grocery-modal');">🛒 Lista de Compras</button>
       <button class="drawer-btn" onclick="App.ui.toggleDrawer(false); App.ui.openModal('edit-modal');">⚙️ Configurações / PIX</button>
@@ -961,30 +361,18 @@
       <p>Marque conforme for pagando o PIX para cada responsável</p>
     </header>
 
-    <!-- Caixa do Contador (Escondida após a partida) -->
+    <!-- Caixa do Contador -->
     <section class="countdown-card" id="countdown-section" aria-label="Contagem Regressiva">
       <div class="countdown-title">⏳ Contagem Regressiva para a Partida</div>
       <div class="countdown-grid" id="countdown-grid">
-        <div class="countdown-unit">
-          <span class="countdown-number" id="cd-days">--</span>
-          <span class="countdown-label">Dias</span>
-        </div>
-        <div class="countdown-unit">
-          <span class="countdown-number" id="cd-hours">--</span>
-          <span class="countdown-label">Horas</span>
-        </div>
-        <div class="countdown-unit">
-          <span class="countdown-number" id="cd-minutes">--</span>
-          <span class="countdown-label">Min</span>
-        </div>
-        <div class="countdown-unit">
-          <span class="countdown-number" id="cd-seconds">--</span>
-          <span class="countdown-label">Seg</span>
-        </div>
+        <div class="countdown-unit"><span class="countdown-number" id="cd-days">--</span><span class="countdown-label">Dias</span></div>
+        <div class="countdown-unit"><span class="countdown-number" id="cd-hours">--</span><span class="countdown-label">Horas</span></div>
+        <div class="countdown-unit"><span class="countdown-number" id="cd-minutes">--</span><span class="countdown-label">Min</span></div>
+        <div class="countdown-unit"><span class="countdown-number" id="cd-seconds">--</span><span class="countdown-label">Seg</span></div>
       </div>
     </section>
 
-    <!-- CARROSSEL DE FOTOS (Exibido Automaticamente no momento da partida) -->
+    <!-- CARROSSEL DE FOTOS -->
     <section class="carousel-card" id="carousel-section" aria-label="Galeria de Fotos">
       <div class="carousel-header-title">📸 Memórias da Roça 2.0</div>
       <div class="carousel-container" id="carousel-container">
@@ -996,10 +384,30 @@
       <p id="carousel-empty" style="display:none; text-align:center; padding: 20px; color: var(--color-text-muted);">Ainda não há fotos no mural.</p>
     </section>
 
+    <!-- NOVA SEÇÃO: DASHBOARD GRÁFICO -->
+    <section class="dashboard-card" id="dashboard-section" style="display:none;" aria-label="Dashboard de Custos">
+      <div class="dashboard-header">📈 Gráfico Gerencial de Despesas</div>
+      <div class="dashboard-grid">
+        <div class="donut-chart" id="expense-donut">
+          <div class="donut-hole">
+            <span>Total Gasto</span>
+            <strong id="donut-total">R$ 0</strong>
+          </div>
+        </div>
+        <div class="legend-container" id="dashboard-legend">
+           <!-- Injetado via JS -->
+        </div>
+      </div>
+    </section>
+
     <!-- Lista de Despesas -->
     <main id="expenses-container" aria-label="Lista de Despesas"></main>
 
-    <!-- Resumo dos Participantes -->
+    <!-- CENTRAL DE CARONAS -->
+    <h2 class="section-title">🚗 Caronas & Logística</h2>
+    <section id="rides-container" aria-label="Lista de Caronas"></section>
+
+    <!-- Resumo dos Participantes & Acerto Inteligente -->
     <section class="summary-card" aria-label="Resumo Consolidado">
       <div class="summary-header">
         <span>📊 Resumo por Participante</span>
@@ -1008,12 +416,20 @@
       <p style="font-size: 0.78rem; color: #a5b4fc; text-align: center; margin-top: 14px;">
         * Itens sem valor preenchido não entram na soma até que o valor seja definido.
       </p>
+      
+      <!-- ACERTO INTELIGENTE -->
+      <div class="smart-settlement-box" id="smart-settlement-box">
+         <div class="settlement-title">🤖 Acerto Inteligente (PIX Consolidados)</div>
+         <p style="font-size:0.8rem; color:var(--color-text-muted); margin-bottom:10px;">Para não precisar fazer vários PIX picados, o sistema consolidou suas pendências por recebedor:</p>
+         <div id="settlement-routes-container"></div>
+      </div>
+
     </section>
 
     <!-- Rodapé -->
     <footer class="footer-section">
       <button class="btn-action-report" onclick="App.reports.copyWhatsAppReport()">
-        📋 Gerar Relatório de Atualizações
+        📋 Exportar Relatório Pós-Roça (WhatsApp)
       </button>
     </footer>
   </div>
@@ -1021,7 +437,7 @@
   <!-- Container de Toasts -->
   <div class="toast-container" id="toast-container" aria-live="polite"></div>
 
-  <!-- Modais Restantes -->
+  <!-- Modais -->
   <div id="photos-modal" class="modal-overlay" role="dialog" aria-modal="true">
     <div class="modal-content">
       <div class="modal-header">
@@ -1041,31 +457,20 @@
         </div>
         <div class="photo-grid" id="photos-container"></div>
       </div>
-      <div class="modal-footer">
-        <button class="btn-primary" onclick="App.ui.closeModal('photos-modal')">Fechar</button>
-      </div>
+      <div class="modal-footer"><button class="btn-primary" onclick="App.ui.closeModal('photos-modal')">Fechar</button></div>
     </div>
   </div>
 
   <div id="spotify-modal" class="modal-overlay" role="dialog" aria-modal="true">
     <div class="modal-content">
       <div class="modal-header">
-        <h3 style="color: var(--color-accent-emerald);">🎵 Playlist Oficial da Roça</h3>
+        <h3 style="color: var(--color-accent-emerald);">🎵 Playlist Oficial</h3>
         <button class="close-modal-btn" onclick="App.ui.closeModal('spotify-modal')">&times;</button>
       </div>
       <div class="modal-body">
-        <iframe 
-          style="border-radius:12px; width: 100%; min-height: 380px; display:block;" 
-          src="https://open.spotify.com/embed/playlist/3MHVdo7bcslLl2tWs3EjWy?utm_source=generator&theme=0" 
-          frameBorder="0" 
-          allowfullscreen="" 
-          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
-          loading="lazy">
-        </iframe>
+        <iframe style="border-radius:12px; width: 100%; min-height: 380px; display:block;" src="https://open.spotify.com/embed/playlist/3MHVdo7bcslLl2tWs3EjWy?utm_source=generator&theme=0" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
       </div>
-      <div class="modal-footer">
-        <button class="btn-primary" onclick="App.ui.closeModal('spotify-modal')">Fechar</button>
-      </div>
+      <div class="modal-footer"><button class="btn-primary" onclick="App.ui.closeModal('spotify-modal')">Fechar</button></div>
     </div>
   </div>
 
@@ -1076,32 +481,14 @@
         <button class="close-modal-btn" onclick="App.ui.closeModal('luggage-modal')">&times;</button>
       </div>
       <div class="modal-body">
-        <p style="font-size:0.82rem; color:var(--color-text-muted); margin-bottom:8px;">Itens extras logísticos para a viagem:</p>
+        <p style="font-size:0.82rem; color:var(--color-text-muted); margin-bottom:8px;">Itens extras para a viagem:</p>
         <div id="luggage-container" style="display:flex; flex-direction:column; gap:8px;"></div>
         <div class="add-input-box">
-          <input type="text" id="new-luggage-input" placeholder="Ex: Bola de vôlei, Lanterna..." onkeydown="if(event.key==='Enter') App.luggage.addItem()">
+          <input type="text" id="new-luggage-input" placeholder="Ex: Lanterna..." onkeydown="if(event.key==='Enter') App.luggage.addItem()">
           <button class="btn-primary" onclick="App.luggage.addItem()">➕ Adicionar</button>
         </div>
       </div>
-      <div class="modal-footer">
-        <button class="btn-primary" onclick="App.ui.closeModal('luggage-modal')">Salvar e Fechar</button>
-      </div>
-    </div>
-  </div>
-  
-  <div id="rides-modal" class="modal-overlay" role="dialog" aria-modal="true">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3 style="color: var(--color-accent-amber);">🚗 Central de Caronas</h3>
-        <button class="close-modal-btn" onclick="App.ui.closeModal('rides-modal')">&times;</button>
-      </div>
-      <div class="modal-body">
-        <p style="font-size:0.82rem; color:var(--color-text-muted); margin-bottom:8px;">Organize quem vai com quem e evite confusão na saída:</p>
-        <div id="rides-container"></div>
-      </div>
-      <div class="modal-footer">
-        <button class="btn-primary" onclick="App.ui.closeModal('rides-modal')">Salvar e Fechar</button>
-      </div>
+      <div class="modal-footer"><button class="btn-primary" onclick="App.ui.closeModal('luggage-modal')">Salvar e Fechar</button></div>
     </div>
   </div>
 
@@ -1111,9 +498,7 @@
         <h3>⚙️ Configurações / Edição</h3>
         <button class="close-modal-btn" onclick="App.ui.closeModal('edit-modal')">&times;</button>
       </div>
-      <div class="modal-body" id="modal-body">
-        <!-- Injetado dinamicamente -->
-      </div>
+      <div class="modal-body" id="modal-body"></div>
       <div class="modal-footer">
         <button class="btn-primary" onclick="App.settings.saveFromModal()">Salvar Alterações</button>
       </div>
@@ -1132,9 +517,7 @@
       <div class="modal-body">
         <div class="grocery-grid" id="grocery-list-container"></div>
       </div>
-      <div class="modal-footer">
-        <button class="btn-primary" onclick="App.ui.closeModal('grocery-modal')">Fechar Lista</button>
-      </div>
+      <div class="modal-footer"><button class="btn-primary" onclick="App.ui.closeModal('grocery-modal')">Fechar Lista</button></div>
     </div>
   </div>
 
@@ -1165,7 +548,7 @@
         { id: "carros", name: "🚗 Carros", total: 1373.34, responsible: "Paulinho", pix: "61992727661", pixDisplay: "61 99272-7661", excluded: ["Jeferson"] },
         { id: "chopp", name: "🍺 Chopp", total: 1090.00, responsible: "Paulinho", pix: "61992727661", pixDisplay: "61 99272-7661", excluded: [] },
         { id: "combustivel", name: "⛽ Combustível", total: null, responsible: "Jeferson", pix: "61982355635", pixDisplay: "61 98235-5635", excluded: [] },
-        { id: "comidas", name: "🍽️ Comidas", total: null, responsible: "Jeferson", pix: "61982355635", pixDisplay: "61 98235-5635", excluded: [] },
+        { id: "compras", name: "🛒 Compras", total: null, responsible: "Jeferson", pix: "61982355635", pixDisplay: "61 98235-5635", excluded: [] },
         { id: "narguile", name: "💨 Narguilé", total: null, responsible: "Steffano Santos", pix: "", pixDisplay: "A definir", excluded: ["Jeferson"] }
       ];
 
@@ -1224,6 +607,7 @@
         luggage: JSON.parse(JSON.stringify(DEFAULT_LUGGAGE)),
         rides: JSON.parse(JSON.stringify(DEFAULT_RIDES)),
         photos: [],
+        smartDebts: {}, // Guarda as rotas de PIX consolidadas
         isSaving: false,
         hasLoadedCloudOnce: false
       };
@@ -1268,7 +652,7 @@
         }
       };
 
-      /* --- REPOSITÓRIO --- */
+      /* --- REPOSITÓRIO E MIGRAÇÕES AUTOMÁTICAS --- */
       const repository = {
         loadLocal: () => {
           try {
@@ -1284,38 +668,18 @@
             if (groc) state.grocery = JSON.parse(groc);
             if (lug) state.luggage = JSON.parse(lug);
             if (pic) state.photos = JSON.parse(pic);
-            
             if (rid) {
               state.rides = JSON.parse(rid);
               state.rides.forEach(c => c.passengers = c.passengers || []);
             }
 
+            // MIGRATION: Comidas para Compras
             state.expenses.forEach(item => {
-              if (item.id === "costela" || item.id === "carnes") {
-                item.id = "carnes";
-                item.name = "🥩 Carnes";
-                if(item.total === null) item.total = 1186.70;
+              if (item.id === "comidas") {
+                item.id = "compras";
+                item.name = "🛒 Compras";
               }
             });
-            
-            const oldChopeiraIndex = state.luggage.findIndex(i => i.id === "chopeira");
-            if (oldChopeiraIndex !== -1) {
-              state.luggage.splice(oldChopeiraIndex, 1, 
-                { id: "chopeira_maq", name: "🍺 Máquina da Chopeira", assigned: "Paulinho" },
-                { id: "barril_50", name: "🛢️ Barril de Chopp (50L)", assigned: "Gustavo" },
-                { id: "barril_30", name: "🛢️ Barril de Chopp (30L)", assigned: "Jeferson" }
-              );
-            }
-            
-            if(state.luggage.length < 3) state.luggage = JSON.parse(JSON.stringify(DEFAULT_LUGGAGE));
-            if(state.rides.length < 3) state.rides = JSON.parse(JSON.stringify(DEFAULT_RIDES));
-            
-            const car1 = state.rides.find(c => c.id === "car_1");
-            if(car1) {
-              if(!car1.passengers.includes("Dona Elda")) car1.passengers.unshift("Dona Elda");
-              if(!car1.passengers.includes("Tia")) car1.passengers.splice(1, 0, "Tia");
-              if(car1.capacity < 3) car1.capacity = 3;
-            }
 
           } catch (e) {
             console.error("Falha ao carregar cache local:", e);
@@ -1338,16 +702,13 @@
         patchRemoteField: async (path, value) => {
           repository.saveLocal();
           if (!navigator.onLine) return;
-
           try {
             await fetch(`${CONFIG.FIREBASE_BASE_URL}/${path}.json`, {
               method: "PUT",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify(value)
             });
-          } catch (err) {
-            console.warn(`Erro no patch do caminho ${path}:`, err);
-          }
+          } catch (err) { console.warn(`Erro no patch do caminho ${path}:`, err); }
         },
 
         syncEntireState: async () => {
@@ -1368,24 +729,18 @@
               rides: state.rides,
               lastUpdated: Date.now()
             });
-
             const res = await fetch(`${CONFIG.FIREBASE_BASE_URL}.json`, {
               method: "PUT",
               headers: { "Content-Type": "application/json" },
               body: payload
             });
-
             if (res.ok) state.hasLoadedCloudOnce = true;
-          } catch (err) {
-            console.warn("Erro ao sincronizar tudo:", err);
-          } finally {
-            setTimeout(() => { state.isSaving = false; }, 400);
-          }
+          } catch (err) { console.warn("Erro ao sincronizar tudo:", err);
+          } finally { setTimeout(() => { state.isSaving = false; }, 400); }
         },
 
         syncFromCloud: async () => {
           if (state.isSaving || !navigator.onLine) return;
-
           try {
             const res = await fetch(`${CONFIG.FIREBASE_BASE_URL}.json?t=${Date.now()}`);
             if (res.ok) {
@@ -1394,68 +749,41 @@
                 state.expenses = data.expenses;
 
                 let needsCloudCorrection = false;
+                
+                // MIGRATION NUVEM: Comidas para Compras
                 state.expenses.forEach(item => {
-                  if (item.id === "costela" || item.id === "carnes") {
-                    if (item.id !== "carnes" || item.name !== "🥩 Carnes" || item.total !== 1186.70) {
-                      needsCloudCorrection = true;
-                    }
-                    item.id = "carnes";
-                    item.name = "🥩 Carnes";
+                  if (item.id === "comidas") {
+                    item.id = "compras";
+                    item.name = "🛒 Compras";
+                    needsCloudCorrection = true;
                   }
                 });
 
                 state.payments = data.payments || {};
                 state.grocery = data.grocery || {};
-                
-                if (data.luggage && data.luggage.length > 0) {
-                  state.luggage = data.luggage;
-                  const oldChopeiraIndex = state.luggage.findIndex(i => i.id === "chopeira");
-                  if (oldChopeiraIndex !== -1) {
-                    needsCloudCorrection = true;
-                    state.luggage.splice(oldChopeiraIndex, 1, 
-                      { id: "chopeira_maq", name: "🍺 Máquina da Chopeira", assigned: "Paulinho" },
-                      { id: "barril_50", name: "🛢️ Barril de Chopp (50L)", assigned: "Gustavo" },
-                      { id: "barril_30", name: "🛢️ Barril de Chopp (30L)", assigned: "Jeferson" }
-                    );
-                  }
-                } else {
-                  needsCloudCorrection = true;
-                }
-                
+                if (data.luggage) state.luggage = data.luggage;
                 if (data.photos) state.photos = data.photos;
-                
-                if (data.rides && data.rides.length > 2) {
+                if (data.rides) {
                   state.rides = data.rides.map(car => {
                      car.passengers = car.passengers || []; 
-                     if(car.id === "car_1") {
-                       if(!car.passengers.includes("Dona Elda")) { car.passengers.unshift("Dona Elda"); needsCloudCorrection = true; }
-                       if(!car.passengers.includes("Tia")) { car.passengers.splice(1, 0, "Tia"); needsCloudCorrection = true; }
-                       if(car.capacity < 3) { car.capacity = 3; needsCloudCorrection = true; }
-                     }
                      return car;
                   });
-                } else {
-                  needsCloudCorrection = true;
                 }
 
                 repository.saveLocal();
                 ui.renderAll();
                 state.hasLoadedCloudOnce = true;
 
-                if (needsCloudCorrection) {
-                  repository.syncEntireState();
-                }
+                if (needsCloudCorrection) repository.syncEntireState();
               } else if (data === null && !state.hasLoadedCloudOnce) {
                 repository.syncEntireState();
               }
             }
-          } catch (err) {
-            console.warn("Erro ao buscar dados remotos:", err);
-          }
+          } catch (err) { console.warn("Erro ao buscar dados remotos:", err); }
         }
       };
 
-      /* --- SERVIÇOS --- */
+      /* --- SERVIÇOS DE NEGÓCIOS --- */
       const settingsService = {
         saveFromModal: () => {
           state.expenses.forEach(exp => {
@@ -1463,7 +791,6 @@
             const respInput = document.getElementById(`modal_resp_${exp.id}`);
             const pixInput = document.getElementById(`modal_pix_${exp.id}`);
             const dispInput = document.getElementById(`modal_disp_${exp.id}`);
-
             if (totalInput) {
               const val = totalInput.value.trim();
               exp.total = val !== "" && !isNaN(val) ? parseFloat(val) : null;
@@ -1477,7 +804,6 @@
             const driverInput = document.getElementById(`modal_car_driver_${car.id}`);
             const capInput = document.getElementById(`modal_car_cap_${car.id}`);
             const noteInput = document.getElementById(`modal_car_note_${car.id}`);
-            
             if(driverInput) car.driver = driverInput.value.trim();
             if(capInput) car.capacity = parseInt(capInput.value) || 0;
             if(noteInput) car.note = noteInput.value.trim();
@@ -1497,7 +823,6 @@
           const key = `${expId}_${person}`;
           state.payments[key] = !state.payments[key];
           ui.renderExpenses();
-
           repository.patchRemoteField(`payments/${key}`, state.payments[key]);
           utils.showToast(state.payments[key] ? `Pagamento marcado: ${person}` : `Pagamento desmarcado: ${person}`);
         }
@@ -1506,17 +831,12 @@
       const photosService = {
         triggerFileInput: () => {
           const select = document.getElementById("photo-sender-select");
-          if (!select.value) {
-            utils.showToast("Selecione quem tirou a foto primeiro!", "⚠️");
-            return;
-          }
+          if (!select.value) { utils.showToast("Selecione quem tirou a foto primeiro!", "⚠️"); return; }
           document.getElementById("photo-file-input").click();
         },
-
         handleUpload: (event) => {
           const file = event.target.files[0];
           if (!file) return;
-
           const author = document.getElementById("photo-sender-select").value || "Alguém";
           const reader = new FileReader();
 
@@ -1526,29 +846,20 @@
             img.onload = () => {
               const canvas = document.createElement("canvas");
               let { width, height } = img;
-
               if (width > CONFIG.PHOTO_MAX_WIDTH) {
                 height = Math.round((height * CONFIG.PHOTO_MAX_WIDTH) / width);
                 width = CONFIG.PHOTO_MAX_WIDTH;
               }
-
-              canvas.width = width;
-              canvas.height = height;
+              canvas.width = width; canvas.height = height;
               const ctx = canvas.getContext("2d");
               ctx.drawImage(img, 0, 0, width, height);
-
               const compressedData = canvas.toDataURL("image/jpeg", CONFIG.PHOTO_JPEG_QUALITY);
 
               state.photos.unshift({
-                id: `photo_${Date.now()}`,
-                url: compressedData,
-                author,
+                id: `photo_${Date.now()}`, url: compressedData, author,
                 date: new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })
               });
-
-              if (state.photos.length > CONFIG.MAX_PHOTOS) {
-                state.photos = state.photos.slice(0, CONFIG.MAX_PHOTOS);
-              }
+              if (state.photos.length > CONFIG.MAX_PHOTOS) state.photos = state.photos.slice(0, CONFIG.MAX_PHOTOS);
 
               ui.renderPhotos();
               repository.patchRemoteField('photos', state.photos);
@@ -1558,7 +869,6 @@
           };
           reader.readAsDataURL(file);
         },
-
         deletePhoto: (photoId) => {
           state.photos = state.photos.filter(p => p.id !== photoId);
           ui.renderPhotos();
@@ -1579,7 +889,7 @@
           }
         },
         removePassenger: (carId, person) => {
-          if (person === "Dona Elda" || person === "Tia") return; // Proteção extra contra exclusão
+          if (person === "Dona Elda" || person === "Tia") return; // VIP Protection
           const car = state.rides.find(c => c.id === carId);
           if (car) {
             car.passengers = car.passengers.filter(p => p !== person);
@@ -1603,13 +913,7 @@
           const input = document.getElementById("new-luggage-input");
           const name = input.value.trim();
           if (!name) return;
-
-          state.luggage.push({
-            id: `custom_${Date.now()}`,
-            name: name.startsWith("🎒") ? name : `🎒 ${name}`,
-            assigned: ""
-          });
-
+          state.luggage.push({ id: `custom_${Date.now()}`, name: name.startsWith("🎒") ? name : `🎒 ${name}`, assigned: "" });
           input.value = "";
           ui.renderLuggage();
           repository.patchRemoteField('luggage', state.luggage);
@@ -1622,18 +926,18 @@
           state.grocery[itemId] = !state.grocery[itemId];
           ui.renderGrocery();
           ui.renderExpenses();
-
           repository.patchRemoteField(`grocery/${itemId}`, state.grocery[itemId]);
           utils.showToast(state.grocery[itemId] ? "Item marcado como comprado!" : "Item desmarcado.");
         }
       };
 
+      /* --- RELATÓRIOS E EXPORTAÇÃO --- */
       const reportsService = {
         copyWhatsAppReport: () => {
-          let report = `🌾 *STATUS DE PAGAMENTOS E LOGÍSTICA - ROÇA 2.0* 🌾\n`;
+          let report = `🌾 *RESUMO DE FECHAMENTO - ROÇA 2.0* 🌾\n`;
           report += `📅 *Período:* 30/10 a 02/11\n`;
           report += `------------------------------------\n\n`;
-          report += `📋 *DESPESAS E ARRECADAÇÃO:*\n`;
+          report += `📋 *STATUS DAS DESPESAS:*\n`;
 
           const balances = {};
           const sortedParticipants = [...PARTICIPANTS].sort((a, b) => a.localeCompare(b, 'pt-BR'));
@@ -1641,12 +945,16 @@
 
           const sortedExpenses = [...state.expenses].sort((a, b) => utils.cleanName(a.name).localeCompare(utils.cleanName(b.name), 'pt-BR'));
 
+          let totalGasto = 0;
+
           sortedExpenses.forEach(exp => {
             const excluded = exp.excluded || [];
             const activePeople = sortedParticipants.filter(p => !excluded.includes(p));
             const activeCount = activePeople.length;
             const hasDefined = typeof exp.total === 'number' && exp.total > 0 && activeCount > 0;
             const perPersonVal = hasDefined ? exp.total / activeCount : 0;
+
+            if (hasDefined) totalGasto += exp.total;
 
             let paidCount = 0;
             const pendingNames = [];
@@ -1676,28 +984,29 @@
           });
 
           report += `------------------------------------\n`;
-          report += `👤 *RESUMO INDIVIDUAL (QUANTO FALTA):*\n`;
+          report += `📈 *CUSTO TOTAL DA VIAGEM:* ${utils.formatBRL(totalGasto)}\n`;
+          report += `------------------------------------\n\n`;
 
-          sortedParticipants.forEach(person => {
-            const { totalOwed, totalPaid } = balances[person];
-            const pending = Math.max(0, totalOwed - totalPaid);
-
-            if (totalOwed === 0) report += `• ${person}: Nenhum valor pendente\n`;
-            else if (pending < 0.01) report += `• *${person}*: ✅ Quitado! (Total: ${utils.formatBRL(totalPaid)})\n`;
-            else report += `• *${person}*: Deve ${utils.formatBRL(pending)} (Pago: ${utils.formatBRL(totalPaid)} / Total: ${utils.formatBRL(totalOwed)})\n`;
-          });
+          // Geração do Relatório do Acerto Inteligente
+          report += `🤖 *ACERTO INTELIGENTE (COMO PAGAR):*\n`;
+          let hasDebts = false;
           
-          report += `\n------------------------------------\n`;
-          report += `🚗 *CARONAS E VAGAS:*\n`;
-          state.rides.forEach(car => {
-            report += `• Carro: ${car.driver} (${car.passengers.length}/${car.capacity} vagas)\n`;
-            if (car.passengers.length > 0) report += `  Passageiros: ${car.passengers.join(", ")}\n`;
-            if (car.note) report += `  ⚠️ ${car.note}\n`;
-            report += `\n`;
+          Object.keys(state.smartDebts).sort().forEach(debtor => {
+             const creditorsObj = state.smartDebts[debtor];
+             Object.keys(creditorsObj).sort().forEach(creditor => {
+                 const amount = creditorsObj[creditor];
+                 if (amount > 0.01) {
+                     hasDebts = true;
+                     report += `💸 *${debtor}* ➔ envia ${utils.formatBRL(amount)} para *${creditor}*\n`;
+                 }
+             });
           });
+
+          if (!hasDebts) report += `✅ Tudo 100% quitado entre o grupo!\n\n`;
+          else report += `\n`;
 
           report += `------------------------------------\n`;
-          report += `🔑 *CHAVES PIX PARA PAGAMENTO:*\n`;
+          report += `🔑 *CHAVES PIX DOS RECEBEDORES:*\n`;
 
           const addedPix = new Map();
           sortedExpenses.forEach(exp => {
@@ -1710,26 +1019,19 @@
             .sort((a, b) => a[0].localeCompare(b[0], 'pt-BR'))
             .forEach(([resp, key]) => { report += `• ${resp}: \`${key}\`\n`; });
 
-          utils.copyToClipboard(report, "Relatório copiado para a área de transferência!");
+          utils.copyToClipboard(report, "Resumo Pós-Roça copiado para a área de transferência!");
         }
       };
 
       /* --- CAMADA DE INTERFACE (VIEW / UI CONTROLLER) --- */
       const ui = {
         carousel: {
-          index: 0,
-          touchStartX: 0,
-          touchEndX: 0,
+          index: 0, touchStartX: 0, touchEndX: 0,
           initSwipe: () => {
             const track = document.getElementById('carousel-track');
             if(!track) return;
-            track.addEventListener('touchstart', e => {
-              App.ui.carousel.touchStartX = e.changedTouches[0].screenX;
-            }, {passive: true});
-            track.addEventListener('touchend', e => {
-              App.ui.carousel.touchEndX = e.changedTouches[0].screenX;
-              App.ui.carousel.handleSwipe();
-            }, {passive: true});
+            track.addEventListener('touchstart', e => { App.ui.carousel.touchStartX = e.changedTouches[0].screenX; }, {passive: true});
+            track.addEventListener('touchend', e => { App.ui.carousel.touchEndX = e.changedTouches[0].screenX; App.ui.carousel.handleSwipe(); }, {passive: true});
           },
           handleSwipe: () => {
             const diff = App.ui.carousel.touchStartX - App.ui.carousel.touchEndX;
@@ -1739,27 +1041,13 @@
           updateTransform: () => {
             const track = document.getElementById('carousel-track');
             if(track) track.style.transform = `translateX(-${App.ui.carousel.index * 100}%)`;
-            
             document.querySelectorAll('.carousel-dot').forEach((dot, idx) => {
               dot.classList.toggle('active', idx === App.ui.carousel.index);
             });
           },
-          next: () => {
-            if(App.ui.carousel.index < state.photos.length - 1) {
-              App.ui.carousel.index++;
-              App.ui.carousel.updateTransform();
-            }
-          },
-          prev: () => {
-            if(App.ui.carousel.index > 0) {
-              App.ui.carousel.index--;
-              App.ui.carousel.updateTransform();
-            }
-          },
-          goTo: (idx) => {
-            App.ui.carousel.index = idx;
-            App.ui.carousel.updateTransform();
-          },
+          next: () => { if(App.ui.carousel.index < state.photos.length - 1) { App.ui.carousel.index++; App.ui.carousel.updateTransform(); } },
+          prev: () => { if(App.ui.carousel.index > 0) { App.ui.carousel.index--; App.ui.carousel.updateTransform(); } },
+          goTo: (idx) => { App.ui.carousel.index = idx; App.ui.carousel.updateTransform(); },
           render: () => {
             const track = document.getElementById('carousel-track');
             const indicators = document.getElementById('carousel-indicators');
@@ -1768,27 +1056,19 @@
             if(!track || !indicators || !emptyText) return;
             
             if (state.photos.length === 0) {
-              track.innerHTML = '';
-              indicators.innerHTML = '';
-              emptyText.style.display = 'block';
-              return;
+              track.innerHTML = ''; indicators.innerHTML = ''; emptyText.style.display = 'block'; return;
             }
             emptyText.style.display = 'none';
 
             track.innerHTML = state.photos.map((photo) => `
               <div class="carousel-slide">
                 <img src="${photo.url}" alt="Foto" loading="lazy" onclick="window.open('${photo.url}')">
-                <div class="carousel-author-tag">📸 ${photo.author}</div>
+                <div class="carousel-author-tag">📸 ${photo.author} (${photo.date || ''})</div>
               </div>
             `).join('');
 
-            indicators.innerHTML = state.photos.map((_, idx) => `
-              <div class="carousel-dot ${idx === App.ui.carousel.index ? 'active' : ''}" onclick="App.ui.carousel.goTo(${idx})"></div>
-            `).join('');
-
-            if(App.ui.carousel.index >= state.photos.length) {
-              App.ui.carousel.index = Math.max(0, state.photos.length - 1);
-            }
+            indicators.innerHTML = state.photos.map((_, idx) => `<div class="carousel-dot ${idx === App.ui.carousel.index ? 'active' : ''}" onclick="App.ui.carousel.goTo(${idx})"></div>`).join('');
+            if(App.ui.carousel.index >= state.photos.length) App.ui.carousel.index = Math.max(0, state.photos.length - 1);
             App.ui.carousel.updateTransform();
           }
         },
@@ -1797,31 +1077,24 @@
           document.getElementById("drawer-menu").classList.toggle("active", open);
           document.getElementById("drawer-overlay").classList.toggle("active", open);
         },
-
         openModal: (modalId) => {
           if (modalId === 'photos-modal') ui.populatePhotoSenders();
           if (modalId === 'edit-modal') ui.renderEditModal();
-          if (modalId === 'rides-modal') ui.renderRides();
           document.getElementById(modalId)?.classList.add("active");
         },
-
-        closeModal: (modalId) => {
-          document.getElementById(modalId)?.classList.remove("active");
-        },
+        closeModal: (modalId) => { document.getElementById(modalId)?.classList.remove("active"); },
 
         updateCountdown: () => {
           const now = new Date();
-          // Target configurado para 30/10/2026 às 18:00
           const targetDate = new Date(CONFIG.COUNTDOWN_TARGET.year, CONFIG.COUNTDOWN_TARGET.month, CONFIG.COUNTDOWN_TARGET.day, CONFIG.COUNTDOWN_TARGET.hour, 0, 0);
 
           const diff = targetDate.getTime() - now.getTime();
           const countdownSection = document.getElementById("countdown-section");
           const carouselSection = document.getElementById("carousel-section");
 
-          // Quando a contagem zera (ou já passou da hora da partida), o cronômetro some e o carrossel entra em cena permanentemente
-          if (diff <= 0) {
+          if (diff <= 0) { // Atingiu a hora da partida, mostra o carrossel
             if (countdownSection) countdownSection.style.display = "none";
-            if (carouselSection) {
+            if (carouselSection && carouselSection.style.display !== "block") {
                carouselSection.style.display = "block";
                App.ui.carousel.updateTransform();
             }
@@ -1842,16 +1115,69 @@
           document.getElementById("cd-seconds").textContent = String(seconds).padStart(2, '0');
         },
 
+        renderDashboard: (categoryTotals, grandTotal) => {
+          const dashboard = document.getElementById("dashboard-section");
+          if (!dashboard) return;
+          if (grandTotal <= 0) { dashboard.style.display = "none"; return; }
+          
+          dashboard.style.display = "block";
+          
+          const colors = {
+             "Transporte": "#38bdf8",      // Sky
+             "Carnes & Bebidas": "#f87171", // Rose
+             "Compras & Extras": "#22c55e"  // Emerald
+          };
+
+          let conicString = "";
+          let startAngle = 0;
+          let legendHtml = "";
+
+          for (const [cat, val] of Object.entries(categoryTotals)) {
+              if (val > 0) {
+                 const percentage = (val / grandTotal) * 100;
+                 const endAngle = startAngle + percentage;
+                 conicString += `${colors[cat]} ${startAngle}% ${endAngle}%, `;
+                 startAngle = endAngle;
+
+                 legendHtml += `
+                   <div class="legend-item">
+                      <div>
+                        <span class="legend-color-box" style="background:${colors[cat]};"></span>
+                        <span style="color:var(--color-text-main); font-weight:500;">${cat}</span>
+                      </div>
+                      <strong style="color:${colors[cat]};">${utils.formatBRL(val)} <span style="font-size:0.75rem; color:var(--color-text-muted);">(${percentage.toFixed(0)}%)</span></strong>
+                   </div>
+                 `;
+              }
+          }
+
+          if (conicString.length > 0) {
+             conicString = conicString.slice(0, -2);
+             document.getElementById("expense-donut").style.background = `conic-gradient(${conicString})`;
+          }
+          
+          document.getElementById("donut-total").textContent = utils.formatBRL(grandTotal);
+          document.getElementById("dashboard-legend").innerHTML = legendHtml;
+        },
+
         renderExpenses: () => {
           const container = document.getElementById("expenses-container");
           if (!container) return;
           container.innerHTML = "";
 
           const balances = {};
+          const debts = {}; // Para o Acerto Inteligente
+          
           const sortedParticipants = [...PARTICIPANTS].sort((a, b) => a.localeCompare(b, 'pt-BR'));
-          sortedParticipants.forEach(p => { balances[p] = { totalOwed: 0, totalPaid: 0 }; });
+          sortedParticipants.forEach(p => { 
+             balances[p] = { totalOwed: 0, totalPaid: 0 }; 
+             debts[p] = {}; 
+          });
 
           const sortedExpenses = [...state.expenses].sort((a, b) => utils.cleanName(a.name).localeCompare(utils.cleanName(b.name), 'pt-BR'));
+          
+          let totalGastoViagem = 0;
+          let categoryTotals = { "Transporte": 0, "Carnes & Bebidas": 0, "Compras & Extras": 0 };
 
           sortedExpenses.forEach(exp => {
             const card = document.createElement("article");
@@ -1871,9 +1197,15 @@
             const hasDefinedValue = typeof exp.total === 'number' && exp.total > 0 && activeCount > 0;
 
             if (hasDefinedValue) {
+              totalGastoViagem += exp.total;
               perPersonVal = exp.total / activeCount;
               perPersonText = `${utils.formatBRL(perPersonVal)} / pessoa`;
               totalText = utils.formatBRL(exp.total);
+              
+              // Categoria para Gráfico Dashboard
+              if(exp.id === "carros" || exp.id === "combustivel") categoryTotals["Transporte"] += exp.total;
+              else if (exp.id === "carnes" || exp.id === "chopp") categoryTotals["Carnes & Bebidas"] += exp.total;
+              else categoryTotals["Compras & Extras"] += exp.total;
             }
 
             let paidCountInExp = 0;
@@ -1887,6 +1219,11 @@
               if (perPersonVal > 0) {
                 balances[person].totalOwed += perPersonVal;
                 if (isPaid) balances[person].totalPaid += perPersonVal;
+                
+                // Lógica do Acerto Inteligente (Apenas se a pessoa não pagou)
+                if (!isPaid && exp.responsible && exp.responsible !== "A definir" && person !== exp.responsible) {
+                    debts[person][exp.responsible] = (debts[person][exp.responsible] || 0) + perPersonVal;
+                }
               }
 
               peopleHtml += `
@@ -1933,15 +1270,11 @@
                 </div>
               `;
             } else {
-              statusHtml = `
-                <div class="expense-status-row">
-                  <span style="color: var(--color-text-muted);">Valores pendentes de definição</span>
-                </div>
-              `;
+              statusHtml = `<div class="expense-status-row"><span style="color: var(--color-text-muted);">Valores pendentes de definição</span></div>`;
             }
 
             let checklistBtnHtml = '';
-            if (exp.id === 'comidas') {
+            if (exp.id === 'compras') {
               const boughtTotal = Object.values(state.grocery).filter(Boolean).length;
               checklistBtnHtml = `
                 <button class="checklist-trigger-btn" onclick="App.ui.openModal('grocery-modal')">
@@ -1974,14 +1307,18 @@
             container.appendChild(card);
           });
 
-          ui.renderSummary(balances, sortedParticipants);
+          // Atualiza Resumo e Dashboard
+          state.smartDebts = debts; // Guarda no state para exportação
+          ui.renderDashboard(categoryTotals, totalGastoViagem);
+          ui.renderSummary(balances, sortedParticipants, debts);
         },
 
-        renderSummary: (balances, sortedParticipants) => {
+        renderSummary: (balances, sortedParticipants, debts) => {
           const summaryContainer = document.getElementById("summary-container");
           if (!summaryContainer) return;
           summaryContainer.innerHTML = "";
 
+          // 1. Resumo por Participante
           sortedParticipants.forEach(person => {
             const { totalOwed, totalPaid } = balances[person];
             const pending = Math.max(0, totalOwed - totalPaid);
@@ -2004,8 +1341,40 @@
             `;
             summaryContainer.appendChild(row);
           });
+          
+          // 2. Acerto Inteligente (Rotas de PIX Consolidadas)
+          const settlementContainer = document.getElementById("settlement-routes-container");
+          if (settlementContainer) {
+              settlementContainer.innerHTML = "";
+              let hasDebts = false;
+              
+              Object.keys(debts).sort().forEach(debtor => {
+                 const creditors = debts[debtor];
+                 Object.keys(creditors).sort().forEach(creditor => {
+                     const amount = creditors[creditor];
+                     if (amount > 0.01) {
+                         hasDebts = true;
+                         const route = document.createElement("div");
+                         route.className = "settlement-route";
+                         route.innerHTML = `
+                            <div>
+                               <strong style="color: var(--color-accent-rose);">${debtor}</strong> 
+                               <span class="route-arrow">➔ envia para</span> 
+                               <strong>${creditor}</strong>
+                            </div>
+                            <div class="route-amount">${utils.formatBRL(amount)}</div>
+                         `;
+                         settlementContainer.appendChild(route);
+                     }
+                 });
+              });
+              
+              if(!hasDebts) {
+                  settlementContainer.innerHTML = `<div style="text-align:center; padding:10px; color:#86efac; font-weight:600; background:rgba(34,197,94,0.1); border-radius:6px;">🎉 Tudo 100% quitado entre o grupo!</div>`;
+              }
+          }
         },
-        
+
         renderRides: () => {
           const container = document.getElementById("rides-container");
           if (!container) return;
@@ -2022,8 +1391,11 @@
 
           state.rides.forEach(car => {
             const card = document.createElement("div");
-            card.className = "edit-item-card"; 
-            card.style.marginBottom = "12px";
+            card.className = "expense-card"; 
+            card.style.borderLeft = "4px solid var(--color-accent-amber)";
+            card.style.marginBottom = "16px";
+            
+            car.passengers = car.passengers || [];
 
             let passengersHtml = car.passengers.map(p => {
               const isFixed = p === "Dona Elda" || p === "Tia";
@@ -2035,32 +1407,30 @@
             }).join('');
 
             if (car.passengers.length === 0) {
-              passengersHtml = `<span style="font-size:0.8rem; color:var(--color-text-muted);">Nenhum passageiro do grupo ainda.</span>`;
+              passengersHtml = `<span style="font-size:0.85rem; color:var(--color-text-muted);">Nenhum passageiro do grupo ainda.</span>`;
             }
 
             let optionsHtml = `<option value="">+ Adicionar ao carro</option>`;
-            available.forEach(p => {
-              optionsHtml += `<option value="${p}">${p}</option>`;
-            });
+            available.forEach(p => { optionsHtml += `<option value="${p}">${p}</option>`; });
 
             const canAdd = car.passengers.length < car.capacity;
 
             card.innerHTML = `
-              <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--color-border); padding-bottom:8px; margin-bottom:8px;">
-                <span style="font-weight:bold; color:var(--color-accent-amber); font-size: 0.95rem;">🚗 Carro: ${car.driver}</span>
-                <span style="font-size:0.75rem; background:var(--color-bg-surface); padding:3px 8px; border-radius:6px; border:1px solid var(--color-border);">${car.passengers.length}/${car.capacity} vagas</span>
+              <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--color-border); padding-bottom:8px; margin-bottom:12px;">
+                <span style="font-weight:bold; color:var(--color-accent-amber); font-size: 1.05rem;">🚘 ${car.driver}</span>
+                <span style="font-size:0.75rem; background:var(--color-bg-primary); padding:4px 8px; border-radius:6px; border:1px solid var(--color-border); color: var(--color-text-muted);">${car.passengers.length}/${car.capacity} vagas</span>
               </div>
-              <div style="font-size:0.8rem; color:var(--color-text-muted); margin-bottom:10px; display: flex; flex-direction: column; gap: 4px;">
-                ${car.note ? `<span style="color:var(--color-accent-rose); font-weight:bold;">⚠️ ${car.note}</span>` : ''}
+              <div style="font-size:0.82rem; color:var(--color-text-muted); margin-bottom:12px; display: flex; flex-direction: column; gap: 4px;">
+                ${car.note ? `<span style="color:var(--color-accent-rose); font-weight:600;">⚠️ ${car.note}</span>` : ''}
               </div>
-              <div style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:12px; min-height: 28px; align-items:center;">
+              <div style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:14px; min-height: 28px; align-items:center;">
                 ${passengersHtml}
               </div>
               ${canAdd && available.length > 0 ? `
-                <select style="width:100%; background:var(--color-bg-surface); border:1px solid var(--color-border); color:var(--color-accent-sky); padding:8px; border-radius:6px; font-size:0.85rem;" onchange="App.rides.addPassenger('${car.id}', this.value); this.value='';">
+                <select style="width:100%; background:var(--color-bg-primary); border:1px solid var(--color-border); color:var(--color-accent-sky); padding:10px; border-radius:8px; font-size:0.9rem;" onchange="App.rides.addPassenger('${car.id}', this.value); this.value='';">
                   ${optionsHtml}
                 </select>
-              ` : `<div style="font-size:0.8rem; background: rgba(34, 197, 94, 0.1); padding:6px; border-radius: 6px; color:var(--color-accent-emerald); text-align:center; border: 1px solid rgba(34, 197, 94, 0.3);">${!canAdd ? '⚠️ Vagas do grupo esgotadas!' : '✅ Todos do grupo já têm carona!'}</div>`}
+              ` : `<div style="font-size:0.85rem; background: rgba(34, 197, 94, 0.1); padding:8px; border-radius: 8px; color:var(--color-accent-emerald); text-align:center; border: 1px solid rgba(34, 197, 94, 0.3); font-weight:500;">${!canAdd ? '⚠️ Vagas esgotadas!' : '✅ Todos já têm carona!'}</div>`}
             `;
             container.appendChild(card);
           });
@@ -2075,11 +1445,9 @@
           GROCERY_ITEMS.forEach(item => {
             const isBought = !!state.grocery[item.id];
             if (isBought) boughtCount++;
-
             const row = document.createElement("div");
             row.className = `grocery-item ${isBought ? 'bought' : ''}`;
             row.onclick = () => groceryService.toggleItem(item.id);
-
             row.innerHTML = `
               <div class="grocery-left">
                 <input type="checkbox" ${isBought ? 'checked' : ''} style="cursor: pointer;" onclick="event.stopPropagation(); App.grocery.toggleItem('${item.id}')">
@@ -2089,7 +1457,6 @@
             `;
             container.appendChild(row);
           });
-
           const counter = document.getElementById("grocery-counter");
           if (counter) counter.textContent = `${boughtCount} de ${GROCERY_ITEMS.length} itens comprados`;
         },
@@ -2098,16 +1465,11 @@
           const container = document.getElementById("luggage-container");
           if (!container) return;
           container.innerHTML = "";
-
           state.luggage.forEach(item => {
             const row = document.createElement("div");
             row.style.cssText = "display:flex; justify-content:space-between; align-items:center; background:#0f172a; padding:10px 12px; border-radius:8px; border:1px solid var(--color-border);";
-
             let opts = `<option value="">Ninguém ainda</option>`;
-            PARTICIPANTS.forEach(p => {
-              opts += `<option value="${p}" ${item.assigned === p ? 'selected' : ''}>${p}</option>`;
-            });
-
+            PARTICIPANTS.forEach(p => { opts += `<option value="${p}" ${item.assigned === p ? 'selected' : ''}>${p}</option>`; });
             row.innerHTML = `
               <span style="font-weight:500; font-size:0.88rem;">${item.name}</span>
               <select style="background:#1e293b; border:1px solid var(--color-border); color:var(--color-accent-sky); padding:5px 8px; border-radius:6px; font-size:0.8rem;" onchange="App.luggage.updateAssignment('${item.id}', this.value)">
@@ -2122,7 +1484,6 @@
           const container = document.getElementById("photos-container");
           if (!container) return;
           container.innerHTML = "";
-
           if (state.photos.length === 0) {
             container.innerHTML = `<p style="grid-column: 1/-1; text-align:center; color:var(--color-text-muted); font-size:0.85rem; padding: 20px;">Nenhuma foto enviada ainda. Seja o primeiro a tirar uma foto!</p>`;
           } else {
@@ -2137,8 +1498,7 @@
               container.appendChild(item);
             });
           }
-          
-          App.ui.carousel.render(); // Sincroniza com o carrossel principal
+          App.ui.carousel.render(); 
         },
 
         populatePhotoSenders: () => {
@@ -2146,8 +1506,7 @@
           if (select && select.options.length <= 1) {
             PARTICIPANTS.forEach(p => {
               const opt = document.createElement("option");
-              opt.value = p;
-              opt.textContent = p;
+              opt.value = p; opt.textContent = p;
               select.appendChild(opt);
             });
           }
@@ -2156,10 +1515,8 @@
         renderEditModal: () => {
           const modalBody = document.getElementById("modal-body");
           if (!modalBody) return;
-          
           let expensesHtml = `<h4 style="color: var(--color-accent-sky); margin-bottom: 10px;">💰 Gastos e Divisões</h4>`;
           const sortedExpenses = [...state.expenses].sort((a, b) => utils.cleanName(a.name).localeCompare(utils.cleanName(b.name), 'pt-BR'));
-
           sortedExpenses.forEach(exp => {
             expensesHtml += `
               <div class="edit-item-card" style="margin-bottom: 10px;">
@@ -2208,7 +1565,6 @@
               </div>
             `;
           });
-          
           modalBody.innerHTML = expensesHtml + carsHtml;
         },
 
@@ -2237,22 +1593,10 @@
             event.target.classList.remove('active');
           }
         });
-
         repository.syncFromCloud();
       };
 
-      return {
-        init,
-        ui,
-        utils,
-        settings: settingsService,
-        expenses: expensesService,
-        photos: photosService,
-        luggage: luggageService,
-        rides: ridesService,
-        grocery: groceryService,
-        reports: reportsService
-      };
+      return { init, ui, utils, settings: settingsService, expenses: expensesService, photos: photosService, luggage: luggageService, rides: ridesService, grocery: groceryService, reports: reportsService };
     })();
 
     document.addEventListener("DOMContentLoaded", App.init);
