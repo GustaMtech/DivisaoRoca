@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <meta name="theme-color" content="#0f172a" />
   <meta name="description" content="Dashboard de Gestão Financeira e Coordenação - Roça 2.0" />
   <title>Divisão Roça 2.0 🌾</title>
@@ -377,6 +377,17 @@
     /* ==========================================================================
        5. COMPONENTES: RESUMO & RODAPÉ
        ========================================================================== */
+    .section-title {
+      font-size: 1.2rem;
+      color: var(--color-accent-amber);
+      margin: 24px 0 14px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--color-border);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
     .summary-card {
       background: #1e1b4b;
       border: 1px solid #4338ca;
@@ -766,6 +777,65 @@
       border-radius: var(--radius-md);
       font-size: 0.88rem;
     }
+    
+    /* CSS para Central de Caronas (Tela Inicial) */
+    .passenger-chip {
+      background: rgba(56, 189, 248, 0.15);
+      color: var(--color-accent-sky);
+      border: 1px solid rgba(56, 189, 248, 0.4);
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 500;
+    }
+    .passenger-chip span {
+      cursor: pointer;
+      color: var(--color-accent-rose);
+      font-weight: bold;
+      font-size: 1.1rem;
+      line-height: 1;
+      padding: 0 2px;
+    }
+
+    /* ==========================================================================
+       7. NOTIFICAÇÕES TOAST
+       ========================================================================== */
+    .toast-container {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2000;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      pointer-events: none;
+    }
+
+    .toast-message {
+      background: #1e293b;
+      color: #f8fafc;
+      border: 1px solid rgba(56, 189, 248, 0.4);
+      padding: 10px 18px;
+      border-radius: 999px;
+      font-size: 0.88rem;
+      font-weight: 500;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+      opacity: 0;
+      transform: translateY(12px) scale(0.95);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .toast-message.show {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
 
     /* Media Queries */
     @media (max-width: 540px) {
@@ -794,7 +864,7 @@
       <button class="drawer-btn" onclick="App.ui.toggleDrawer(false); App.ui.openModal('spotify-modal');">🎵 Playlist Spotify</button>
       <button class="drawer-btn" onclick="App.ui.toggleDrawer(false); App.ui.openModal('luggage-modal');">🎒 Quem Leva o Quê?</button>
       <button class="drawer-btn" onclick="App.ui.toggleDrawer(false); App.ui.openModal('grocery-modal');">🛒 Lista de Compras</button>
-      <button class="drawer-btn" onclick="App.ui.toggleDrawer(false); App.ui.openModal('edit-modal');">⚙️ Editar Gastos / PIX</button>
+      <button class="drawer-btn" onclick="App.ui.toggleDrawer(false); App.ui.openModal('edit-modal');">⚙️ Configurações / PIX</button>
     </nav>
   </aside>
 
@@ -804,7 +874,7 @@
       <div class="top-bar-left">
         <button class="btn-icon" onclick="App.ui.toggleDrawer(true)" title="Menu de opções" aria-label="Abrir Menu">☰</button>
       </div>
-      <button class="btn-secondary" onclick="App.ui.openModal('edit-modal')">⚙️ Gastos / PIX</button>
+      <button class="btn-secondary" onclick="App.ui.openModal('edit-modal')">⚙️ Configurações</button>
     </header>
 
     <header>
@@ -841,6 +911,10 @@
     <!-- Lista de Despesas -->
     <main id="expenses-container" aria-label="Lista de Despesas"></main>
 
+    <!-- CENTRAL DE CARONAS DIRETO NA TELA INICIAL -->
+    <h2 class="section-title">🚗 Caronas & Logística</h2>
+    <section id="rides-container" aria-label="Lista de Caronas"></section>
+
     <!-- Resumo dos Participantes -->
     <section class="summary-card" aria-label="Resumo Consolidado">
       <div class="summary-header">
@@ -860,7 +934,10 @@
     </footer>
   </div>
 
-  <!-- MODAIS -->
+  <!-- Container de Toasts -->
+  <div class="toast-container" id="toast-container" aria-live="polite"></div>
+
+  <!-- Modais Restantes -->
   <div id="photos-modal" class="modal-overlay" role="dialog" aria-modal="true">
     <div class="modal-content">
       <div class="modal-header">
@@ -915,7 +992,7 @@
         <button class="close-modal-btn" onclick="App.ui.closeModal('luggage-modal')">&times;</button>
       </div>
       <div class="modal-body">
-        <p style="font-size:0.82rem; color:var(--color-text-muted); margin-bottom:8px;">Itens extras para a viagem:</p>
+        <p style="font-size:0.82rem; color:var(--color-text-muted); margin-bottom:8px;">Itens extras logísticos para a viagem:</p>
         <div id="luggage-container" style="display:flex; flex-direction:column; gap:8px;"></div>
         <div class="add-input-box">
           <input type="text" id="new-luggage-input" placeholder="Ex: Bola de vôlei, Lanterna..." onkeydown="if(event.key==='Enter') App.luggage.addItem()">
@@ -931,12 +1008,14 @@
   <div id="edit-modal" class="modal-overlay" role="dialog" aria-modal="true">
     <div class="modal-content">
       <div class="modal-header">
-        <h3>Editar Gastos e Chaves PIX</h3>
+        <h3>⚙️ Configurações / Edição</h3>
         <button class="close-modal-btn" onclick="App.ui.closeModal('edit-modal')">&times;</button>
       </div>
-      <div class="modal-body" id="modal-body"></div>
+      <div class="modal-body" id="modal-body">
+        <!-- Injetado dinamicamente: Gastos + Carros -->
+      </div>
       <div class="modal-footer">
-        <button class="btn-primary" onclick="App.expenses.saveFromModal()">Salvar Alterações</button>
+        <button class="btn-primary" onclick="App.settings.saveFromModal()">Salvar Alterações</button>
       </div>
     </div>
   </div>
@@ -960,20 +1039,20 @@
   </div>
 
   <!-- ==========================================================================
-       7. CAMADA JAVASCRIPT ARQUITETURADA
+       8. MOTOR JAVASCRIPT OTIMIZADO COM MIGRAÇÃO AUTOMÁTICA
        ========================================================================== -->
   <script>
-    /**
-     * Módulo Central da Aplicação (Namespace Pattern)
-     */
     const App = (() => {
       'use strict';
 
       /* --- CONFIGURAÇÕES & CONSTANTES --- */
       const CONFIG = {
-        FIREBASE_ENDPOINT: "https://roca2-37116-default-rtdb.firebaseio.com/dados_compartilhados.json",
+        FIREBASE_BASE_URL: "https://roca2-37116-default-rtdb.firebaseio.com/dados_compartilhados",
         SYNC_INTERVAL_MS: 5000,
-        COUNTDOWN_TARGET: { month: 9, day: 30, hour: 8 } // Outubro é índice 9
+        COUNTDOWN_TARGET: { month: 9, day: 30, hour: 8 },
+        MAX_PHOTOS: 20,
+        PHOTO_MAX_WIDTH: 600,
+        PHOTO_JPEG_QUALITY: 0.55
       };
 
       const PARTICIPANTS = Object.freeze([
@@ -982,11 +1061,11 @@
       ]);
 
       const DEFAULT_EXPENSES = [
+        { id: "carnes", name: "🥩 Carnes", total: 1186.70, responsible: "Alexandre", pix: "", pixDisplay: "A definir", excluded: [] },
         { id: "carros", name: "🚗 Carros", total: 1373.34, responsible: "Paulinho", pix: "61992727661", pixDisplay: "61 99272-7661", excluded: ["Jeferson"] },
         { id: "chopp", name: "🍺 Chopp", total: 1090.00, responsible: "Paulinho", pix: "61992727661", pixDisplay: "61 99272-7661", excluded: [] },
         { id: "combustivel", name: "⛽ Combustível", total: null, responsible: "Jeferson", pix: "61982355635", pixDisplay: "61 98235-5635", excluded: [] },
         { id: "comidas", name: "🍽️ Comidas", total: null, responsible: "Jeferson", pix: "61982355635", pixDisplay: "61 98235-5635", excluded: [] },
-        { id: "carnes", name: "🥩 Carnes", total: null, responsible: "Alexandre", pix: "", pixDisplay: "A definir", excluded: [] },
         { id: "narguile", name: "💨 Narguilé", total: null, responsible: "Steffano Santos", pix: "", pixDisplay: "A definir", excluded: ["Jeferson"] }
       ];
 
@@ -1020,12 +1099,21 @@
       ].sort((a, b) => a.name.localeCompare(b.name, 'pt-BR'));
 
       const DEFAULT_LUGGAGE = [
-        { id: "caixa_som", name: "🔊 Caixa de Som Bluetooth", assigned: "" },
+        { id: "chopeira_maq", name: "🍺 Máquina da Chopeira", assigned: "Paulinho" },
+        { id: "barril_50", name: "🛢️ Barril de Chopp (50L)", assigned: "Gustavo" },
+        { id: "barril_30", name: "🛢️ Barril de Chopp (30L)", assigned: "Jeferson" },
+        { id: "mesa_cadeiras", name: "🪑 1 Mesa e 3 Cadeiras", assigned: "Paulinho" },
+        { id: "extensao", name: "🔌 Extensão (1 entrada)", assigned: "Paulinho" },
+        { id: "colchoes", name: "🛏️ Colchões (1 solt, 1 casal)", assigned: "Paulinho" },
         { id: "baralho", name: "🃏 Baralho / Dominó / Truco", assigned: "" },
-        { id: "grelha", name: "🥩 Grelha e Espetos extras", assigned: "" },
-        { id: "extensao", name: "🔌 Extensão de Tomada e Tês", assigned: "" },
         { id: "repelente", name: "🦟 Repelente e Protetor Solar", assigned: "" },
         { id: "gelo", name: "🧊 Cooler / Caixa Térmica", assigned: "" }
+      ];
+      
+      const DEFAULT_RIDES = [
+        { id: "car_1", driver: "Jeferson", capacity: 3, passengers: ["Dona Elda", "Tia"], time: "Quinta, horário a definir", location: "A definir", note: "Leva o Barril de 30L" },
+        { id: "car_2", driver: "Gustavo", capacity: 3, passengers: [], time: "Quinta, horário a definir", location: "A definir", note: "Leva o Barril de 50L (Carga pesada)" },
+        { id: "car_3", driver: "Paulinho", capacity: 3, passengers: [], time: "Quinta, horário a definir", location: "A definir", note: "Mesa, Cadeiras, Colchões e Máq. Chopeira" }
       ];
 
       /* --- ESTADO REATIVO --- */
@@ -1034,6 +1122,7 @@
         payments: {},
         grocery: {},
         luggage: JSON.parse(JSON.stringify(DEFAULT_LUGGAGE)),
+        rides: JSON.parse(JSON.stringify(DEFAULT_RIDES)),
         photos: [],
         isSaving: false,
         hasLoadedCloudOnce: false
@@ -1043,11 +1132,29 @@
       const utils = {
         formatBRL: (val) => (val || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }),
         cleanName: (name) => name.replace(/[^\w\sÀ-ÿ]/gi, '').trim(),
+        
+        showToast: (msg, icon = '✓') => {
+          const container = document.getElementById("toast-container");
+          if (!container) return;
+
+          const toast = document.createElement("div");
+          toast.className = "toast-message";
+          toast.innerHTML = `<span>${icon}</span> <span>${msg}</span>`;
+          container.appendChild(toast);
+
+          requestAnimationFrame(() => toast.classList.add("show"));
+
+          setTimeout(() => {
+            toast.classList.remove("show");
+            setTimeout(() => toast.remove(), 250);
+          }, 2500);
+        },
+
         copyToClipboard: async (text, successMsg) => {
           try {
             if (navigator.clipboard && navigator.clipboard.writeText) {
               await navigator.clipboard.writeText(text);
-              alert(successMsg);
+              utils.showToast(successMsg);
             } else {
               throw new Error("Clipboard API indisponível");
             }
@@ -1059,12 +1166,12 @@
             textarea.select();
             document.execCommand('copy');
             document.body.removeChild(textarea);
-            alert(successMsg);
+            utils.showToast(successMsg);
           }
         }
       };
 
-      /* --- REPOSITÓRIO & SINCRONIZAÇÃO (STORAGE & REST) --- */
+      /* --- REPOSITÓRIO & MIGRAÇÃO AUTOMÁTICA --- */
       const repository = {
         loadLocal: () => {
           try {
@@ -1073,14 +1180,42 @@
             const groc = localStorage.getItem("roca_grocery_data");
             const lug = localStorage.getItem("roca_luggage_data");
             const pic = localStorage.getItem("roca_photos_data");
+            const rid = localStorage.getItem("roca_rides_data");
 
             if (exp) state.expenses = JSON.parse(exp);
             if (pay) state.payments = JSON.parse(pay);
             if (groc) state.grocery = JSON.parse(groc);
             if (lug) state.luggage = JSON.parse(lug);
             if (pic) state.photos = JSON.parse(pic);
+            
+            if (rid) {
+              state.rides = JSON.parse(rid);
+              state.rides.forEach(c => c.passengers = c.passengers || []);
+            }
+
+            // Migração forçada do cache local para as Despesas
+            state.expenses.forEach(item => {
+              if (item.id === "costela" || item.id === "carnes") {
+                item.id = "carnes";
+                item.name = "🥩 Carnes";
+                if(item.total === null) item.total = 1186.70; 
+              }
+            });
+            
+            if(state.luggage.length < 3) state.luggage = JSON.parse(JSON.stringify(DEFAULT_LUGGAGE));
+            if(state.rides.length < 3) state.rides = JSON.parse(JSON.stringify(DEFAULT_RIDES));
+            
+            // Migração forçada para Dona Elda e Tia no carro 1
+            const car1 = state.rides.find(c => c.id === "car_1");
+            if(car1) {
+              if(!car1.passengers.includes("Dona Elda")) car1.passengers.unshift("Dona Elda");
+              if(!car1.passengers.includes("Tia")) car1.passengers.splice(1, 0, "Tia");
+              if(car1.capacity < 3) car1.capacity = 3;
+              if(car1.note && car1.note.includes("Dona Elda")) car1.note = "Leva o Barril de 30L";
+            }
+            
           } catch (e) {
-            console.error("Falha ao carregar localStorage:", e);
+            console.error("Falha ao carregar cache local:", e);
           }
         },
 
@@ -1091,12 +1226,28 @@
             localStorage.setItem("roca_grocery_data", JSON.stringify(state.grocery));
             localStorage.setItem("roca_luggage_data", JSON.stringify(state.luggage));
             localStorage.setItem("roca_photos_data", JSON.stringify(state.photos));
+            localStorage.setItem("roca_rides_data", JSON.stringify(state.rides));
           } catch (e) {
-            console.error("Falha ao salvar localStorage:", e);
+            console.error("Falha ao salvar cache local:", e);
           }
         },
 
-        syncToCloud: async () => {
+        patchRemoteField: async (path, value) => {
+          repository.saveLocal();
+          if (!navigator.onLine) return;
+
+          try {
+            await fetch(`${CONFIG.FIREBASE_BASE_URL}/${path}.json`, {
+              method: "PUT",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(value)
+            });
+          } catch (err) {
+            console.warn(`Erro no patch do caminho ${path}:`, err);
+          }
+        },
+
+        syncEntireState: async () => {
           state.isSaving = true;
           repository.saveLocal();
           if (!navigator.onLine) {
@@ -1111,10 +1262,11 @@
               grocery: state.grocery,
               luggage: state.luggage,
               photos: state.photos,
+              rides: state.rides,
               lastUpdated: Date.now()
             });
 
-            const res = await fetch(CONFIG.FIREBASE_ENDPOINT, {
+            const res = await fetch(`${CONFIG.FIREBASE_BASE_URL}.json`, {
               method: "PUT",
               headers: { "Content-Type": "application/json" },
               body: payload
@@ -1122,7 +1274,7 @@
 
             if (res.ok) state.hasLoadedCloudOnce = true;
           } catch (err) {
-            console.warn("Erro ao sincronizar com nuvem:", err);
+            console.warn("Erro ao sincronizar tudo:", err);
           } finally {
             setTimeout(() => { state.isSaving = false; }, 400);
           }
@@ -1132,21 +1284,52 @@
           if (state.isSaving || !navigator.onLine) return;
 
           try {
-            const res = await fetch(`${CONFIG.FIREBASE_ENDPOINT}?t=${Date.now()}`);
+            const res = await fetch(`${CONFIG.FIREBASE_BASE_URL}.json?t=${Date.now()}`);
             if (res.ok) {
               const data = await res.json();
               if (data && Array.isArray(data.expenses) && data.expenses.length > 0) {
                 state.expenses = data.expenses;
+
+                let needsCloudCorrection = false;
+                state.expenses.forEach(item => {
+                  if (item.id === "costela" || item.id === "carnes") {
+                    if (item.id !== "carnes" || item.name !== "🥩 Carnes" || item.total !== 1186.70) {
+                      needsCloudCorrection = true;
+                    }
+                    item.id = "carnes";
+                    item.name = "🥩 Carnes";
+                  }
+                });
+
                 state.payments = data.payments || {};
                 state.grocery = data.grocery || {};
-                if (data.luggage) state.luggage = data.luggage;
+                if (data.luggage && data.luggage.length > 0) state.luggage = data.luggage;
                 if (data.photos) state.photos = data.photos;
+                
+                if (data.rides && data.rides.length > 2) {
+                  state.rides = data.rides.map(car => {
+                     car.passengers = car.passengers || []; 
+                     if(car.id === "car_1") {
+                       if(!car.passengers.includes("Dona Elda")) { car.passengers.unshift("Dona Elda"); needsCloudCorrection = true; }
+                       if(!car.passengers.includes("Tia")) { car.passengers.splice(1, 0, "Tia"); needsCloudCorrection = true; }
+                       if(car.capacity < 3) { car.capacity = 3; needsCloudCorrection = true; }
+                       if(car.note && car.note.includes("Dona Elda")) { car.note = "Leva o Barril de 30L"; needsCloudCorrection = true; }
+                     }
+                     return car;
+                  });
+                } else {
+                  needsCloudCorrection = true;
+                }
 
                 repository.saveLocal();
                 ui.renderAll();
                 state.hasLoadedCloudOnce = true;
+
+                if (needsCloudCorrection) {
+                  repository.syncEntireState();
+                }
               } else if (data === null && !state.hasLoadedCloudOnce) {
-                repository.syncToCloud();
+                repository.syncEntireState();
               }
             }
           } catch (err) {
@@ -1155,15 +1338,8 @@
         }
       };
 
-      /* --- SERVIÇOS ESPECÍFICOS --- */
-      const expensesService = {
-        togglePayment: (expId, person) => {
-          const key = `${expId}_${person}`;
-          state.payments[key] = !state.payments[key];
-          ui.renderExpenses();
-          repository.syncToCloud();
-        },
-
+      /* --- SERVIÇOS --- */
+      const settingsService = {
         saveFromModal: () => {
           state.expenses.forEach(exp => {
             const totalInput = document.getElementById(`modal_total_${exp.id}`);
@@ -1179,10 +1355,34 @@
             if (pixInput) exp.pix = pixInput.value.trim();
             if (dispInput) exp.pixDisplay = dispInput.value.trim() || exp.pix || "A definir";
           });
+          
+          state.rides.forEach(car => {
+            const driverInput = document.getElementById(`modal_car_driver_${car.id}`);
+            const capInput = document.getElementById(`modal_car_cap_${car.id}`);
+            const noteInput = document.getElementById(`modal_car_note_${car.id}`);
+            
+            if(driverInput) car.driver = driverInput.value.trim();
+            if(capInput) car.capacity = parseInt(capInput.value) || 0;
+            if(noteInput) car.note = noteInput.value.trim();
+          });
 
           ui.closeModal('edit-modal');
           ui.renderExpenses();
-          repository.syncToCloud();
+          ui.renderRides();
+          repository.patchRemoteField('expenses', state.expenses);
+          repository.patchRemoteField('rides', state.rides);
+          utils.showToast("Configurações atualizadas!");
+        }
+      };
+
+      const expensesService = {
+        togglePayment: (expId, person) => {
+          const key = `${expId}_${person}`;
+          state.payments[key] = !state.payments[key];
+          ui.renderExpenses();
+
+          repository.patchRemoteField(`payments/${key}`, state.payments[key]);
+          utils.showToast(state.payments[key] ? `Pagamento marcado: ${person}` : `Pagamento desmarcado: ${person}`);
         }
       };
 
@@ -1190,7 +1390,7 @@
         triggerFileInput: () => {
           const select = document.getElementById("photo-sender-select");
           if (!select.value) {
-            alert("Por favor, selecione quem tirou a foto antes de carregar!");
+            utils.showToast("Selecione quem tirou a foto primeiro!", "⚠️");
             return;
           }
           document.getElementById("photo-file-input").click();
@@ -1208,12 +1408,11 @@
             img.src = e.target.result;
             img.onload = () => {
               const canvas = document.createElement("canvas");
-              const MAX_WIDTH = 800;
               let { width, height } = img;
 
-              if (width > MAX_WIDTH) {
-                height *= MAX_WIDTH / width;
-                width = MAX_WIDTH;
+              if (width > CONFIG.PHOTO_MAX_WIDTH) {
+                height = Math.round((height * CONFIG.PHOTO_MAX_WIDTH) / width);
+                width = CONFIG.PHOTO_MAX_WIDTH;
               }
 
               canvas.width = width;
@@ -1221,7 +1420,8 @@
               const ctx = canvas.getContext("2d");
               ctx.drawImage(img, 0, 0, width, height);
 
-              const compressedData = canvas.toDataURL("image/jpeg", 0.65);
+              const compressedData = canvas.toDataURL("image/jpeg", CONFIG.PHOTO_JPEG_QUALITY);
+
               state.photos.unshift({
                 id: `photo_${Date.now()}`,
                 url: compressedData,
@@ -1229,8 +1429,13 @@
                 date: new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })
               });
 
+              if (state.photos.length > CONFIG.MAX_PHOTOS) {
+                state.photos = state.photos.slice(0, CONFIG.MAX_PHOTOS);
+              }
+
               ui.renderPhotos();
-              repository.syncToCloud();
+              repository.patchRemoteField('photos', state.photos);
+              utils.showToast("Foto salva com sucesso no mural!");
               event.target.value = "";
             };
           };
@@ -1238,10 +1443,32 @@
         },
 
         deletePhoto: (photoId) => {
-          if (confirm("Deseja realmente apagar esta foto do mural?")) {
-            state.photos = state.photos.filter(p => p.id !== photoId);
-            ui.renderPhotos();
-            repository.syncToCloud();
+          state.photos = state.photos.filter(p => p.id !== photoId);
+          ui.renderPhotos();
+          repository.patchRemoteField('photos', state.photos);
+          utils.showToast("Foto excluída do mural.", "🗑️");
+        }
+      };
+      
+      const ridesService = {
+        addPassenger: (carId, person) => {
+          if (!person) return;
+          const car = state.rides.find(c => c.id === carId);
+          if (car && car.passengers.length < car.capacity && !car.passengers.includes(person) && car.driver !== person) {
+            car.passengers.push(person);
+            repository.patchRemoteField('rides', state.rides);
+            ui.renderRides();
+            utils.showToast(`${person} entrou no carro de ${car.driver}!`);
+          }
+        },
+        removePassenger: (carId, person) => {
+          if (person === "Dona Elda" || person === "Tia") return; // Proteção extra contra exclusão
+          const car = state.rides.find(c => c.id === carId);
+          if (car) {
+            car.passengers = car.passengers.filter(p => p !== person);
+            repository.patchRemoteField('rides', state.rides);
+            ui.renderRides();
+            utils.showToast(`${person} saiu do carro.`);
           }
         }
       };
@@ -1251,8 +1478,8 @@
           const found = state.luggage.find(i => i.id === id);
           if (found) {
             found.assigned = person;
-            repository.saveLocal();
-            repository.syncToCloud();
+            repository.patchRemoteField('luggage', state.luggage);
+            utils.showToast(`Item logístico atribuído: ${person || 'Ninguém'}`);
           }
         },
 
@@ -1269,8 +1496,8 @@
 
           input.value = "";
           ui.renderLuggage();
-          repository.saveLocal();
-          repository.syncToCloud();
+          repository.patchRemoteField('luggage', state.luggage);
+          utils.showToast("Novo item adicionado à bagagem!");
         }
       };
 
@@ -1279,13 +1506,15 @@
           state.grocery[itemId] = !state.grocery[itemId];
           ui.renderGrocery();
           ui.renderExpenses();
-          repository.syncToCloud();
+
+          repository.patchRemoteField(`grocery/${itemId}`, state.grocery[itemId]);
+          utils.showToast(state.grocery[itemId] ? "Item marcado como comprado!" : "Item desmarcado.");
         }
       };
 
       const reportsService = {
         copyWhatsAppReport: () => {
-          let report = `🌾 *STATUS DE PAGAMENTOS - ROÇA 2.0* 🌾\n`;
+          let report = `🌾 *STATUS DE PAGAMENTOS E LOGÍSTICA - ROÇA 2.0* 🌾\n`;
           report += `📅 *Período:* 30/10 a 02/11\n`;
           report += `------------------------------------\n\n`;
           report += `📋 *DESPESAS E ARRECADAÇÃO:*\n`;
@@ -1341,8 +1570,17 @@
             else if (pending < 0.01) report += `• *${person}*: ✅ Quitado! (Total: ${utils.formatBRL(totalPaid)})\n`;
             else report += `• *${person}*: Deve ${utils.formatBRL(pending)} (Pago: ${utils.formatBRL(totalPaid)} / Total: ${utils.formatBRL(totalOwed)})\n`;
           });
-
+          
           report += `\n------------------------------------\n`;
+          report += `🚗 *CARONAS E VAGAS:*\n`;
+          state.rides.forEach(car => {
+            report += `• Carro: ${car.driver} (${car.passengers.length}/${car.capacity} vagas)\n`;
+            if (car.passengers.length > 0) report += `  Passageiros: ${car.passengers.join(", ")}\n`;
+            if (car.note) report += `  ⚠️ ${car.note}\n`;
+            report += `\n`;
+          });
+
+          report += `------------------------------------\n`;
           report += `🔑 *CHAVES PIX PARA PAGAMENTO:*\n`;
 
           const addedPix = new Map();
@@ -1356,7 +1594,7 @@
             .sort((a, b) => a[0].localeCompare(b[0], 'pt-BR'))
             .forEach(([resp, key]) => { report += `• ${resp}: \`${key}\`\n`; });
 
-          utils.copyToClipboard(report, "📋 Relatório copiado para a área de transferência!");
+          utils.copyToClipboard(report, "Relatório copiado para a área de transferência!");
         }
       };
 
@@ -1573,6 +1811,69 @@
             summaryContainer.appendChild(row);
           });
         },
+        
+        renderRides: () => {
+          const container = document.getElementById("rides-container");
+          if (!container) return;
+          container.innerHTML = "";
+
+          const taken = [];
+          state.rides.forEach(car => {
+            taken.push(car.driver);
+            car.passengers = car.passengers || []; 
+            taken.push(...car.passengers);
+          });
+
+          const available = PARTICIPANTS.filter(p => !taken.includes(p));
+
+          state.rides.forEach(car => {
+            const card = document.createElement("div");
+            card.className = "expense-card"; 
+            card.style.borderLeft = "4px solid var(--color-accent-amber)";
+            card.style.marginBottom = "16px";
+            
+            car.passengers = car.passengers || [];
+
+            let passengersHtml = car.passengers.map(p => {
+              const isFixed = p === "Dona Elda" || p === "Tia";
+              return `
+                <div class="passenger-chip" ${isFixed ? 'style="background: rgba(245, 158, 11, 0.15); border-color: rgba(245, 158, 11, 0.4); color: var(--color-accent-amber);"' : ''}>
+                  ${p} ${isFixed ? '<span style="color:var(--color-accent-amber); font-size:1rem; cursor:default;">🔒</span>' : `<span onclick="App.rides.removePassenger('${car.id}', '${p}')">&times;</span>`}
+                </div>
+              `;
+            }).join('');
+
+            if (car.passengers.length === 0) {
+              passengersHtml = `<span style="font-size:0.85rem; color:var(--color-text-muted);">Nenhum passageiro do grupo ainda.</span>`;
+            }
+
+            let optionsHtml = `<option value="">+ Adicionar ao carro</option>`;
+            available.forEach(p => {
+              optionsHtml += `<option value="${p}">${p}</option>`;
+            });
+
+            const canAdd = car.passengers.length < car.capacity;
+
+            card.innerHTML = `
+              <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--color-border); padding-bottom:8px; margin-bottom:12px;">
+                <span style="font-weight:bold; color:var(--color-accent-amber); font-size: 1.05rem;">🚘 ${car.driver}</span>
+                <span style="font-size:0.75rem; background:var(--color-bg-primary); padding:4px 8px; border-radius:6px; border:1px solid var(--color-border); color: var(--color-text-muted);">${car.passengers.length}/${car.capacity} vagas</span>
+              </div>
+              <div style="font-size:0.82rem; color:var(--color-text-muted); margin-bottom:12px; display: flex; flex-direction: column; gap: 4px;">
+                ${car.note ? `<span style="color:var(--color-accent-rose); font-weight:600;">⚠️ ${car.note}</span>` : ''}
+              </div>
+              <div style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:14px; min-height: 28px; align-items:center;">
+                ${passengersHtml}
+              </div>
+              ${canAdd && available.length > 0 ? `
+                <select style="width:100%; background:var(--color-bg-primary); border:1px solid var(--color-border); color:var(--color-accent-sky); padding:10px; border-radius:8px; font-size:0.9rem;" onchange="App.rides.addPassenger('${car.id}', this.value); this.value='';">
+                  ${optionsHtml}
+                </select>
+              ` : `<div style="font-size:0.85rem; background: rgba(34, 197, 94, 0.1); padding:8px; border-radius: 8px; color:var(--color-accent-emerald); text-align:center; border: 1px solid rgba(34, 197, 94, 0.3); font-weight:500;">${!canAdd ? '⚠️ Vagas esgotadas!' : '✅ Todos já têm carona!'}</div>`}
+            `;
+            container.appendChild(card);
+          });
+        },
 
         renderGrocery: () => {
           const container = document.getElementById("grocery-list-container");
@@ -1663,36 +1964,60 @@
         renderEditModal: () => {
           const modalBody = document.getElementById("modal-body");
           if (!modalBody) return;
-          modalBody.innerHTML = "";
-
+          
+          let expensesHtml = `<h4 style="color: var(--color-accent-sky); margin-bottom: 10px;">💰 Gastos e Divisões</h4>`;
           const sortedExpenses = [...state.expenses].sort((a, b) => utils.cleanName(a.name).localeCompare(utils.cleanName(b.name), 'pt-BR'));
 
           sortedExpenses.forEach(exp => {
-            const item = document.createElement("div");
-            item.className = "edit-item-card";
-            item.innerHTML = `
-              <div class="edit-item-title">${exp.name}</div>
-              <div class="edit-form-grid">
-                <div class="form-group">
-                  <label>Valor Total (R$)</label>
-                  <input type="number" step="0.01" id="modal_total_${exp.id}" value="${exp.total !== null ? exp.total : ''}" placeholder="Ex: 500.00">
-                </div>
-                <div class="form-group">
-                  <label>Responsável</label>
-                  <input type="text" id="modal_resp_${exp.id}" value="${exp.responsible || ''}" placeholder="Nome">
-                </div>
-                <div class="form-group">
-                  <label>Chave PIX (apenas dígitos ou chave)</label>
-                  <input type="text" id="modal_pix_${exp.id}" value="${exp.pix || ''}" placeholder="Ex: 61999999999">
-                </div>
-                <div class="form-group">
-                  <label>Exibição do PIX</label>
-                  <input type="text" id="modal_disp_${exp.id}" value="${exp.pixDisplay || ''}" placeholder="Ex: 61 99999-9999">
+            expensesHtml += `
+              <div class="edit-item-card" style="margin-bottom: 10px;">
+                <div class="edit-item-title">${exp.name}</div>
+                <div class="edit-form-grid">
+                  <div class="form-group">
+                    <label>Valor Total (R$)</label>
+                    <input type="number" step="0.01" id="modal_total_${exp.id}" value="${exp.total !== null ? exp.total : ''}" placeholder="Ex: 500.00">
+                  </div>
+                  <div class="form-group">
+                    <label>Responsável</label>
+                    <input type="text" id="modal_resp_${exp.id}" value="${exp.responsible || ''}" placeholder="Nome">
+                  </div>
+                  <div class="form-group">
+                    <label>Chave PIX (apenas dígitos ou chave)</label>
+                    <input type="text" id="modal_pix_${exp.id}" value="${exp.pix || ''}" placeholder="Ex: 61999999999">
+                  </div>
+                  <div class="form-group">
+                    <label>Exibição do PIX</label>
+                    <input type="text" id="modal_disp_${exp.id}" value="${exp.pixDisplay || ''}" placeholder="Ex: 61 99999-9999">
+                  </div>
                 </div>
               </div>
             `;
-            modalBody.appendChild(item);
           });
+          
+          let carsHtml = `<h4 style="color: var(--color-accent-amber); margin: 20px 0 10px; border-bottom: 1px solid var(--color-border); padding-bottom: 5px;">🚗 Configuração das Caronas</h4>`;
+          state.rides.forEach(car => {
+            carsHtml += `
+              <div class="edit-item-card" style="margin-bottom: 10px;">
+                <div class="edit-item-title">Carro: ${car.driver}</div>
+                <div class="edit-form-grid">
+                  <div class="form-group">
+                    <label>Motorista</label>
+                    <input type="text" id="modal_car_driver_${car.id}" value="${car.driver}">
+                  </div>
+                  <div class="form-group">
+                    <label>Vagas Totais (incluindo fixos)</label>
+                    <input type="number" id="modal_car_cap_${car.id}" value="${car.capacity}">
+                  </div>
+                  <div class="form-group" style="grid-column: 1/-1;">
+                    <label>Observação (Ex: Leva chopp, Dona Elda...)</label>
+                    <input type="text" id="modal_car_note_${car.id}" value="${car.note || ''}">
+                  </div>
+                </div>
+              </div>
+            `;
+          });
+          
+          modalBody.innerHTML = expensesHtml + carsHtml;
         },
 
         renderAll: () => {
@@ -1700,6 +2025,7 @@
           ui.renderGrocery();
           ui.renderLuggage();
           ui.renderPhotos();
+          ui.renderRides();
         }
       };
 
@@ -1722,20 +2048,20 @@
         repository.syncFromCloud();
       };
 
-      // API Pública exposta para o escopo global
       return {
         init,
         ui,
         utils,
+        settings: settingsService,
         expenses: expensesService,
         photos: photosService,
         luggage: luggageService,
+        rides: ridesService,
         grocery: groceryService,
         reports: reportsService
       };
     })();
 
-    // Disparo no carregamento do DOM
     document.addEventListener("DOMContentLoaded", App.init);
   </script>
 </body>
