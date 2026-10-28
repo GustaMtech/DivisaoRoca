@@ -205,7 +205,118 @@
     }
 
     /* ==========================================================================
-       4. COMPONENTES: CARTÕES DE DESPESAS
+       4. COMPONENTES: CARROSSEL DE FOTOS
+       ========================================================================== */
+    .carousel-card {
+      background: var(--color-bg-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: 16px;
+      margin-bottom: 18px;
+      box-shadow: var(--shadow-md);
+      display: none; /* Controlado via JS */
+    }
+
+    .carousel-header-title {
+      font-size: 1.15rem;
+      color: var(--color-accent-sky);
+      margin-bottom: 12px;
+      font-weight: 700;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .carousel-container {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      border-radius: var(--radius-md);
+      background: #000;
+      aspect-ratio: 4/3;
+      touch-action: pan-y;
+    }
+
+    .carousel-track {
+      display: flex;
+      height: 100%;
+      transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    .carousel-slide {
+      min-width: 100%;
+      height: 100%;
+      position: relative;
+    }
+
+    .carousel-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .carousel-author-tag {
+      position: absolute;
+      bottom: 10px;
+      left: 10px;
+      background: rgba(0, 0, 0, 0.7);
+      color: #fff;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+    }
+
+    .carousel-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(15, 23, 42, 0.6);
+      color: white;
+      border: 1px solid rgba(255,255,255,0.1);
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      transition: all var(--transition-fast);
+    }
+
+    .carousel-btn:hover { background: rgba(15, 23, 42, 0.9); scale: 1.05; }
+    .carousel-btn.prev { left: 10px; }
+    .carousel-btn.next { right: 10px; }
+
+    .carousel-indicators {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 14px;
+      flex-wrap: wrap;
+    }
+
+    .carousel-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--color-border);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .carousel-dot.active {
+      background: var(--color-accent-sky);
+      transform: scale(1.3);
+    }
+
+    /* ==========================================================================
+       5. COMPONENTES: CARTÕES DE DESPESAS
        ========================================================================== */
     .expense-card {
       background: var(--color-bg-surface);
@@ -375,19 +486,8 @@
     }
 
     /* ==========================================================================
-       5. COMPONENTES: RESUMO & RODAPÉ
+       6. COMPONENTES: RESUMO & RODAPÉ
        ========================================================================== */
-    .section-title {
-      font-size: 1.2rem;
-      color: var(--color-accent-amber);
-      margin: 24px 0 14px;
-      padding-bottom: 8px;
-      border-bottom: 1px solid var(--color-border);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
     .summary-card {
       background: #1e1b4b;
       border: 1px solid #4338ca;
@@ -464,7 +564,7 @@
     }
 
     /* ==========================================================================
-       6. COMPONENTES: PAINEL LATERAL (DRAWER) & MODAIS
+       7. COMPONENTES: PAINEL LATERAL (DRAWER) & MODAIS
        ========================================================================== */
     .drawer-overlay {
       position: fixed;
@@ -777,31 +877,9 @@
       border-radius: var(--radius-md);
       font-size: 0.88rem;
     }
-    
-    /* CSS para Central de Caronas (Tela Inicial) */
-    .passenger-chip {
-      background: rgba(56, 189, 248, 0.15);
-      color: var(--color-accent-sky);
-      border: 1px solid rgba(56, 189, 248, 0.4);
-      padding: 6px 12px;
-      border-radius: 999px;
-      font-size: 0.85rem;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-weight: 500;
-    }
-    .passenger-chip span {
-      cursor: pointer;
-      color: var(--color-accent-rose);
-      font-weight: bold;
-      font-size: 1.1rem;
-      line-height: 1;
-      padding: 0 2px;
-    }
 
     /* ==========================================================================
-       7. NOTIFICAÇÕES TOAST
+       8. NOTIFICAÇÕES TOAST
        ========================================================================== */
     .toast-container {
       position: fixed;
@@ -862,6 +940,7 @@
     <nav class="drawer-nav">
       <button class="drawer-btn" onclick="App.ui.toggleDrawer(false); App.ui.openModal('photos-modal');">📸 Fotos da Roça</button>
       <button class="drawer-btn" onclick="App.ui.toggleDrawer(false); App.ui.openModal('spotify-modal');">🎵 Playlist Spotify</button>
+      <button class="drawer-btn" onclick="App.ui.toggleDrawer(false); App.ui.openModal('rides-modal');">🚗 Central de Caronas</button>
       <button class="drawer-btn" onclick="App.ui.toggleDrawer(false); App.ui.openModal('luggage-modal');">🎒 Quem Leva o Quê?</button>
       <button class="drawer-btn" onclick="App.ui.toggleDrawer(false); App.ui.openModal('grocery-modal');">🛒 Lista de Compras</button>
       <button class="drawer-btn" onclick="App.ui.toggleDrawer(false); App.ui.openModal('edit-modal');">⚙️ Configurações / PIX</button>
@@ -882,8 +961,8 @@
       <p>Marque conforme for pagando o PIX para cada responsável</p>
     </header>
 
-    <!-- Caixa do Contador -->
-    <section class="countdown-card" aria-label="Contagem Regressiva">
+    <!-- Caixa do Contador (Escondida após a partida) -->
+    <section class="countdown-card" id="countdown-section" aria-label="Contagem Regressiva">
       <div class="countdown-title">⏳ Contagem Regressiva para a Partida</div>
       <div class="countdown-grid" id="countdown-grid">
         <div class="countdown-unit">
@@ -903,17 +982,22 @@
           <span class="countdown-label">Seg</span>
         </div>
       </div>
-      <div id="countdown-finished" style="display: none; color: #86efac; font-weight: 700; font-size: 1rem;">
-        🍻 Chegou a hora da Roça 2.0! Partiu!
+    </section>
+
+    <!-- CARROSSEL DE FOTOS (Exibido Automaticamente no momento da partida) -->
+    <section class="carousel-card" id="carousel-section" aria-label="Galeria de Fotos">
+      <div class="carousel-header-title">📸 Memórias da Roça 2.0</div>
+      <div class="carousel-container" id="carousel-container">
+        <button class="carousel-btn prev" onclick="App.ui.carousel.prev()" aria-label="Anterior">&#10094;</button>
+        <div class="carousel-track" id="carousel-track"></div>
+        <button class="carousel-btn next" onclick="App.ui.carousel.next()" aria-label="Próximo">&#10095;</button>
       </div>
+      <div class="carousel-indicators" id="carousel-indicators"></div>
+      <p id="carousel-empty" style="display:none; text-align:center; padding: 20px; color: var(--color-text-muted);">Ainda não há fotos no mural.</p>
     </section>
 
     <!-- Lista de Despesas -->
     <main id="expenses-container" aria-label="Lista de Despesas"></main>
-
-    <!-- CENTRAL DE CARONAS DIRETO NA TELA INICIAL -->
-    <h2 class="section-title">🚗 Caronas & Logística</h2>
-    <section id="rides-container" aria-label="Lista de Caronas"></section>
 
     <!-- Resumo dos Participantes -->
     <section class="summary-card" aria-label="Resumo Consolidado">
@@ -1004,6 +1088,22 @@
       </div>
     </div>
   </div>
+  
+  <div id="rides-modal" class="modal-overlay" role="dialog" aria-modal="true">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 style="color: var(--color-accent-amber);">🚗 Central de Caronas</h3>
+        <button class="close-modal-btn" onclick="App.ui.closeModal('rides-modal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size:0.82rem; color:var(--color-text-muted); margin-bottom:8px;">Organize quem vai com quem e evite confusão na saída:</p>
+        <div id="rides-container"></div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-primary" onclick="App.ui.closeModal('rides-modal')">Salvar e Fechar</button>
+      </div>
+    </div>
+  </div>
 
   <div id="edit-modal" class="modal-overlay" role="dialog" aria-modal="true">
     <div class="modal-content">
@@ -1012,7 +1112,7 @@
         <button class="close-modal-btn" onclick="App.ui.closeModal('edit-modal')">&times;</button>
       </div>
       <div class="modal-body" id="modal-body">
-        <!-- Injetado dinamicamente: Gastos + Carros -->
+        <!-- Injetado dinamicamente -->
       </div>
       <div class="modal-footer">
         <button class="btn-primary" onclick="App.settings.saveFromModal()">Salvar Alterações</button>
@@ -1039,7 +1139,7 @@
   </div>
 
   <!-- ==========================================================================
-       8. MOTOR JAVASCRIPT OTIMIZADO COM MIGRAÇÃO AUTOMÁTICA
+       8. MOTOR JAVASCRIPT OTIMIZADO
        ========================================================================== -->
   <script>
     const App = (() => {
@@ -1049,7 +1149,7 @@
       const CONFIG = {
         FIREBASE_BASE_URL: "https://roca2-37116-default-rtdb.firebaseio.com/dados_compartilhados",
         SYNC_INTERVAL_MS: 5000,
-        COUNTDOWN_TARGET: { month: 9, day: 30, hour: 8 },
+        COUNTDOWN_TARGET: { year: 2026, month: 9, day: 30, hour: 18 }, // 30/10/2026 às 18:00
         MAX_PHOTOS: 20,
         PHOTO_MAX_WIDTH: 600,
         PHOTO_JPEG_QUALITY: 0.55
@@ -1136,14 +1236,11 @@
         showToast: (msg, icon = '✓') => {
           const container = document.getElementById("toast-container");
           if (!container) return;
-
           const toast = document.createElement("div");
           toast.className = "toast-message";
           toast.innerHTML = `<span>${icon}</span> <span>${msg}</span>`;
           container.appendChild(toast);
-
           requestAnimationFrame(() => toast.classList.add("show"));
-
           setTimeout(() => {
             toast.classList.remove("show");
             setTimeout(() => toast.remove(), 250);
@@ -1171,7 +1268,7 @@
         }
       };
 
-      /* --- REPOSITÓRIO & MIGRAÇÃO AUTOMÁTICA --- */
+      /* --- REPOSITÓRIO --- */
       const repository = {
         loadLocal: () => {
           try {
@@ -1193,27 +1290,33 @@
               state.rides.forEach(c => c.passengers = c.passengers || []);
             }
 
-            // Migração forçada do cache local para as Despesas
             state.expenses.forEach(item => {
               if (item.id === "costela" || item.id === "carnes") {
                 item.id = "carnes";
                 item.name = "🥩 Carnes";
-                if(item.total === null) item.total = 1186.70; 
+                if(item.total === null) item.total = 1186.70;
               }
             });
+            
+            const oldChopeiraIndex = state.luggage.findIndex(i => i.id === "chopeira");
+            if (oldChopeiraIndex !== -1) {
+              state.luggage.splice(oldChopeiraIndex, 1, 
+                { id: "chopeira_maq", name: "🍺 Máquina da Chopeira", assigned: "Paulinho" },
+                { id: "barril_50", name: "🛢️ Barril de Chopp (50L)", assigned: "Gustavo" },
+                { id: "barril_30", name: "🛢️ Barril de Chopp (30L)", assigned: "Jeferson" }
+              );
+            }
             
             if(state.luggage.length < 3) state.luggage = JSON.parse(JSON.stringify(DEFAULT_LUGGAGE));
             if(state.rides.length < 3) state.rides = JSON.parse(JSON.stringify(DEFAULT_RIDES));
             
-            // Migração forçada para Dona Elda e Tia no carro 1
             const car1 = state.rides.find(c => c.id === "car_1");
             if(car1) {
               if(!car1.passengers.includes("Dona Elda")) car1.passengers.unshift("Dona Elda");
               if(!car1.passengers.includes("Tia")) car1.passengers.splice(1, 0, "Tia");
               if(car1.capacity < 3) car1.capacity = 3;
-              if(car1.note && car1.note.includes("Dona Elda")) car1.note = "Leva o Barril de 30L";
             }
-            
+
           } catch (e) {
             console.error("Falha ao carregar cache local:", e);
           }
@@ -1303,7 +1406,22 @@
 
                 state.payments = data.payments || {};
                 state.grocery = data.grocery || {};
-                if (data.luggage && data.luggage.length > 0) state.luggage = data.luggage;
+                
+                if (data.luggage && data.luggage.length > 0) {
+                  state.luggage = data.luggage;
+                  const oldChopeiraIndex = state.luggage.findIndex(i => i.id === "chopeira");
+                  if (oldChopeiraIndex !== -1) {
+                    needsCloudCorrection = true;
+                    state.luggage.splice(oldChopeiraIndex, 1, 
+                      { id: "chopeira_maq", name: "🍺 Máquina da Chopeira", assigned: "Paulinho" },
+                      { id: "barril_50", name: "🛢️ Barril de Chopp (50L)", assigned: "Gustavo" },
+                      { id: "barril_30", name: "🛢️ Barril de Chopp (30L)", assigned: "Jeferson" }
+                    );
+                  }
+                } else {
+                  needsCloudCorrection = true;
+                }
+                
                 if (data.photos) state.photos = data.photos;
                 
                 if (data.rides && data.rides.length > 2) {
@@ -1313,7 +1431,6 @@
                        if(!car.passengers.includes("Dona Elda")) { car.passengers.unshift("Dona Elda"); needsCloudCorrection = true; }
                        if(!car.passengers.includes("Tia")) { car.passengers.splice(1, 0, "Tia"); needsCloudCorrection = true; }
                        if(car.capacity < 3) { car.capacity = 3; needsCloudCorrection = true; }
-                       if(car.note && car.note.includes("Dona Elda")) { car.note = "Leva o Barril de 30L"; needsCloudCorrection = true; }
                      }
                      return car;
                   });
@@ -1482,7 +1599,6 @@
             utils.showToast(`Item logístico atribuído: ${person || 'Ninguém'}`);
           }
         },
-
         addItem: () => {
           const input = document.getElementById("new-luggage-input");
           const name = input.value.trim();
@@ -1600,6 +1716,83 @@
 
       /* --- CAMADA DE INTERFACE (VIEW / UI CONTROLLER) --- */
       const ui = {
+        carousel: {
+          index: 0,
+          touchStartX: 0,
+          touchEndX: 0,
+          initSwipe: () => {
+            const track = document.getElementById('carousel-track');
+            if(!track) return;
+            track.addEventListener('touchstart', e => {
+              App.ui.carousel.touchStartX = e.changedTouches[0].screenX;
+            }, {passive: true});
+            track.addEventListener('touchend', e => {
+              App.ui.carousel.touchEndX = e.changedTouches[0].screenX;
+              App.ui.carousel.handleSwipe();
+            }, {passive: true});
+          },
+          handleSwipe: () => {
+            const diff = App.ui.carousel.touchStartX - App.ui.carousel.touchEndX;
+            if (diff > 40) App.ui.carousel.next();
+            if (diff < -40) App.ui.carousel.prev();
+          },
+          updateTransform: () => {
+            const track = document.getElementById('carousel-track');
+            if(track) track.style.transform = `translateX(-${App.ui.carousel.index * 100}%)`;
+            
+            document.querySelectorAll('.carousel-dot').forEach((dot, idx) => {
+              dot.classList.toggle('active', idx === App.ui.carousel.index);
+            });
+          },
+          next: () => {
+            if(App.ui.carousel.index < state.photos.length - 1) {
+              App.ui.carousel.index++;
+              App.ui.carousel.updateTransform();
+            }
+          },
+          prev: () => {
+            if(App.ui.carousel.index > 0) {
+              App.ui.carousel.index--;
+              App.ui.carousel.updateTransform();
+            }
+          },
+          goTo: (idx) => {
+            App.ui.carousel.index = idx;
+            App.ui.carousel.updateTransform();
+          },
+          render: () => {
+            const track = document.getElementById('carousel-track');
+            const indicators = document.getElementById('carousel-indicators');
+            const emptyText = document.getElementById('carousel-empty');
+            
+            if(!track || !indicators || !emptyText) return;
+            
+            if (state.photos.length === 0) {
+              track.innerHTML = '';
+              indicators.innerHTML = '';
+              emptyText.style.display = 'block';
+              return;
+            }
+            emptyText.style.display = 'none';
+
+            track.innerHTML = state.photos.map((photo) => `
+              <div class="carousel-slide">
+                <img src="${photo.url}" alt="Foto" loading="lazy" onclick="window.open('${photo.url}')">
+                <div class="carousel-author-tag">📸 ${photo.author}</div>
+              </div>
+            `).join('');
+
+            indicators.innerHTML = state.photos.map((_, idx) => `
+              <div class="carousel-dot ${idx === App.ui.carousel.index ? 'active' : ''}" onclick="App.ui.carousel.goTo(${idx})"></div>
+            `).join('');
+
+            if(App.ui.carousel.index >= state.photos.length) {
+              App.ui.carousel.index = Math.max(0, state.photos.length - 1);
+            }
+            App.ui.carousel.updateTransform();
+          }
+        },
+
         toggleDrawer: (open) => {
           document.getElementById("drawer-menu").classList.toggle("active", open);
           document.getElementById("drawer-overlay").classList.toggle("active", open);
@@ -1608,6 +1801,7 @@
         openModal: (modalId) => {
           if (modalId === 'photos-modal') ui.populatePhotoSenders();
           if (modalId === 'edit-modal') ui.renderEditModal();
+          if (modalId === 'rides-modal') ui.renderRides();
           document.getElementById(modalId)?.classList.add("active");
         },
 
@@ -1617,25 +1811,25 @@
 
         updateCountdown: () => {
           const now = new Date();
-          let currentYear = now.getFullYear();
-          let targetDate = new Date(currentYear, CONFIG.COUNTDOWN_TARGET.month, CONFIG.COUNTDOWN_TARGET.day, CONFIG.COUNTDOWN_TARGET.hour, 0, 0);
-
-          if (now.getTime() > targetDate.getTime() + (4 * 24 * 60 * 60 * 1000)) {
-            targetDate = new Date(currentYear + 1, CONFIG.COUNTDOWN_TARGET.month, CONFIG.COUNTDOWN_TARGET.day, CONFIG.COUNTDOWN_TARGET.hour, 0, 0);
-          }
+          // Target configurado para 30/10/2026 às 18:00
+          const targetDate = new Date(CONFIG.COUNTDOWN_TARGET.year, CONFIG.COUNTDOWN_TARGET.month, CONFIG.COUNTDOWN_TARGET.day, CONFIG.COUNTDOWN_TARGET.hour, 0, 0);
 
           const diff = targetDate.getTime() - now.getTime();
-          const grid = document.getElementById("countdown-grid");
-          const finished = document.getElementById("countdown-finished");
+          const countdownSection = document.getElementById("countdown-section");
+          const carouselSection = document.getElementById("carousel-section");
 
-          if (diff <= 0 && diff > -(4 * 24 * 60 * 60 * 1000)) {
-            if (grid) grid.style.display = "none";
-            if (finished) finished.style.display = "block";
+          // Quando a contagem zera (ou já passou da hora da partida), o cronômetro some e o carrossel entra em cena permanentemente
+          if (diff <= 0) {
+            if (countdownSection) countdownSection.style.display = "none";
+            if (carouselSection) {
+               carouselSection.style.display = "block";
+               App.ui.carousel.updateTransform();
+            }
             return;
           }
 
-          if (grid) grid.style.display = "flex";
-          if (finished) finished.style.display = "none";
+          if (countdownSection) countdownSection.style.display = "block";
+          if (carouselSection) carouselSection.style.display = "none";
 
           const days = Math.floor(diff / (1000 * 60 * 60 * 24));
           const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
@@ -1828,11 +2022,8 @@
 
           state.rides.forEach(car => {
             const card = document.createElement("div");
-            card.className = "expense-card"; 
-            card.style.borderLeft = "4px solid var(--color-accent-amber)";
-            card.style.marginBottom = "16px";
-            
-            car.passengers = car.passengers || [];
+            card.className = "edit-item-card"; 
+            card.style.marginBottom = "12px";
 
             let passengersHtml = car.passengers.map(p => {
               const isFixed = p === "Dona Elda" || p === "Tia";
@@ -1844,7 +2035,7 @@
             }).join('');
 
             if (car.passengers.length === 0) {
-              passengersHtml = `<span style="font-size:0.85rem; color:var(--color-text-muted);">Nenhum passageiro do grupo ainda.</span>`;
+              passengersHtml = `<span style="font-size:0.8rem; color:var(--color-text-muted);">Nenhum passageiro do grupo ainda.</span>`;
             }
 
             let optionsHtml = `<option value="">+ Adicionar ao carro</option>`;
@@ -1855,21 +2046,21 @@
             const canAdd = car.passengers.length < car.capacity;
 
             card.innerHTML = `
-              <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--color-border); padding-bottom:8px; margin-bottom:12px;">
-                <span style="font-weight:bold; color:var(--color-accent-amber); font-size: 1.05rem;">🚘 ${car.driver}</span>
-                <span style="font-size:0.75rem; background:var(--color-bg-primary); padding:4px 8px; border-radius:6px; border:1px solid var(--color-border); color: var(--color-text-muted);">${car.passengers.length}/${car.capacity} vagas</span>
+              <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--color-border); padding-bottom:8px; margin-bottom:8px;">
+                <span style="font-weight:bold; color:var(--color-accent-amber); font-size: 0.95rem;">🚗 Carro: ${car.driver}</span>
+                <span style="font-size:0.75rem; background:var(--color-bg-surface); padding:3px 8px; border-radius:6px; border:1px solid var(--color-border);">${car.passengers.length}/${car.capacity} vagas</span>
               </div>
-              <div style="font-size:0.82rem; color:var(--color-text-muted); margin-bottom:12px; display: flex; flex-direction: column; gap: 4px;">
-                ${car.note ? `<span style="color:var(--color-accent-rose); font-weight:600;">⚠️ ${car.note}</span>` : ''}
+              <div style="font-size:0.8rem; color:var(--color-text-muted); margin-bottom:10px; display: flex; flex-direction: column; gap: 4px;">
+                ${car.note ? `<span style="color:var(--color-accent-rose); font-weight:bold;">⚠️ ${car.note}</span>` : ''}
               </div>
-              <div style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:14px; min-height: 28px; align-items:center;">
+              <div style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:12px; min-height: 28px; align-items:center;">
                 ${passengersHtml}
               </div>
               ${canAdd && available.length > 0 ? `
-                <select style="width:100%; background:var(--color-bg-primary); border:1px solid var(--color-border); color:var(--color-accent-sky); padding:10px; border-radius:8px; font-size:0.9rem;" onchange="App.rides.addPassenger('${car.id}', this.value); this.value='';">
+                <select style="width:100%; background:var(--color-bg-surface); border:1px solid var(--color-border); color:var(--color-accent-sky); padding:8px; border-radius:6px; font-size:0.85rem;" onchange="App.rides.addPassenger('${car.id}', this.value); this.value='';">
                   ${optionsHtml}
                 </select>
-              ` : `<div style="font-size:0.85rem; background: rgba(34, 197, 94, 0.1); padding:8px; border-radius: 8px; color:var(--color-accent-emerald); text-align:center; border: 1px solid rgba(34, 197, 94, 0.3); font-weight:500;">${!canAdd ? '⚠️ Vagas esgotadas!' : '✅ Todos já têm carona!'}</div>`}
+              ` : `<div style="font-size:0.8rem; background: rgba(34, 197, 94, 0.1); padding:6px; border-radius: 6px; color:var(--color-accent-emerald); text-align:center; border: 1px solid rgba(34, 197, 94, 0.3);">${!canAdd ? '⚠️ Vagas do grupo esgotadas!' : '✅ Todos do grupo já têm carona!'}</div>`}
             `;
             container.appendChild(card);
           });
@@ -1934,19 +2125,20 @@
 
           if (state.photos.length === 0) {
             container.innerHTML = `<p style="grid-column: 1/-1; text-align:center; color:var(--color-text-muted); font-size:0.85rem; padding: 20px;">Nenhuma foto enviada ainda. Seja o primeiro a tirar uma foto!</p>`;
-            return;
+          } else {
+            state.photos.forEach(photo => {
+              const item = document.createElement("div");
+              item.className = "photo-item";
+              item.innerHTML = `
+                <img src="${photo.url}" alt="Foto da Roça" onclick="window.open('${photo.url}')" style="cursor:pointer;" title="Clique para ampliar">
+                <button class="photo-delete-btn" onclick="event.stopPropagation(); App.photos.deletePhoto('${photo.id}')" title="Excluir foto">🗑️</button>
+                <div class="photo-uploader-tag">📸 ${photo.author} (${photo.date || ''})</div>
+              `;
+              container.appendChild(item);
+            });
           }
-
-          state.photos.forEach(photo => {
-            const item = document.createElement("div");
-            item.className = "photo-item";
-            item.innerHTML = `
-              <img src="${photo.url}" alt="Foto da Roça" onclick="window.open('${photo.url}')" style="cursor:pointer;" title="Clique para ampliar">
-              <button class="photo-delete-btn" onclick="event.stopPropagation(); App.photos.deletePhoto('${photo.id}')" title="Excluir foto">🗑️</button>
-              <div class="photo-uploader-tag">📸 ${photo.author} (${photo.date || ''})</div>
-            `;
-            container.appendChild(item);
-          });
+          
+          App.ui.carousel.render(); // Sincroniza com o carrossel principal
         },
 
         populatePhotoSenders: () => {
@@ -2031,6 +2223,7 @@
 
       /* --- INICIALIZAÇÃO CONTROLADA --- */
       const init = () => {
+        ui.carousel.initSwipe();
         repository.loadLocal();
         ui.renderAll();
         ui.updateCountdown();
