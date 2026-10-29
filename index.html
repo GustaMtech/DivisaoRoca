@@ -94,10 +94,7 @@
       justify-content: center;
       transition: background-color var(--transition-normal);
     }
-
-    .btn-icon:hover {
-      background: var(--color-bg-elevated);
-    }
+    .btn-icon:hover { background: var(--color-bg-elevated); }
 
     .btn-primary {
       background: var(--color-accent-emerald);
@@ -110,10 +107,8 @@
       cursor: pointer;
       transition: opacity var(--transition-normal);
     }
-
-    .btn-primary:hover {
-      opacity: 0.9;
-    }
+    .btn-primary:hover { opacity: 0.9; }
+    .btn-primary:disabled { opacity: 0.6; cursor: wait; }
 
     .btn-secondary {
       background: var(--color-bg-elevated);
@@ -130,26 +125,11 @@
       transition: background-color var(--transition-normal);
       white-space: nowrap;
     }
+    .btn-secondary:hover { background: #475569; }
 
-    .btn-secondary:hover {
-      background: #475569;
-    }
-
-    header {
-      text-align: center;
-      margin-bottom: 16px;
-    }
-
-    header h1 {
-      font-size: clamp(1.4rem, 4vw, 1.8rem);
-      color: var(--color-accent-amber);
-      margin-bottom: 4px;
-    }
-
-    header p {
-      font-size: clamp(0.82rem, 2.5vw, 0.95rem);
-      color: var(--color-text-muted);
-    }
+    header { text-align: center; margin-bottom: 16px; }
+    header h1 { font-size: clamp(1.4rem, 4vw, 1.8rem); color: var(--color-accent-amber); margin-bottom: 4px; }
+    header p { font-size: clamp(0.82rem, 2.5vw, 0.95rem); color: var(--color-text-muted); }
 
     /* ==========================================================================
        3. COMPONENTES: CONTAGEM DECRESCENTE
@@ -163,49 +143,14 @@
       text-align: center;
       box-shadow: var(--shadow-md);
     }
-
-    .countdown-title {
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--color-accent-amber);
-      margin-bottom: 8px;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-    }
-
-    .countdown-grid {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .countdown-unit {
-      background: var(--color-bg-primary);
-      border: 1px solid var(--color-border);
-      border-radius: var(--radius-md);
-      padding: 6px 12px;
-      min-width: 65px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .countdown-number {
-      font-size: 1.25rem;
-      font-weight: 700;
-      color: var(--color-accent-sky);
-    }
-
-    .countdown-label {
-      font-size: 0.68rem;
-      color: var(--color-text-muted);
-      text-transform: uppercase;
-    }
+    .countdown-title { font-size: 0.85rem; font-weight: 600; color: var(--color-accent-amber); margin-bottom: 8px; text-transform: uppercase; }
+    .countdown-grid { display: flex; justify-content: center; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .countdown-unit { background: var(--color-bg-primary); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: 6px 12px; min-width: 65px; display: flex; flex-direction: column; align-items: center; }
+    .countdown-number { font-size: 1.25rem; font-weight: 700; color: var(--color-accent-sky); }
+    .countdown-label { font-size: 0.68rem; color: var(--color-text-muted); text-transform: uppercase; }
 
     /* ==========================================================================
-       4. COMPONENTES: CARROSSEL DE FOTOS
+       4. COMPONENTES: CARROSSEL DE FOTOS/VÍDEOS
        ========================================================================== */
     .carousel-card {
       background: var(--color-bg-surface);
@@ -216,104 +161,21 @@
       box-shadow: var(--shadow-md);
       display: none; 
     }
-
-    .carousel-header-title {
-      font-size: 1.15rem;
-      color: var(--color-accent-sky);
-      margin-bottom: 12px;
-      font-weight: 700;
-      text-align: center;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-    }
-
-    .carousel-container {
-      position: relative;
-      width: 100%;
-      overflow: hidden;
-      border-radius: var(--radius-md);
-      background: #000;
-      aspect-ratio: 4/3;
-      touch-action: pan-y;
-    }
-
-    .carousel-track {
-      display: flex;
-      height: 100%;
-      transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-    }
-
-    .carousel-slide {
-      min-width: 100%;
-      height: 100%;
-      position: relative;
-    }
-
-    .carousel-slide img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-    }
-
-    .carousel-author-tag {
-      position: absolute;
-      bottom: 10px;
-      left: 10px;
-      background: rgba(0, 0, 0, 0.7);
-      color: #fff;
-      padding: 6px 12px;
-      border-radius: 999px;
-      font-size: 0.75rem;
-      backdrop-filter: blur(4px);
-      -webkit-backdrop-filter: blur(4px);
-    }
-
-    .carousel-btn {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background: rgba(15, 23, 42, 0.6);
-      color: white;
-      border: 1px solid rgba(255,255,255,0.1);
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      font-size: 1.2rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 10;
-      transition: all var(--transition-fast);
-    }
-
+    .carousel-header-title { font-size: 1.15rem; color: var(--color-accent-sky); margin-bottom: 12px; font-weight: 700; text-align: center; display: flex; align-items: center; justify-content: center; gap: 8px; }
+    .carousel-container { position: relative; width: 100%; overflow: hidden; border-radius: var(--radius-md); background: #000; aspect-ratio: 4/3; touch-action: pan-y; }
+    .carousel-track { display: flex; height: 100%; transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); }
+    .carousel-slide { min-width: 100%; height: 100%; position: relative; display: flex; align-items: center; justify-content: center; }
+    .carousel-slide img, .carousel-slide video { width: 100%; height: 100%; object-fit: contain; }
+    .carousel-author-tag { position: absolute; bottom: 10px; left: 10px; background: rgba(0, 0, 0, 0.7); color: #fff; padding: 6px 12px; border-radius: 999px; font-size: 0.75rem; backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); z-index: 5; }
+    .video-icon-badge { position: absolute; top: 10px; right: 10px; background: rgba(220, 38, 38, 0.85); color: #fff; padding: 4px 8px; border-radius: 6px; font-size: 0.7rem; font-weight: bold; z-index: 5; }
+    
+    .carousel-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(15, 23, 42, 0.6); color: white; border: 1px solid rgba(255,255,255,0.1); width: 36px; height: 36px; border-radius: 50%; font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 10; transition: all var(--transition-fast); }
     .carousel-btn:hover { background: rgba(15, 23, 42, 0.9); scale: 1.05; }
     .carousel-btn.prev { left: 10px; }
     .carousel-btn.next { right: 10px; }
-
-    .carousel-indicators {
-      display: flex;
-      justify-content: center;
-      gap: 8px;
-      margin-top: 14px;
-      flex-wrap: wrap;
-    }
-
-    .carousel-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--color-border);
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .carousel-dot.active {
-      background: var(--color-accent-sky);
-      transform: scale(1.3);
-    }
+    .carousel-indicators { display: flex; justify-content: center; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
+    .carousel-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--color-border); cursor: pointer; transition: all 0.3s ease; }
+    .carousel-dot.active { background: var(--color-accent-sky); transform: scale(1.3); }
 
     /* ==========================================================================
        5. COMPONENTES: DASHBOARD & GRÁFICOS
@@ -324,349 +186,73 @@
       border-radius: var(--radius-lg);
       padding: clamp(14px, 3vw, 20px);
       margin-top: 24px;
-      margin-bottom: 24px; /* AJUSTE: Adicionado espaçamento inferior */
+      margin-bottom: 24px; 
     }
-
-    .dashboard-header {
-      font-size: 1.15rem;
-      color: var(--color-accent-sky);
-      margin-bottom: 16px;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .dashboard-grid {
-      display: grid;
-      grid-template-columns: auto 1fr;
-      gap: 20px;
-      align-items: center;
-    }
+    .dashboard-header { font-size: 1.15rem; color: var(--color-accent-sky); margin-bottom: 16px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+    .dashboard-grid { display: grid; grid-template-columns: auto 1fr; gap: 20px; align-items: center; }
     
-    .donut-chart {
-      width: 140px;
-      height: 140px;
-      border-radius: 50%;
-      background: var(--color-bg-primary);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-    }
-
-    .donut-hole {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      background: var(--color-bg-surface);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
-
+    .donut-chart { width: 140px; height: 140px; border-radius: 50%; background: var(--color-bg-primary); display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+    .donut-hole { width: 100px; height: 100px; border-radius: 50%; background: var(--color-bg-surface); display: flex; flex-direction: column; align-items: center; justify-content: center; }
     .donut-hole span { font-size: 0.75rem; color: var(--color-text-muted); }
     .donut-hole strong { font-size: 1.1rem; color: var(--color-text-main); }
     
     .legend-container { display: flex; flex-direction: column; gap: 8px; }
-    
-    .legend-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 0.85rem;
-      padding: 6px 10px;
-      background: rgba(15, 23, 42, 0.4);
-      border-radius: 6px;
-    }
-
-    .legend-color-box {
-      width: 12px;
-      height: 12px;
-      border-radius: 3px;
-      display: inline-block;
-      margin-right: 8px;
-    }
+    .legend-item { display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; padding: 6px 10px; background: rgba(15, 23, 42, 0.4); border-radius: 6px; }
+    .legend-color-box { width: 12px; height: 12px; border-radius: 3px; display: inline-block; margin-right: 8px; }
 
     /* ==========================================================================
        6. COMPONENTES: CARTÕES DE DESPESAS
        ========================================================================== */
-    .expense-card {
-      background: var(--color-bg-surface);
-      border: 1px solid var(--color-border);
-      border-radius: var(--radius-lg);
-      padding: clamp(12px, 3vw, 18px);
-      margin-bottom: 16px;
-      box-shadow: var(--shadow-md);
-    }
-
-    .expense-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      border-bottom: 1px solid var(--color-border);
-      padding-bottom: 10px;
-      margin-bottom: 12px;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-
-    .expense-title {
-      font-weight: 700;
-      font-size: 1.15rem;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .expense-val {
-      font-size: 1rem;
-      font-weight: 600;
-      color: var(--color-accent-sky);
-      text-align: right;
-    }
-
-    .expense-status-row {
-      font-size: 0.8rem;
-      margin-top: 4px;
-      display: flex;
-      gap: 10px;
-      justify-content: flex-end;
-      flex-wrap: wrap;
-    }
-
+    .expense-card { background: var(--color-bg-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: clamp(12px, 3vw, 18px); margin-bottom: 16px; box-shadow: var(--shadow-md); }
+    .expense-header { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1px solid var(--color-border); padding-bottom: 10px; margin-bottom: 12px; gap: 12px; flex-wrap: wrap; }
+    .expense-title { font-weight: 700; font-size: 1.15rem; display: flex; align-items: center; gap: 6px; }
+    .expense-val { font-size: 1rem; font-weight: 600; color: var(--color-accent-sky); text-align: right; }
+    .expense-status-row { font-size: 0.8rem; margin-top: 4px; display: flex; gap: 10px; justify-content: flex-end; flex-wrap: wrap; }
+    
     .progress-wrapper { margin-bottom: 12px; }
-
-    .progress-bar-bg {
-      width: 100%;
-      height: 7px;
-      background: rgba(255, 255, 255, 0.08);
-      border-radius: 999px;
-      overflow: hidden;
-    }
-
-    .progress-bar-fill {
-      height: 100%;
-      background: var(--color-accent-emerald);
-      border-radius: 999px;
-      width: 0%;
-      transition: width 0.25s ease;
-    }
-
+    .progress-bar-bg { width: 100%; height: 7px; background: rgba(255, 255, 255, 0.08); border-radius: 999px; overflow: hidden; }
+    .progress-bar-fill { height: 100%; background: var(--color-accent-emerald); border-radius: 999px; width: 0%; transition: width 0.25s ease; }
     .progress-bar-fill.complete { background: #10b981; }
+    .progress-label { display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--color-text-muted); margin-top: 5px; }
 
-    .progress-label {
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.75rem;
-      color: var(--color-text-muted);
-      margin-top: 5px;
-    }
-
-    .pix-box {
-      font-size: 0.85rem;
-      background: rgba(0, 0, 0, 0.25);
-      border-radius: var(--radius-md);
-      padding: 8px 12px;
-      margin-bottom: 14px;
-      color: var(--color-text-muted);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
+    .pix-box { font-size: 0.85rem; background: rgba(0, 0, 0, 0.25); border-radius: var(--radius-md); padding: 8px 12px; margin-bottom: 14px; color: var(--color-text-muted); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
     .pix-box strong { color: var(--color-text-main); }
+    .copy-btn { background: #3b82f6; border: none; color: #fff; padding: 4px 10px; border-radius: var(--radius-sm); font-size: 0.78rem; font-weight: 500; cursor: pointer; white-space: nowrap; }
 
-    .copy-btn {
-      background: #3b82f6;
-      border: none;
-      color: #fff;
-      padding: 4px 10px;
-      border-radius: var(--radius-sm);
-      font-size: 0.78rem;
-      font-weight: 500;
-      cursor: pointer;
-      white-space: nowrap;
-    }
-
-    .checklist-trigger-btn {
-      width: 100%;
-      background: rgba(56, 189, 248, 0.12);
-      border: 1px solid rgba(56, 189, 248, 0.35);
-      color: var(--color-accent-sky);
-      padding: 10px 14px;
-      border-radius: var(--radius-md);
-      font-size: 0.88rem;
-      font-weight: 600;
-      cursor: pointer;
-      margin-bottom: 14px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 6px;
-      transition: background var(--transition-normal);
-    }
-
+    .checklist-trigger-btn { width: 100%; background: rgba(56, 189, 248, 0.12); border: 1px solid rgba(56, 189, 248, 0.35); color: var(--color-accent-sky); padding: 10px 14px; border-radius: var(--radius-md); font-size: 0.88rem; font-weight: 600; cursor: pointer; margin-bottom: 14px; display: flex; justify-content: center; align-items: center; gap: 6px; transition: background var(--transition-normal); }
     .checklist-trigger-btn:hover { background: rgba(56, 189, 248, 0.22); }
 
     .people-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px; }
-
-    .person-chip {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      background: var(--color-bg-primary);
-      border: 1px solid var(--color-border);
-      padding: 8px 12px;
-      border-radius: var(--radius-md);
-      cursor: pointer;
-      user-select: none;
-      font-size: 0.88rem;
-      transition: all var(--transition-fast);
-    }
-
-    .person-chip.paid {
-      background: rgba(34, 197, 94, 0.15);
-      border-color: var(--color-accent-emerald);
-      color: #86efac;
-    }
-
-    .person-chip input {
-      cursor: pointer;
-      accent-color: var(--color-accent-emerald);
-      width: 16px;
-      height: 16px;
-    }
-
+    .person-chip { display: flex; align-items: center; gap: 8px; background: var(--color-bg-primary); border: 1px solid var(--color-border); padding: 8px 12px; border-radius: var(--radius-md); cursor: pointer; user-select: none; font-size: 0.88rem; transition: all var(--transition-fast); }
+    .person-chip.paid { background: rgba(34, 197, 94, 0.15); border-color: var(--color-accent-emerald); color: #86efac; }
+    .person-chip input { cursor: pointer; accent-color: var(--color-accent-emerald); width: 16px; height: 16px; }
     .excluded-tag { font-size: 0.78rem; color: #64748b; font-style: italic; }
 
     /* Central de Caronas */
-    .passenger-chip {
-      background: rgba(56, 189, 248, 0.15);
-      color: var(--color-accent-sky);
-      border: 1px solid rgba(56, 189, 248, 0.4);
-      padding: 6px 12px;
-      border-radius: 999px;
-      font-size: 0.85rem;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-weight: 500;
-    }
-
-    .passenger-chip span {
-      cursor: pointer;
-      color: var(--color-accent-rose);
-      font-weight: bold;
-      font-size: 1.1rem;
-      line-height: 1;
-      padding: 0 2px;
-    }
-
-    .section-title {
-      font-size: 1.2rem;
-      color: var(--color-accent-amber);
-      margin: 24px 0 14px;
-      padding-bottom: 8px;
-      border-bottom: 1px solid var(--color-border);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
+    .passenger-chip { background: rgba(56, 189, 248, 0.15); color: var(--color-accent-sky); border: 1px solid rgba(56, 189, 248, 0.4); padding: 6px 12px; border-radius: 999px; font-size: 0.85rem; display: flex; align-items: center; gap: 8px; font-weight: 500; }
+    .passenger-chip span { cursor: pointer; color: var(--color-accent-rose); font-weight: bold; font-size: 1.1rem; line-height: 1; padding: 0 2px; }
+    .section-title { font-size: 1.2rem; color: var(--color-accent-amber); margin: 24px 0 14px; padding-bottom: 8px; border-bottom: 1px solid var(--color-border); display: flex; align-items: center; gap: 8px; }
 
     /* ==========================================================================
        7. COMPONENTES: RESUMO & ACERTO INTELIGENTE
        ========================================================================== */
-    .summary-card {
-      background: #1e1b4b;
-      border: 1px solid #4338ca;
-      border-radius: var(--radius-lg);
-      padding: clamp(14px, 3vw, 20px);
-      margin-top: 24px;
-    }
-
-    .summary-header {
-      font-size: 1.15rem;
-      color: #a5b4fc;
-      margin-bottom: 14px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
+    .summary-card { background: #1e1b4b; border: 1px solid #4338ca; border-radius: var(--radius-lg); padding: clamp(14px, 3vw, 20px); margin-top: 24px; }
+    .summary-header { font-size: 1.15rem; color: #a5b4fc; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center; }
     .summary-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 10px; }
-
-    .summary-row {
-      background: rgba(15, 23, 42, 0.6);
-      border: 1px solid #312e81;
-      padding: 10px 14px;
-      border-radius: var(--radius-md);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 0.92rem;
-      gap: 10px;
-    }
-
+    .summary-row { background: rgba(15, 23, 42, 0.6); border: 1px solid #312e81; padding: 10px 14px; border-radius: var(--radius-md); display: flex; justify-content: space-between; align-items: center; font-size: 0.92rem; gap: 10px; }
     .summary-row.fully-paid { border-color: var(--color-accent-emerald); background: rgba(34, 197, 94, 0.08); }
     .summary-details { text-align: right; font-size: 0.82rem; white-space: nowrap; }
     .text-paid { color: #86efac; font-weight: 600; }
     .text-pending { color: var(--color-accent-rose); font-weight: 600; }
 
-    .smart-settlement-box {
-      margin-top: 20px;
-      padding-top: 16px;
-      border-top: 1px dashed #4338ca;
-    }
-
-    .settlement-title {
-      font-size: 1rem;
-      color: var(--color-accent-emerald);
-      margin-bottom: 12px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .settlement-route {
-      background: rgba(0,0,0,0.2);
-      border: 1px solid #312e81;
-      padding: 8px 12px;
-      border-radius: var(--radius-md);
-      font-size: 0.9rem;
-      margin-bottom: 8px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
+    .smart-settlement-box { margin-top: 20px; padding-top: 16px; border-top: 1px dashed #4338ca; }
+    .settlement-title { font-size: 1rem; color: var(--color-accent-emerald); margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+    .settlement-route { background: rgba(0,0,0,0.2); border: 1px solid #312e81; padding: 8px 12px; border-radius: var(--radius-md); font-size: 0.9rem; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
     .route-arrow { color: var(--color-text-muted); font-size: 1.2rem; }
     .route-amount { color: #86efac; font-weight: 700; background: rgba(34,197,94,0.15); padding: 2px 8px; border-radius: 4px; }
 
     footer.footer-section { margin-top: 26px; display: flex; justify-content: flex-start; align-items: center; }
-
-    .btn-action-report {
-      background: rgba(34, 197, 94, 0.15);
-      border: 1px solid rgba(34, 197, 94, 0.4);
-      color: #86efac;
-      padding: 10px 16px;
-      border-radius: var(--radius-md);
-      font-size: 0.88rem;
-      font-weight: 600;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      transition: background var(--transition-normal);
-      width: 100%;
-      justify-content: center;
-    }
-
+    .btn-action-report { background: rgba(34, 197, 94, 0.15); border: 1px solid rgba(34, 197, 94, 0.4); color: #86efac; padding: 10px 16px; border-radius: var(--radius-md); font-size: 0.88rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: background var(--transition-normal); width: 100%; justify-content: center; }
     .btn-action-report:hover { background: rgba(34, 197, 94, 0.25); }
 
     /* ==========================================================================
@@ -674,42 +260,12 @@
        ========================================================================== */
     .drawer-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(4px); z-index: 1000; display: none; }
     .drawer-overlay.active { display: block; }
-
-    .drawer-menu {
-      position: fixed;
-      top: 0;
-      left: -300px;
-      width: 280px;
-      height: 100%;
-      background: var(--color-bg-surface);
-      border-right: 1px solid var(--color-border);
-      z-index: 1001;
-      transition: left 0.3s ease;
-      display: flex;
-      flex-direction: column;
-      box-shadow: var(--shadow-lg);
-    }
+    .drawer-menu { position: fixed; top: 0; left: -300px; width: 280px; height: 100%; background: var(--color-bg-surface); border-right: 1px solid var(--color-border); z-index: 1001; transition: left 0.3s ease; display: flex; flex-direction: column; box-shadow: var(--shadow-lg); }
     .drawer-menu.active { left: 0; }
-
     .drawer-header { padding: 18px 20px; border-bottom: 1px solid var(--color-border); display: flex; justify-content: space-between; align-items: center; }
     .drawer-header h3 { font-size: 1.15rem; color: var(--color-accent-amber); }
     .drawer-nav { padding: 16px 12px; display: flex; flex-direction: column; gap: 10px; flex: 1; overflow-y: auto; }
-    
-    .drawer-btn {
-      background: var(--color-bg-primary);
-      border: 1px solid var(--color-border);
-      color: var(--color-text-main);
-      padding: 12px 14px;
-      border-radius: 10px;
-      font-size: 0.95rem;
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      cursor: pointer;
-      text-align: left;
-      transition: all var(--transition-normal);
-    }
+    .drawer-btn { background: var(--color-bg-primary); border: 1px solid var(--color-border); color: var(--color-text-main); padding: 12px 14px; border-radius: 10px; font-size: 0.95rem; font-weight: 600; display: flex; align-items: center; gap: 10px; cursor: pointer; text-align: left; transition: all var(--transition-normal); }
     .drawer-btn:hover { background: var(--color-bg-elevated); border-color: var(--color-accent-sky); color: var(--color-accent-sky); }
 
     .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: var(--color-bg-overlay); backdrop-filter: blur(6px); display: none; justify-content: center; align-items: center; padding: 14px; z-index: 1100; }
@@ -738,12 +294,14 @@
     .add-input-box { display: flex; gap: 8px; margin-top: 10px; }
     .add-input-box input { flex: 1; background: var(--color-bg-primary); border: 1px solid var(--color-border); color: var(--color-text-main); padding: 9px 12px; border-radius: var(--radius-md); font-size: 0.88rem; }
 
+    /* Galeria Mista (Fotos e Vídeos) */
     .photo-upload-box { background: var(--color-bg-primary); border: 2px dashed var(--color-border); border-radius: 10px; padding: 18px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+    .upload-limit-badge { font-size: 0.76rem; color: var(--color-accent-amber); background: rgba(245, 158, 11, 0.12); border: 1px solid rgba(245, 158, 11, 0.35); padding: 4px 10px; border-radius: 999px; font-weight: 600; }
     .photo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 10px; margin-top: 10px; }
-    .photo-item { position: relative; border-radius: var(--radius-md); overflow: hidden; aspect-ratio: 1; background: var(--color-bg-primary); border: 1px solid var(--color-border); }
-    .photo-item img { width: 100%; height: 100%; object-fit: cover; }
-    .photo-delete-btn { position: absolute; top: 5px; right: 5px; background: rgba(239, 68, 68, 0.85); border: none; color: #fff; border-radius: 50%; width: 26px; height: 26px; font-size: 0.75rem; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5); }
-    .photo-uploader-tag { position: absolute; bottom: 0; left: 0; right: 0; background: rgba(0, 0, 0, 0.7); color: var(--color-text-main); font-size: 0.68rem; padding: 3px 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .photo-item { position: relative; border-radius: var(--radius-md); overflow: hidden; aspect-ratio: 1; background: var(--color-bg-primary); border: 1px solid var(--color-border); display: flex; justify-content: center; align-items: center; }
+    .photo-item img, .photo-item video { width: 100%; height: 100%; object-fit: cover; }
+    .photo-delete-btn { position: absolute; top: 5px; right: 5px; background: rgba(239, 68, 68, 0.85); border: none; color: #fff; border-radius: 50%; width: 26px; height: 26px; font-size: 0.75rem; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5); z-index: 10;}
+    .photo-uploader-tag { position: absolute; bottom: 0; left: 0; right: 0; background: rgba(0, 0, 0, 0.7); color: var(--color-text-main); font-size: 0.68rem; padding: 3px 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; z-index: 10;}
 
     .toast-container { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); z-index: 2000; display: flex; flex-direction: column; gap: 8px; pointer-events: none; }
     .toast-message { background: #1e293b; color: #f8fafc; border: 1px solid rgba(56, 189, 248, 0.4); padding: 10px 18px; border-radius: 999px; font-size: 0.88rem; font-weight: 500; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6); opacity: 0; transform: translateY(12px) scale(0.95); transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1); display: flex; align-items: center; gap: 8px; }
@@ -753,52 +311,17 @@
        9. RESPONSIVIDADE PARA TELAS GRANDES (PC / TABLET)
        ========================================================================== */
     @media (min-width: 900px) {
-      :root {
-        --container-max-width: 95%; /* Expande o painel para ocupar 95% do monitor */
-      }
-
-      @media (max-width: 480px) {
-        .dashboard-grid { grid-template-columns: 1fr; justify-items: center; text-align: center; }
-        .legend-container { width: 100%; }
-      }
-
-      /* Coloca os cartões de despesas em grade no Desktop */
-      #expenses-container {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
-        gap: 16px;
-      }
-      
-      /* Coloca os cartões de carona em grade no Desktop */
-      #rides-container {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
-        gap: 16px;
-      }
-
-      /* Ajusta os cartões para preencherem o espaço da grade de forma uniforme */
-      #expenses-container .expense-card, #rides-container .expense-card {
-        margin-bottom: 0;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-      }
-
-      /* Empurra a lista de pessoas pro fundo, alinhando visualmente todos os cartões */
-      #expenses-container .expense-card .people-grid {
-        margin-top: auto; 
-      }
-      
-      #rides-container .expense-card > div:last-child {
-        margin-top: auto;
-      }
+      :root { --container-max-width: 95%; }
+      #expenses-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); gap: 16px; }
+      #rides-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 16px; }
+      #expenses-container .expense-card, #rides-container .expense-card { margin-bottom: 0; height: 100%; display: flex; flex-direction: column; }
+      #expenses-container .expense-card .people-grid { margin-top: auto; }
+      #rides-container .expense-card > div:last-child { margin-top: auto; }
     }
 
-    @media (max-width: 899px) {
-      @media (max-width: 480px) {
-        .dashboard-grid { grid-template-columns: 1fr; justify-items: center; text-align: center; }
-        .legend-container { width: 100%; }
-      }
+    @media (max-width: 480px) {
+      .dashboard-grid { grid-template-columns: 1fr; justify-items: center; text-align: center; }
+      .legend-container { width: 100%; }
     }
   </style>
 </head>
@@ -812,7 +335,7 @@
       <button class="close-modal-btn" onclick="App.ui.toggleDrawer(false)" aria-label="Fechar">&times;</button>
     </div>
     <nav class="drawer-nav">
-      <button class="drawer-btn" onclick="App.ui.toggleDrawer(false); App.ui.openModal('photos-modal');">📸 Fotos da Roça</button>
+      <button class="drawer-btn" onclick="App.ui.toggleDrawer(false); App.ui.openModal('photos-modal');">📸 Galeria (Fotos & Vídeos)</button>
       <button class="drawer-btn" onclick="App.ui.toggleDrawer(false); App.ui.openModal('spotify-modal');">🎵 Playlist Spotify</button>
       <button class="drawer-btn" onclick="App.ui.toggleDrawer(false); App.ui.openModal('luggage-modal');">🎒 Quem Leva o Quê?</button>
       <button class="drawer-btn" onclick="App.ui.toggleDrawer(false); App.ui.openModal('grocery-modal');">🛒 Lista de Compras</button>
@@ -845,8 +368,8 @@
       </div>
     </section>
 
-    <!-- CARROSSEL DE FOTOS COM AUTOPLAY -->
-    <section class="carousel-card" id="carousel-section" aria-label="Galeria de Fotos">
+    <!-- CARROSSEL DE FOTOS/VÍDEOS COM AUTOPLAY -->
+    <section class="carousel-card" id="carousel-section" aria-label="Galeria de Fotos e Vídeos">
       <div class="carousel-header-title">📸 Memórias da Roça 2.0</div>
       <div class="carousel-container" id="carousel-container">
         <button class="carousel-btn prev" onclick="App.ui.carousel.prev()" aria-label="Anterior">&#10094;</button>
@@ -854,7 +377,7 @@
         <button class="carousel-btn next" onclick="App.ui.carousel.next()" aria-label="Próximo">&#10095;</button>
       </div>
       <div class="carousel-indicators" id="carousel-indicators"></div>
-      <p id="carousel-empty" style="display:none; text-align:center; padding: 20px; color: var(--color-text-muted);">Ainda não há fotos no mural.</p>
+      <p id="carousel-empty" style="display:none; text-align:center; padding: 20px; color: var(--color-text-muted);">Ainda não há mídias no mural.</p>
     </section>
 
     <!-- DASHBOARD GRÁFICO -->
@@ -911,18 +434,19 @@
   <div id="photos-modal" class="modal-overlay" role="dialog" aria-modal="true">
     <div class="modal-content">
       <div class="modal-header">
-        <h3 style="color: var(--color-accent-sky);">📸 Fotos da Roça</h3>
+        <h3 style="color: var(--color-accent-sky);">📸 Mural (Fotos e Vídeos)</h3>
         <button class="close-modal-btn" onclick="App.ui.closeModal('photos-modal')">&times;</button>
       </div>
       <div class="modal-body">
         <div class="photo-upload-box">
-          <p style="font-size: 0.88rem; color: var(--color-text-muted);">Tire uma foto na hora ou escolha da galeria:</p>
-          <div style="display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; width: 100%;">
+          <p style="font-size: 0.88rem; color: var(--color-text-muted);">Tire uma foto ou envie um vídeo da galeria (conversão automática para 480p):</p>
+          <span class="upload-limit-badge">✂️ Vídeos até 30s (vídeos longos são cortados de 0s a 30s automaticamente)</span>
+          <div style="display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; width: 100%; margin-top: 4px;">
             <select id="photo-sender-select">
-              <option value="">Quem tirou a foto?</option>
+              <option value="">Quem tirou?</option>
             </select>
-            <input type="file" id="photo-file-input" accept="image/*" style="display: none;" onchange="App.photos.handleUpload(event)">
-            <button class="btn-primary" onclick="App.photos.triggerFileInput()">➕ Adicionar Foto</button>
+            <input type="file" id="photo-file-input" accept="image/*, video/mp4, video/webm, video/quicktime" style="display: none;" onchange="App.photos.handleUpload(event)">
+            <button class="btn-primary" id="btn-upload-media" onclick="App.photos.triggerFileInput()">➕ Adicionar Mídia</button>
           </div>
         </div>
         <div class="photo-grid" id="photos-container"></div>
@@ -992,7 +516,7 @@
   </div>
 
   <!-- ==========================================================================
-       8. MOTOR JAVASCRIPT OTIMIZADO
+       8. MOTOR JAVASCRIPT OTIMIZADO (COM CORTE AUTOMÁTICO DE 0S A 30S)
        ========================================================================== -->
   <script>
     const App = (() => {
@@ -1005,7 +529,11 @@
         COUNTDOWN_TARGET: { year: 2026, month: 9, day: 30, hour: 18 }, // 30/10/2026 às 18:00
         MAX_PHOTOS: 20,
         PHOTO_MAX_WIDTH: 600,
-        PHOTO_JPEG_QUALITY: 0.55
+        PHOTO_JPEG_QUALITY: 0.55,
+        VIDEO_MAX_DIMENSION: 480,      // Resolução padrão leve (480p)
+        VIDEO_BITRATE: 450000,         // 450 kbps (~56KB/s -> ~1.6MB para 30s)
+        VIDEO_MAX_DURATION_SEC: 30,    // Corta vídeos automaticamente do 0s aos 30s
+        MAX_FALLBACK_SIZE_MB: 4        // Limite caso o navegador não suporte MediaRecorder
       };
 
       const PARTICIPANTS = Object.freeze([
@@ -1076,7 +604,7 @@
         grocery: {},
         luggage: JSON.parse(JSON.stringify(DEFAULT_LUGGAGE)),
         rides: JSON.parse(JSON.stringify(DEFAULT_RIDES)),
-        photos: [],
+        photos: [], 
         smartDebts: {},
         isSaving: false,
         hasLoadedCloudOnce: false
@@ -1098,7 +626,7 @@
           setTimeout(() => {
             toast.classList.remove("show");
             setTimeout(() => toast.remove(), 250);
-          }, 2500);
+          }, 3000);
         },
 
         copyToClipboard: async (text, successMsg) => {
@@ -1291,18 +819,223 @@
         }
       };
 
+      /* --- SERVIÇO DE MÍDIA E CORTE AUTOMÁTICO (0S A 30S) --- */
       const photosService = {
         triggerFileInput: () => {
           const select = document.getElementById("photo-sender-select");
-          if (!select.value) { utils.showToast("Selecione quem tirou a foto primeiro!", "⚠️"); return; }
+          if (!select.value) { utils.showToast("Selecione quem tirou a foto/vídeo primeiro!", "⚠️"); return; }
           document.getElementById("photo-file-input").click();
         },
-        handleUpload: (event) => {
+        
+        saveMediaData: (base64Data, author, type, wasTrimmed = false) => {
+          state.photos.unshift({
+            id: `media_${Date.now()}`, 
+            url: base64Data, 
+            author: author,
+            type: type, 
+            date: new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })
+          });
+          
+          if (state.photos.length > CONFIG.MAX_PHOTOS) {
+            state.photos = state.photos.slice(0, CONFIG.MAX_PHOTOS);
+          }
+
+          ui.renderPhotos();
+          repository.patchRemoteField('photos', state.photos);
+          if (type === 'video') {
+            utils.showToast(wasTrimmed ? "Vídeo cortado (0s-30s) e salvo no mural!" : "Vídeo comprimido e salvo no mural!", "🎥");
+          } else {
+            utils.showToast("Foto salva no mural!");
+          }
+        },
+
+        // Transcodificador e Cortador Automático (0s até 30s) via Canvas + MediaRecorder
+        compressVideoFile: (file, onProgress) => {
+          return new Promise((resolve, reject) => {
+            const video = document.createElement("video");
+            video.style.cssText = "position:fixed; top:-9999px; left:-9999px; width:1px; height:1px; opacity:0; pointer-events:none;";
+            video.muted = true;
+            video.playsInline = true;
+            video.setAttribute("playsinline", "");
+            video.setAttribute("webkit-playsinline", "");
+            document.body.appendChild(video);
+
+            const objectUrl = URL.createObjectURL(file);
+            video.src = objectUrl;
+
+            let safetyStopTimer = null;
+            const cleanup = () => {
+              if (safetyStopTimer) clearTimeout(safetyStopTimer);
+              URL.revokeObjectURL(objectUrl);
+              if (video.parentNode) video.parentNode.removeChild(video);
+            };
+
+            video.onloadedmetadata = () => {
+              const rawDuration = (video.duration && isFinite(video.duration)) ? video.duration : CONFIG.VIDEO_MAX_DURATION_SEC;
+              const wasTrimmed = rawDuration > CONFIG.VIDEO_MAX_DURATION_SEC;
+              const durationToRecord = Math.min(rawDuration, CONFIG.VIDEO_MAX_DURATION_SEC);
+
+              if (wasTrimmed) {
+                utils.showToast(`Vídeo de ${Math.ceil(rawDuration)}s detectado: cortando automaticamente de 0s a ${CONFIG.VIDEO_MAX_DURATION_SEC}s...`, "✂️");
+              }
+
+              const maxDim = CONFIG.VIDEO_MAX_DIMENSION;
+              let width = video.videoWidth || 480;
+              let height = video.videoHeight || 360;
+
+              if (width > height) {
+                if (width > maxDim) { height = Math.round((height * maxDim) / width); width = maxDim; }
+              } else {
+                if (height > maxDim) { width = Math.round((width * maxDim) / height); height = maxDim; }
+              }
+
+              // Garante dimensões pares para compatibilidade de codec
+              width = width % 2 === 0 ? width : width - 1;
+              height = height % 2 === 0 ? height : height - 1;
+
+              const canvas = document.createElement("canvas");
+              canvas.width = width;
+              canvas.height = height;
+              const ctx = canvas.getContext("2d");
+
+              const streamFunc = canvas.captureStream || canvas.mozCaptureStream || canvas.webkitCaptureStream;
+              if (!streamFunc || typeof MediaRecorder === "undefined") {
+                cleanup();
+                return reject(new Error("UNSUPPORTED_RECORDER"));
+              }
+
+              const stream = streamFunc.call(canvas, 24);
+              const mimeTypes = [
+                "video/webm;codecs=vp9",
+                "video/webm;codecs=vp8",
+                "video/webm",
+                "video/mp4"
+              ];
+              const selectedMime = mimeTypes.find(t => MediaRecorder.isTypeSupported(t)) || "";
+
+              let recorder;
+              try {
+                recorder = new MediaRecorder(stream, {
+                  mimeType: selectedMime || undefined,
+                  videoBitsPerSecond: CONFIG.VIDEO_BITRATE
+                });
+              } catch (e) {
+                recorder = new MediaRecorder(stream);
+              }
+
+              const chunks = [];
+              recorder.ondataavailable = (ev) => {
+                if (ev.data && ev.data.size > 0) chunks.push(ev.data);
+              };
+
+              recorder.onstop = () => {
+                cleanup();
+                const blob = new Blob(chunks, { type: recorder.mimeType || "video/webm" });
+                const reader = new FileReader();
+                reader.onloadend = () => resolve({ base64: reader.result, wasTrimmed });
+                reader.onerror = () => reject(new Error("READ_ERROR"));
+                reader.readAsDataURL(blob);
+              };
+
+              recorder.onerror = (err) => {
+                cleanup();
+                reject(err);
+              };
+
+              let animFrameId;
+              const stopRecordingSafely = () => {
+                if (recorder && recorder.state === "recording") {
+                  recorder.stop();
+                }
+                video.pause();
+                if (animFrameId) cancelAnimationFrame(animFrameId);
+              };
+
+              const renderLoop = () => {
+                if (video.paused || video.ended || video.currentTime >= durationToRecord) {
+                  stopRecordingSafely();
+                  return;
+                }
+                ctx.drawImage(video, 0, 0, width, height);
+                if (onProgress && durationToRecord > 0) {
+                  const pct = Math.min(99, Math.round((video.currentTime / durationToRecord) * 100));
+                  onProgress(pct, wasTrimmed);
+                }
+                animFrameId = requestAnimationFrame(renderLoop);
+              };
+
+              video.onplay = () => {
+                recorder.start(100);
+                // Trava de segurança extra: encerra no tempo limite mesmo se a aba perder foco
+                safetyStopTimer = setTimeout(stopRecordingSafely, (durationToRecord * 1000) + 400);
+                renderLoop();
+              };
+
+              video.onended = () => {
+                stopRecordingSafely();
+              };
+
+              // Garante que o corte comece exatamente no início (0s)
+              video.currentTime = 0;
+              video.play().catch(err => {
+                cleanup();
+                reject(err);
+              });
+            };
+
+            video.onerror = () => {
+              cleanup();
+              reject(new Error("LOAD_ERROR"));
+            };
+          });
+        },
+
+        handleUpload: async (event) => {
           const file = event.target.files[0];
           if (!file) return;
+          
           const author = document.getElementById("photo-sender-select").value || "Alguém";
-          const reader = new FileReader();
+          const isVideo = file.type.startsWith('video/');
+          const uploadBtn = document.getElementById("btn-upload-media");
 
+          // Tratamento para Vídeos com Corte Automático (0s a 30s) e Compressão 480p
+          if (isVideo) {
+             if (uploadBtn) {
+               uploadBtn.disabled = true;
+               uploadBtn.textContent = "⏳ Preparando vídeo...";
+             }
+
+             try {
+               const result = await photosService.compressVideoFile(file, (pct, wasTrimmed) => {
+                 if (uploadBtn) {
+                   uploadBtn.textContent = wasTrimmed
+                     ? `✂️ Cortando (0-30s)... ${pct}%`
+                     : `⏳ Comprimindo... ${pct}%`;
+                 }
+               });
+               photosService.saveMediaData(result.base64, author, 'video', result.wasTrimmed);
+             } catch (err) {
+               console.warn("Compressão nativa indisponível neste aparelho, tentando fallback direto:", err);
+               const sizeInMB = file.size / (1024 * 1024);
+               if (sizeInMB > CONFIG.MAX_FALLBACK_SIZE_MB) {
+                 alert(`⚠️ O seu navegador bloqueou o corte automático e o vídeo original é muito pesado (${sizeInMB.toFixed(1)}MB).\n\nEnvie um vídeo menor que ${CONFIG.MAX_FALLBACK_SIZE_MB}MB.`);
+               } else {
+                 const reader = new FileReader();
+                 reader.onload = (e) => photosService.saveMediaData(e.target.result, author, 'video', false);
+                 reader.readAsDataURL(file);
+               }
+             } finally {
+               if (uploadBtn) {
+                 uploadBtn.disabled = false;
+                 uploadBtn.textContent = "➕ Adicionar Mídia";
+               }
+               event.target.value = "";
+             }
+             return;
+          }
+
+          // Tratamento para Imagens (Compressão via Canvas)
+          const reader = new FileReader();
           reader.onload = (e) => {
             const img = new Image();
             img.src = e.target.result;
@@ -1318,25 +1051,18 @@
               ctx.drawImage(img, 0, 0, width, height);
               const compressedData = canvas.toDataURL("image/jpeg", CONFIG.PHOTO_JPEG_QUALITY);
 
-              state.photos.unshift({
-                id: `photo_${Date.now()}`, url: compressedData, author,
-                date: new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })
-              });
-              if (state.photos.length > CONFIG.MAX_PHOTOS) state.photos = state.photos.slice(0, CONFIG.MAX_PHOTOS);
-
-              ui.renderPhotos();
-              repository.patchRemoteField('photos', state.photos);
-              utils.showToast("Foto salva com sucesso no mural!");
+              photosService.saveMediaData(compressedData, author, 'image', false);
               event.target.value = "";
             };
           };
           reader.readAsDataURL(file);
         },
+
         deletePhoto: (photoId) => {
           state.photos = state.photos.filter(p => p.id !== photoId);
           ui.renderPhotos();
           repository.patchRemoteField('photos', state.photos);
-          utils.showToast("Foto excluída do mural.", "🗑️");
+          utils.showToast("Mídia excluída do mural.", "🗑️");
         }
       };
       
@@ -1450,7 +1176,6 @@
           report += `📈 *CUSTO TOTAL DA VIAGEM:* ${utils.formatBRL(totalGasto)}\n`;
           report += `------------------------------------\n\n`;
 
-          // Geração do Relatório do Acerto Inteligente
           report += `🤖 *ACERTO INTELIGENTE (COMO PAGAR):*\n`;
           let hasDebts = false;
           
@@ -1482,7 +1207,7 @@
             .sort((a, b) => a[0].localeCompare(b[0], 'pt-BR'))
             .forEach(([resp, key]) => { report += `• ${resp}: \`${key}\`\n`; });
 
-          utils.copyToClipboard(report, "Resumo Pós-Roça copiado para a área de transferência!");
+          utils.copyToClipboard(report, "Relatório Geral copiado para a área de transferência!");
         }
       };
 
@@ -1496,14 +1221,32 @@
           delay: 4000,
           
           startAutoPlay: () => {
-            clearInterval(App.ui.carousel.timer);
-            if (state.photos.length > 1) {
-              App.ui.carousel.timer = setInterval(() => {
-                App.ui.carousel.next(true); 
-              }, App.ui.carousel.delay);
+            clearTimeout(App.ui.carousel.timer);
+            if (state.photos.length <= 1) return;
+
+            const currentMedia = state.photos[App.ui.carousel.index];
+            const track = document.getElementById('carousel-track');
+            
+            // Se o slide atual for um vídeo, aguarda o vídeo terminar para avançar
+            if (currentMedia && currentMedia.type === 'video' && track) {
+              const slides = track.querySelectorAll('.carousel-slide');
+              const activeVideo = slides[App.ui.carousel.index]?.querySelector('video');
+              if (activeVideo) {
+                activeVideo.loop = false;
+                activeVideo.currentTime = 0;
+                activeVideo.onended = () => App.ui.carousel.next(true);
+                activeVideo.play().catch(() => {
+                  App.ui.carousel.timer = setTimeout(() => App.ui.carousel.next(true), App.ui.carousel.delay);
+                });
+                return;
+              }
             }
+
+            App.ui.carousel.timer = setTimeout(() => {
+              App.ui.carousel.next(true); 
+            }, App.ui.carousel.delay);
           },
-          stopAutoPlay: () => { clearInterval(App.ui.carousel.timer); },
+          stopAutoPlay: () => { clearTimeout(App.ui.carousel.timer); },
           resetAutoPlay: () => { App.ui.carousel.startAutoPlay(); },
           
           initSwipe: () => {
@@ -1540,7 +1283,7 @@
               App.ui.carousel.index = 0; 
             }
             App.ui.carousel.updateTransform(); 
-            if (!isAuto) App.ui.carousel.resetAutoPlay();
+            App.ui.carousel.resetAutoPlay();
           },
           prev: () => { 
             if(state.photos.length <= 1) return;
@@ -1571,12 +1314,22 @@
             }
             emptyText.style.display = 'none';
 
-            track.innerHTML = state.photos.map((photo) => `
-              <div class="carousel-slide">
-                <img src="${photo.url}" alt="Foto" loading="lazy" onclick="window.open('${photo.url}')">
-                <div class="carousel-author-tag">📸 ${photo.author} (${photo.date || ''})</div>
-              </div>
-            `).join('');
+            const shouldLoopSingleVideo = state.photos.length === 1;
+
+            track.innerHTML = state.photos.map((media) => {
+              const isVideo = media.type === 'video';
+              const mediaContent = isVideo 
+                ? `<video src="${media.url}" autoplay muted ${shouldLoopSingleVideo ? 'loop' : ''} playsinline></video>
+                   <div class="video-icon-badge">🎥 VÍDEO</div>`
+                : `<img src="${media.url}" alt="Foto" onclick="window.open('${media.url}')" style="cursor:pointer;" title="Clique para ampliar">`;
+                
+              return `
+                <div class="carousel-slide">
+                  ${mediaContent}
+                  <div class="carousel-author-tag">📸 ${media.author} (${media.date || ''})</div>
+                </div>
+              `;
+            }).join('');
 
             indicators.innerHTML = state.photos.map((_, idx) => `<div class="carousel-dot ${idx === App.ui.carousel.index ? 'active' : ''}" onclick="App.ui.carousel.goTo(${idx})"></div>`).join('');
             if(App.ui.carousel.index >= state.photos.length) App.ui.carousel.index = Math.max(0, state.photos.length - 1);
@@ -1999,15 +1752,22 @@
           if (!container) return;
           container.innerHTML = "";
           if (state.photos.length === 0) {
-            container.innerHTML = `<p style="grid-column: 1/-1; text-align:center; color:var(--color-text-muted); font-size:0.85rem; padding: 20px;">Nenhuma foto enviada ainda. Seja o primeiro a tirar uma foto!</p>`;
+            container.innerHTML = `<p style="grid-column: 1/-1; text-align:center; color:var(--color-text-muted); font-size:0.85rem; padding: 20px;">Nenhuma foto/vídeo enviado ainda.</p>`;
           } else {
-            state.photos.forEach(photo => {
+            state.photos.forEach(media => {
               const item = document.createElement("div");
               item.className = "photo-item";
+              
+              const isVideo = media.type === 'video';
+              const mediaContent = isVideo 
+                ? `<video src="${media.url}" autoplay muted loop playsinline></video>
+                   <div class="video-icon-badge">🎥 VÍDEO</div>`
+                : `<img src="${media.url}" alt="Foto" onclick="window.open('${media.url}')" style="cursor:pointer;" title="Clique para ampliar">`;
+
               item.innerHTML = `
-                <img src="${photo.url}" alt="Foto da Roça" onclick="window.open('${photo.url}')" style="cursor:pointer;" title="Clique para ampliar">
-                <button class="photo-delete-btn" onclick="event.stopPropagation(); App.photos.deletePhoto('${photo.id}')" title="Excluir foto">🗑️</button>
-                <div class="photo-uploader-tag">📸 ${photo.author} (${photo.date || ''})</div>
+                ${mediaContent}
+                <button class="photo-delete-btn" onclick="event.stopPropagation(); App.photos.deletePhoto('${media.id}')" title="Excluir">🗑️</button>
+                <div class="photo-uploader-tag">📸 ${media.author} (${media.date || ''})</div>
               `;
               container.appendChild(item);
             });
