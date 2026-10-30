@@ -256,7 +256,7 @@
     .btn-action-report:hover { background: rgba(34, 197, 94, 0.25); }
 
     /* ==========================================================================
-       8. COMPONENTES: PAINEL LATERAL & MODAIS
+       8. COMPONENTES: PAINEL LATERAL E MODAIS
        ========================================================================== */
     .drawer-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(4px); z-index: 1000; display: none; }
     .drawer-overlay.active { display: block; }
@@ -503,7 +503,7 @@
       <div class="modal-body">
         <div class="photo-upload-box">
           <p style="font-size: 0.88rem; color: var(--color-text-muted);">Tire uma foto ou envie um vídeo da galeria (conversão automática para 480p):</p>
-          <span class="upload-limit-badge">✂️ Vídeos até 30s (vídeos longos são cortados automaticamente)</span>
+          <span class="upload-limit-badge">✂️ Vídeos até 30s (vídeos longos são cortados de 0s a 30s automaticamente)</span>
           <div style="display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; width: 100%; margin-top: 4px;">
             <select id="photo-sender-select">
               <option value="">Quem tirou?</option>
@@ -579,7 +579,7 @@
   </div>
 
   <!-- ==========================================================================
-       8. MOTOR JAVASCRIPT OTIMIZADO 
+       8. MOTOR JAVASCRIPT OTIMIZADO (COM CORTE AUTOMÁTICO DE 0S A 30S)
        ========================================================================== -->
   <script>
     const App = (() => {
@@ -593,10 +593,10 @@
         MAX_PHOTOS: 20,
         PHOTO_MAX_WIDTH: 600,
         PHOTO_JPEG_QUALITY: 0.55,
-        VIDEO_MAX_DIMENSION: 480,      
-        VIDEO_BITRATE: 450000,         
-        VIDEO_MAX_DURATION_SEC: 30,    
-        MAX_FALLBACK_SIZE_MB: 4        
+        VIDEO_MAX_DIMENSION: 480,      // Resolução padrão leve (480p)
+        VIDEO_BITRATE: 450000,         // 450 kbps (~56KB/s -> ~1.6MB para 30s)
+        VIDEO_MAX_DURATION_SEC: 30,    // Corta vídeos automaticamente do 0s aos 30s
+        MAX_FALLBACK_SIZE_MB: 4        // Limite caso o navegador não suporte MediaRecorder
       };
 
       const PARTICIPANTS = Object.freeze([
@@ -656,7 +656,7 @@
       
       const DEFAULT_RIDES = [
         { id: "car_1", driver: "Jeferson", capacity: 3, passengers: ["Dona Elda", "Tia"], time: "Quinta, horário a definir", location: "A definir", note: "Leva o Barril de 30L" },
-        { id: "car_2", driver: "Gustavo", capacity: 3, passengers: [], time: "Quinta, horário a definir", location: "A definir", note: "Leva o Barril de 50L (Carga pesada)" },
+        { id: "car_2", driver: "Alexandre", capacity: 3, passengers: ["Gustavo"], time: "Quinta, horário a definir", location: "A definir", note: "Leva o Barril de 50L (Carga pesada)" },
         { id: "car_3", driver: "Paulinho", capacity: 3, passengers: [], time: "Quinta, horário a definir", location: "A definir", note: "Mesa, Cadeiras, Colchões e Máq. Chopeira" }
       ];
 
@@ -882,7 +882,7 @@
         }
       };
 
-      /* --- SERVIÇO DE MÍDIA --- */
+      /* --- SERVIÇO DE MÍDIA E CORTE AUTOMÁTICO (0S A 30S) --- */
       const photosService = {
         triggerFileInput: () => {
           const select = document.getElementById("photo-sender-select");
@@ -906,12 +906,13 @@
           ui.renderPhotos();
           repository.patchRemoteField('photos', state.photos);
           if (type === 'video') {
-            utils.showToast(wasTrimmed ? "Vídeo cortado e salvo!" : "Vídeo comprimido e salvo!", "🎥");
+            utils.showToast(wasTrimmed ? "Vídeo cortado (0s-30s) e salvo no mural!" : "Vídeo comprimido e salvo no mural!", "🎥");
           } else {
             utils.showToast("Foto salva no mural!");
           }
         },
 
+        // Transcodificador e Cortador Automático (0s até 30s) via Canvas + MediaRecorder
         compressVideoFile: (file, onProgress) => {
           return new Promise((resolve, reject) => {
             const video = document.createElement("video");
@@ -938,7 +939,7 @@
               const durationToRecord = Math.min(rawDuration, CONFIG.VIDEO_MAX_DURATION_SEC);
 
               if (wasTrimmed) {
-                utils.showToast(`Vídeo cortado para ${CONFIG.VIDEO_MAX_DURATION_SEC}s...`, "✂️");
+                utils.showToast(`Vídeo de ${Math.ceil(rawDuration)}s detectado: cortando automaticamente de 0s a ${CONFIG.VIDEO_MAX_DURATION_SEC}s...`, "✂️");
               }
 
               const maxDim = CONFIG.VIDEO_MAX_DIMENSION;
@@ -951,6 +952,7 @@
                 if (height > maxDim) { width = Math.round((width * maxDim) / height); height = maxDim; }
               }
 
+              // Garante dimensões pares para compatibilidade de codec
               width = width % 2 === 0 ? width : width - 1;
               height = height % 2 === 0 ? height : height - 1;
 
@@ -966,15 +968,28 @@
               }
 
               const stream = streamFunc.call(canvas, 24);
-              const mimeTypes = ["video/webm;codecs=vp9", "video/webm;codecs=vp8", "video/webm", "video/mp4"];
+              const mimeTypes = [
+                "video/webm;codecs=vp9",
+                "video/webm;codecs=vp8",
+                "video/webm",
+                "video/mp4"
+              ];
               const selectedMime = mimeTypes.find(t => MediaRecorder.isTypeSupported(t)) || "";
 
               let recorder;
-              try { recorder = new MediaRecorder(stream, { mimeType: selectedMime || undefined, videoBitsPerSecond: CONFIG.VIDEO_BITRATE });
-              } catch (e) { recorder = new MediaRecorder(stream); }
+              try {
+                recorder = new MediaRecorder(stream, {
+                  mimeType: selectedMime || undefined,
+                  videoBitsPerSecond: CONFIG.VIDEO_BITRATE
+                });
+              } catch (e) {
+                recorder = new MediaRecorder(stream);
+              }
 
               const chunks = [];
-              recorder.ondataavailable = (ev) => { if (ev.data && ev.data.size > 0) chunks.push(ev.data); };
+              recorder.ondataavailable = (ev) => {
+                if (ev.data && ev.data.size > 0) chunks.push(ev.data);
+              };
 
               recorder.onstop = () => {
                 cleanup();
@@ -985,11 +1000,16 @@
                 reader.readAsDataURL(blob);
               };
 
-              recorder.onerror = (err) => { cleanup(); reject(err); };
+              recorder.onerror = (err) => {
+                cleanup();
+                reject(err);
+              };
 
               let animFrameId;
               const stopRecordingSafely = () => {
-                if (recorder && recorder.state === "recording") recorder.stop();
+                if (recorder && recorder.state === "recording") {
+                  recorder.stop();
+                }
                 video.pause();
                 if (animFrameId) cancelAnimationFrame(animFrameId);
               };
@@ -1009,16 +1029,27 @@
 
               video.onplay = () => {
                 recorder.start(100);
+                // Trava de segurança extra: encerra no tempo limite mesmo se a aba perder foco
                 safetyStopTimer = setTimeout(stopRecordingSafely, (durationToRecord * 1000) + 400);
                 renderLoop();
               };
 
-              video.onended = () => { stopRecordingSafely(); };
+              video.onended = () => {
+                stopRecordingSafely();
+              };
+
+              // Garante que o corte comece exatamente no início (0s)
               video.currentTime = 0;
-              video.play().catch(err => { cleanup(); reject(err); });
+              video.play().catch(err => {
+                cleanup();
+                reject(err);
+              });
             };
 
-            video.onerror = () => { cleanup(); reject(new Error("LOAD_ERROR")); };
+            video.onerror = () => {
+              cleanup();
+              reject(new Error("LOAD_ERROR"));
+            };
           });
         },
 
@@ -1030,30 +1061,43 @@
           const isVideo = file.type.startsWith('video/');
           const uploadBtn = document.getElementById("btn-upload-media");
 
+          // Tratamento para Vídeos com Corte Automático (0s a 30s) e Compressão 480p
           if (isVideo) {
-             if (uploadBtn) { uploadBtn.disabled = true; uploadBtn.textContent = "⏳ Preparando vídeo..."; }
+             if (uploadBtn) {
+               uploadBtn.disabled = true;
+               uploadBtn.textContent = "⏳ Preparando vídeo...";
+             }
+
              try {
                const result = await photosService.compressVideoFile(file, (pct, wasTrimmed) => {
-                 if (uploadBtn) uploadBtn.textContent = wasTrimmed ? `✂️ Cortando (0-30s)... ${pct}%` : `⏳ Comprimindo... ${pct}%`;
+                 if (uploadBtn) {
+                   uploadBtn.textContent = wasTrimmed
+                     ? `✂️ Cortando (0-30s)... ${pct}%`
+                     : `⏳ Comprimindo... ${pct}%`;
+                 }
                });
                photosService.saveMediaData(result.base64, author, 'video', result.wasTrimmed);
              } catch (err) {
-               console.warn("Compressão nativa indisponível:", err);
+               console.warn("Compressão nativa indisponível neste aparelho, tentando fallback direto:", err);
                const sizeInMB = file.size / (1024 * 1024);
                if (sizeInMB > CONFIG.MAX_FALLBACK_SIZE_MB) {
-                 alert(`⚠️ Seu navegador bloqueou a compressão.\nO vídeo original tem ${sizeInMB.toFixed(1)}MB.\n\nPor favor, envie um arquivo menor que ${CONFIG.MAX_FALLBACK_SIZE_MB}MB para não travar o celular da galera.`);
+                 alert(`⚠️ O seu navegador bloqueou o corte automático e o vídeo original é muito pesado (${sizeInMB.toFixed(1)}MB).\n\nEnvie um vídeo menor que ${CONFIG.MAX_FALLBACK_SIZE_MB}MB.`);
                } else {
                  const reader = new FileReader();
                  reader.onload = (e) => photosService.saveMediaData(e.target.result, author, 'video', false);
                  reader.readAsDataURL(file);
                }
              } finally {
-               if (uploadBtn) { uploadBtn.disabled = false; uploadBtn.textContent = "➕ Adicionar Mídia"; }
+               if (uploadBtn) {
+                 uploadBtn.disabled = false;
+                 uploadBtn.textContent = "➕ Adicionar Mídia";
+               }
                event.target.value = "";
              }
              return;
           }
 
+          // Tratamento para Imagens (Compressão via Canvas)
           const reader = new FileReader();
           reader.onload = (e) => {
             const img = new Image();
@@ -1061,11 +1105,15 @@
             img.onload = () => {
               const canvas = document.createElement("canvas");
               let { width, height } = img;
-              if (width > CONFIG.PHOTO_MAX_WIDTH) { height = Math.round((height * CONFIG.PHOTO_MAX_WIDTH) / width); width = CONFIG.PHOTO_MAX_WIDTH; }
+              if (width > CONFIG.PHOTO_MAX_WIDTH) {
+                height = Math.round((height * CONFIG.PHOTO_MAX_WIDTH) / width);
+                width = CONFIG.PHOTO_MAX_WIDTH;
+              }
               canvas.width = width; canvas.height = height;
               const ctx = canvas.getContext("2d");
               ctx.drawImage(img, 0, 0, width, height);
               const compressedData = canvas.toDataURL("image/jpeg", CONFIG.PHOTO_JPEG_QUALITY);
+
               photosService.saveMediaData(compressedData, author, 'image', false);
               event.target.value = "";
             };
@@ -1242,6 +1290,7 @@
             const currentMedia = state.photos[App.ui.carousel.index];
             const track = document.getElementById('carousel-track');
             
+            // Se o slide atual for um vídeo, aguarda o vídeo terminar para avançar
             if (currentMedia && currentMedia.type === 'video' && track) {
               const slides = track.querySelectorAll('.carousel-slide');
               const activeVideo = slides[App.ui.carousel.index]?.querySelector('video');
