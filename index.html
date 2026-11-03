@@ -16,117 +16,40 @@
       --color-bg-surface: #1e293b;
       --color-bg-elevated: #334155;
       --color-bg-overlay: rgba(15, 23, 42, 0.85);
-
       --color-text-main: #f8fafc;
       --color-text-muted: #94a3b8;
       --color-accent-amber: #f59e0b;
       --color-accent-sky: #38bdf8;
       --color-accent-emerald: #22c55e;
       --color-accent-rose: #f87171;
-
       --color-border: #334155;
       --radius-sm: 6px;
       --radius-md: 8px;
       --radius-lg: 12px;
       --radius-xl: 14px;
-
       --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
       --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
       --shadow-lg: 0 16px 32px rgba(0, 0, 0, 0.5);
-
       --transition-fast: 0.15s ease;
       --transition-normal: 0.2s ease;
       --container-max-width: 860px;
     }
 
-    *, *::before, *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    }
-
-    body {
-      background-color: var(--color-bg-primary);
-      color: var(--color-text-main);
-      padding: 0 16px 40px;
-      display: flex;
-      justify-content: center;
-      min-height: 100vh;
-      line-height: 1.5;
-    }
-
-    .container {
-      width: 100%;
-      max-width: var(--container-max-width);
-      position: relative;
-    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+    body { background-color: var(--color-bg-primary); color: var(--color-text-main); padding: 0 16px 40px; display: flex; justify-content: center; min-height: 100vh; line-height: 1.5; }
+    .container { width: 100%; max-width: var(--container-max-width); position: relative; }
 
     /* ==========================================================================
        2. COMPONENTES: NAVEGAÇÃO & TOPO
        ========================================================================== */
-    .top-bar {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(15, 23, 42, 0.94);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 12px 6px;
-      border-bottom: 1px solid var(--color-border);
-      margin-bottom: 20px;
-    }
-
-    .btn-icon {
-      background: var(--color-bg-surface);
-      border: 1px solid var(--color-border);
-      color: var(--color-text-main);
-      font-size: 1.25rem;
-      width: 38px;
-      height: 38px;
-      border-radius: var(--radius-md);
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background-color var(--transition-normal);
-    }
+    .top-bar { position: sticky; top: 0; z-index: 100; background: rgba(15, 23, 42, 0.94); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); display: flex; justify-content: space-between; align-items: center; padding: 12px 6px; border-bottom: 1px solid var(--color-border); margin-bottom: 20px; }
+    .btn-icon { background: var(--color-bg-surface); border: 1px solid var(--color-border); color: var(--color-text-main); font-size: 1.25rem; width: 38px; height: 38px; border-radius: var(--radius-md); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background-color var(--transition-normal); }
     .btn-icon:hover { background: var(--color-bg-elevated); }
-
-    .btn-primary {
-      background: var(--color-accent-emerald);
-      border: none;
-      color: var(--color-bg-primary);
-      font-weight: 700;
-      padding: 8px 20px;
-      border-radius: var(--radius-md);
-      font-size: 0.88rem;
-      cursor: pointer;
-      transition: opacity var(--transition-normal);
-    }
+    .btn-primary { background: var(--color-accent-emerald); border: none; color: var(--color-bg-primary); font-weight: 700; padding: 8px 20px; border-radius: var(--radius-md); font-size: 0.88rem; cursor: pointer; transition: opacity var(--transition-normal); }
     .btn-primary:hover { opacity: 0.9; }
     .btn-primary:disabled { opacity: 0.6; cursor: wait; }
-
-    .btn-secondary {
-      background: var(--color-bg-elevated);
-      color: var(--color-text-main);
-      border: 1px solid var(--color-border);
-      padding: 7px 14px;
-      border-radius: var(--radius-md);
-      font-size: 0.85rem;
-      font-weight: 500;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      transition: background-color var(--transition-normal);
-      white-space: nowrap;
-    }
+    .btn-secondary { background: var(--color-bg-elevated); color: var(--color-text-main); border: 1px solid var(--color-border); padding: 7px 14px; border-radius: var(--radius-md); font-size: 0.85rem; font-weight: 500; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: background-color var(--transition-normal); white-space: nowrap; }
     .btn-secondary:hover { background: #475569; }
-
     header { text-align: center; margin-bottom: 16px; }
     header h1 { font-size: clamp(1.4rem, 4vw, 1.8rem); color: var(--color-accent-amber); margin-bottom: 4px; }
     header p { font-size: clamp(0.82rem, 2.5vw, 0.95rem); color: var(--color-text-muted); }
@@ -134,15 +57,7 @@
     /* ==========================================================================
        3. COMPONENTES: CONTAGEM DECRESCENTE
        ========================================================================== */
-    .countdown-card {
-      background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.9));
-      border: 1px solid rgba(245, 158, 11, 0.3);
-      border-radius: var(--radius-lg);
-      padding: 14px;
-      margin-bottom: 18px;
-      text-align: center;
-      box-shadow: var(--shadow-md);
-    }
+    .countdown-card { background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.9)); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: var(--radius-lg); padding: 14px; margin-bottom: 18px; text-align: center; box-shadow: var(--shadow-md); }
     .countdown-title { font-size: 0.85rem; font-weight: 600; color: var(--color-accent-amber); margin-bottom: 8px; text-transform: uppercase; }
     .countdown-grid { display: flex; justify-content: center; align-items: center; gap: 8px; flex-wrap: wrap; }
     .countdown-unit { background: var(--color-bg-primary); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: 6px 12px; min-width: 65px; display: flex; flex-direction: column; align-items: center; }
@@ -152,15 +67,7 @@
     /* ==========================================================================
        4. COMPONENTES: CARROSSEL DE FOTOS/VÍDEOS
        ========================================================================== */
-    .carousel-card {
-      background: var(--color-bg-surface);
-      border: 1px solid var(--color-border);
-      border-radius: var(--radius-lg);
-      padding: 16px;
-      margin-bottom: 18px;
-      box-shadow: var(--shadow-md);
-      display: none; 
-    }
+    .carousel-card { background: var(--color-bg-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 16px; margin-bottom: 18px; box-shadow: var(--shadow-md); display: none; }
     .carousel-header-title { font-size: 1.15rem; color: var(--color-accent-sky); margin-bottom: 12px; font-weight: 700; text-align: center; display: flex; align-items: center; justify-content: center; gap: 8px; }
     .carousel-container { position: relative; width: 100%; overflow: hidden; border-radius: var(--radius-md); background: #000; aspect-ratio: 4/3; touch-action: pan-y; }
     .carousel-track { display: flex; height: 100%; transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); }
@@ -168,7 +75,6 @@
     .carousel-slide img, .carousel-slide video { width: 100%; height: 100%; object-fit: contain; }
     .carousel-author-tag { position: absolute; bottom: 10px; left: 10px; background: rgba(0, 0, 0, 0.7); color: #fff; padding: 6px 12px; border-radius: 999px; font-size: 0.75rem; backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); z-index: 5; pointer-events: none; }
     .video-icon-badge { position: absolute; top: 10px; right: 10px; background: rgba(220, 38, 38, 0.85); color: #fff; padding: 4px 8px; border-radius: 6px; font-size: 0.7rem; font-weight: bold; z-index: 5; pointer-events: none; }
-    
     .carousel-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(15, 23, 42, 0.6); color: white; border: 1px solid rgba(255,255,255,0.1); width: 36px; height: 36px; border-radius: 50%; font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 10; transition: all var(--transition-fast); }
     .carousel-btn:hover { background: rgba(15, 23, 42, 0.9); scale: 1.05; }
     .carousel-btn.prev { left: 10px; }
@@ -180,22 +86,13 @@
     /* ==========================================================================
        5. COMPONENTES: DASHBOARD & GRÁFICOS
        ========================================================================== */
-    .dashboard-card {
-      background: var(--color-bg-surface);
-      border: 1px solid var(--color-border);
-      border-radius: var(--radius-lg);
-      padding: clamp(14px, 3vw, 20px);
-      margin-top: 24px;
-      margin-bottom: 24px; 
-    }
+    .dashboard-card { background: var(--color-bg-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: clamp(14px, 3vw, 20px); margin-top: 24px; margin-bottom: 24px; }
     .dashboard-header { font-size: 1.15rem; color: var(--color-accent-sky); margin-bottom: 16px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
     .dashboard-grid { display: grid; grid-template-columns: auto 1fr; gap: 20px; align-items: center; }
-    
     .donut-chart { width: 140px; height: 140px; border-radius: 50%; background: var(--color-bg-primary); display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
     .donut-hole { width: 100px; height: 100px; border-radius: 50%; background: var(--color-bg-surface); display: flex; flex-direction: column; align-items: center; justify-content: center; }
     .donut-hole span { font-size: 0.75rem; color: var(--color-text-muted); }
     .donut-hole strong { font-size: 1.1rem; color: var(--color-text-main); }
-    
     .legend-container { display: flex; flex-direction: column; gap: 8px; }
     .legend-item { display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; padding: 6px 10px; background: rgba(15, 23, 42, 0.4); border-radius: 6px; }
     .legend-color-box { width: 12px; height: 12px; border-radius: 3px; display: inline-block; margin-right: 8px; }
@@ -208,20 +105,16 @@
     .expense-title { font-weight: 700; font-size: 1.15rem; display: flex; align-items: center; gap: 6px; }
     .expense-val { font-size: 1rem; font-weight: 600; color: var(--color-accent-sky); text-align: right; }
     .expense-status-row { font-size: 0.8rem; margin-top: 4px; display: flex; gap: 10px; justify-content: flex-end; flex-wrap: wrap; }
-    
     .progress-wrapper { margin-bottom: 12px; }
     .progress-bar-bg { width: 100%; height: 7px; background: rgba(255, 255, 255, 0.08); border-radius: 999px; overflow: hidden; }
     .progress-bar-fill { height: 100%; background: var(--color-accent-emerald); border-radius: 999px; width: 0%; transition: width 0.25s ease; }
     .progress-bar-fill.complete { background: #10b981; }
     .progress-label { display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--color-text-muted); margin-top: 5px; }
-
     .pix-box { font-size: 0.85rem; background: rgba(0, 0, 0, 0.25); border-radius: var(--radius-md); padding: 8px 12px; margin-bottom: 14px; color: var(--color-text-muted); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
     .pix-box strong { color: var(--color-text-main); }
     .copy-btn { background: #3b82f6; border: none; color: #fff; padding: 4px 10px; border-radius: var(--radius-sm); font-size: 0.78rem; font-weight: 500; cursor: pointer; white-space: nowrap; }
-
     .checklist-trigger-btn { width: 100%; background: rgba(56, 189, 248, 0.12); border: 1px solid rgba(56, 189, 248, 0.35); color: var(--color-accent-sky); padding: 10px 14px; border-radius: var(--radius-md); font-size: 0.88rem; font-weight: 600; cursor: pointer; margin-bottom: 14px; display: flex; justify-content: center; align-items: center; gap: 6px; transition: background var(--transition-normal); }
     .checklist-trigger-btn:hover { background: rgba(56, 189, 248, 0.22); }
-
     .people-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px; }
     .person-chip { display: flex; align-items: center; gap: 8px; background: var(--color-bg-primary); border: 1px solid var(--color-border); padding: 8px 12px; border-radius: var(--radius-md); cursor: pointer; user-select: none; font-size: 0.88rem; transition: all var(--transition-fast); }
     .person-chip.paid { background: rgba(34, 197, 94, 0.15); border-color: var(--color-accent-emerald); color: #86efac; }
@@ -244,13 +137,11 @@
     .summary-details { text-align: right; font-size: 0.82rem; white-space: nowrap; }
     .text-paid { color: #86efac; font-weight: 600; }
     .text-pending { color: var(--color-accent-rose); font-weight: 600; }
-
     .smart-settlement-box { margin-top: 20px; padding-top: 16px; border-top: 1px dashed #4338ca; }
     .settlement-title { font-size: 1rem; color: var(--color-accent-emerald); margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
     .settlement-route { background: rgba(0,0,0,0.2); border: 1px solid #312e81; padding: 8px 12px; border-radius: var(--radius-md); font-size: 0.9rem; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
     .route-arrow { color: var(--color-text-muted); font-size: 1.2rem; }
     .route-amount { color: #86efac; font-weight: 700; background: rgba(34,197,94,0.15); padding: 2px 8px; border-radius: 4px; }
-
     footer.footer-section { margin-top: 26px; display: flex; justify-content: flex-start; align-items: center; }
     .btn-action-report { background: rgba(34, 197, 94, 0.15); border: 1px solid rgba(34, 197, 94, 0.4); color: #86efac; padding: 10px 16px; border-radius: var(--radius-md); font-size: 0.88rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: background var(--transition-normal); width: 100%; justify-content: center; }
     .btn-action-report:hover { background: rgba(34, 197, 94, 0.25); }
@@ -267,7 +158,6 @@
     .drawer-nav { padding: 16px 12px; display: flex; flex-direction: column; gap: 10px; flex: 1; overflow-y: auto; }
     .drawer-btn { background: var(--color-bg-primary); border: 1px solid var(--color-border); color: var(--color-text-main); padding: 12px 14px; border-radius: 10px; font-size: 0.95rem; font-weight: 600; display: flex; align-items: center; gap: 10px; cursor: pointer; text-align: left; transition: all var(--transition-normal); }
     .drawer-btn:hover { background: var(--color-bg-elevated); border-color: var(--color-accent-sky); color: var(--color-accent-sky); }
-
     .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: var(--color-bg-overlay); backdrop-filter: blur(6px); display: none; justify-content: center; align-items: center; padding: 14px; z-index: 1100; }
     .modal-overlay.active { display: flex; }
     .modal-content { background: var(--color-bg-surface); border: 1px solid var(--color-border); border-radius: var(--radius-xl); max-width: 680px; width: 100%; max-height: 88vh; display: flex; flex-direction: column; box-shadow: var(--shadow-lg); }
@@ -276,21 +166,18 @@
     .close-modal-btn { background: transparent; border: none; color: var(--color-text-muted); font-size: 1.5rem; cursor: pointer; line-height: 1; }
     .modal-body { padding: 16px 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; }
     .modal-footer { padding: 14px 20px; border-top: 1px solid var(--color-border); display: flex; justify-content: flex-end; align-items: center; background: #192231; border-radius: 0 0 var(--radius-xl) var(--radius-xl); }
-
     .edit-item-card { background: var(--color-bg-primary); border: 1px solid var(--color-border); border-radius: 10px; padding: 12px 14px; }
     .edit-item-title { font-weight: 600; margin-bottom: 10px; color: var(--color-accent-sky); font-size: 0.98rem; }
     .edit-form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; }
     .form-group { display: flex; flex-direction: column; gap: 4px; }
     .form-group label { font-size: 0.74rem; color: var(--color-text-muted); }
     .form-group input, .form-group select { background: var(--color-bg-surface); border: 1px solid var(--color-border); color: var(--color-text-main); padding: 8px 10px; border-radius: var(--radius-sm); font-size: 0.85rem; }
-
     .grocery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 10px; }
     .grocery-item { display: flex; align-items: center; justify-content: space-between; background: var(--color-bg-primary); border: 1px solid var(--color-border); padding: 10px 14px; border-radius: var(--radius-md); cursor: pointer; user-select: none; transition: all var(--transition-fast); gap: 10px; }
     .grocery-item.bought { background: rgba(34, 197, 94, 0.1); border-color: rgba(34, 197, 94, 0.4); }
     .grocery-item.bought .grocery-text { text-decoration: line-through; color: #64748b; }
     .grocery-left { display: flex; align-items: center; gap: 10px; }
     .grocery-qty { font-size: 0.78rem; background: var(--color-bg-surface); border: 1px solid var(--color-border); color: var(--color-accent-sky); padding: 3px 8px; border-radius: var(--radius-sm); font-weight: 600; white-space: nowrap; }
-    
     .add-input-box { display: flex; gap: 8px; margin-top: 10px; }
     .add-input-box input { flex: 1; background: var(--color-bg-primary); border: 1px solid var(--color-border); color: var(--color-text-main); padding: 9px 12px; border-radius: var(--radius-md); font-size: 0.88rem; }
 
@@ -326,7 +213,6 @@
       #expenses-container .expense-card .people-grid { margin-top: auto; }
       #rides-container .expense-card > div:last-child { margin-top: auto; }
     }
-
     @media (max-width: 480px) {
       .dashboard-grid { grid-template-columns: 1fr; justify-items: center; text-align: center; }
       .legend-container { width: 100%; }
@@ -438,17 +324,15 @@
   <!-- Container de Toasts -->
   <div class="toast-container" id="toast-container" aria-live="polite"></div>
 
-  <!-- NOVO MODAL: VISUALIZADOR DE MÍDIA TELA CHEIA (LIGHTBOX) -->
+  <!-- LIGHTBOX PARA MÍDIAS (TELA CHEIA) -->
   <div id="media-viewer-modal" class="modal-overlay lightbox-modal" role="dialog" aria-modal="true">
     <div class="modal-content lightbox-content">
       <button class="lightbox-close" onclick="App.ui.closeModal('media-viewer-modal')">&times;</button>
-      <div id="media-viewer-content" class="lightbox-media-container">
-        <!-- Injetado dinamicamente via JS (Imagem ou Vídeo) -->
-      </div>
+      <div id="media-viewer-content" class="lightbox-media-container"></div>
     </div>
   </div>
 
-  <!-- Modais -->
+  <!-- Modais Restantes -->
   <div id="photos-modal" class="modal-overlay" role="dialog" aria-modal="true">
     <div class="modal-content">
       <div class="modal-header">
@@ -534,7 +418,7 @@
   </div>
 
   <!-- ==========================================================================
-       8. MOTOR JAVASCRIPT OTIMIZADO (ANTI-FLICKER & CARROSSEL CORRIGIDO)
+       8. MOTOR JAVASCRIPT OTIMIZADO (COMPLETO)
        ========================================================================== -->
   <script>
     const App = (() => {
@@ -544,7 +428,7 @@
       const CONFIG = {
         FIREBASE_BASE_URL: "https://roca2-37116-default-rtdb.firebaseio.com/dados_compartilhados",
         SYNC_INTERVAL_MS: 5000,
-        COUNTDOWN_TARGET: { year: 2026, month: 9, day: 30, hour: 18 }, 
+        COUNTDOWN_TARGET: { year: 2026, month: 9, day: 30, hour: 18 },
         MAX_PHOTOS: 20,
         PHOTO_MAX_WIDTH: 600,
         PHOTO_JPEG_QUALITY: 0.55,
@@ -569,32 +453,16 @@
       ];
 
       const GROCERY_ITEMS = [
-        { id: "alho", name: "Alho", qty: "1 pote" },
-        { id: "arroz", name: "Arroz", qty: "1 pct" },
-        { id: "batata", name: "Batata", qty: "" },
-        { id: "cafe", name: "Café", qty: "1 pct" },
-        { id: "calabresa", name: "Calabresa", qty: "3 uni" },
-        { id: "cebola", name: "Cebola", qty: "" },
-        { id: "cenoura", name: "Cenoura", qty: "" },
-        { id: "desinfetante", name: "Desinfetante", qty: "1 l" },
-        { id: "descartaveis", name: "Descartáveis", qty: "" },
-        { id: "feijao_carioca", name: "Feijão Carioca", qty: "1 pct" },
-        { id: "feijao_corda", name: "Feijão de Corda", qty: "1 pct" },
-        { id: "leite", name: "Leite", qty: "5" },
-        { id: "macarrao", name: "Macarrão", qty: "1 kg" },
-        { id: "molho_tomate", name: "Molho de Tomate", qty: "3" },
-        { id: "mussarela", name: "Mussarela", qty: "500 gm" },
-        { id: "oleo", name: "Óleo", qty: "1 l" },
-        { id: "ovo", name: "Ovo", qty: "30 uni" },
-        { id: "pao_forma", name: "Pão de Forma", qty: "3 pct" },
-        { id: "pao_queijo", name: "Pão de Queijo", qty: "200 uni" },
-        { id: "papel_higienico", name: "Papel Higiênico", qty: "1 pct" },
-        { id: "pimentao", name: "Pimentão", qty: "" },
-        { id: "presunto", name: "Presunto", qty: "gm" },
-        { id: "qboa", name: "Qboa", qty: "1 l" },
-        { id: "saco_lixo", name: "Saco de Lixo Grande", qty: "1 pct" },
-        { id: "sal_grosso", name: "Sal Grosso", qty: "1 pote" },
-        { id: "tomate", name: "Tomate", qty: "" }
+        { id: "alho", name: "Alho", qty: "1 pote" }, { id: "arroz", name: "Arroz", qty: "1 pct" }, { id: "batata", name: "Batata", qty: "" },
+        { id: "cafe", name: "Café", qty: "1 pct" }, { id: "calabresa", name: "Calabresa", qty: "3 uni" }, { id: "cebola", name: "Cebola", qty: "" },
+        { id: "cenoura", name: "Cenoura", qty: "" }, { id: "desinfetante", name: "Desinfetante", qty: "1 l" }, { id: "descartaveis", name: "Descartáveis", qty: "" },
+        { id: "feijao_carioca", name: "Feijão Carioca", qty: "1 pct" }, { id: "feijao_corda", name: "Feijão de Corda", qty: "1 pct" },
+        { id: "leite", name: "Leite", qty: "5" }, { id: "macarrao", name: "Macarrão", qty: "1 kg" }, { id: "molho_tomate", name: "Molho de Tomate", qty: "3" },
+        { id: "mussarela", name: "Mussarela", qty: "500 gm" }, { id: "oleo", name: "Óleo", qty: "1 l" }, { id: "ovo", name: "Ovo", qty: "30 uni" },
+        { id: "pao_forma", name: "Pão de Forma", qty: "3 pct" }, { id: "pao_queijo", name: "Pão de Queijo", qty: "200 uni" },
+        { id: "papel_higienico", name: "Papel Higiênico", qty: "1 pct" }, { id: "pimentao", name: "Pimentão", qty: "" },
+        { id: "presunto", name: "Presunto", qty: "gm" }, { id: "qboa", name: "Qboa", qty: "1 l" }, { id: "saco_lixo", name: "Saco de Lixo Grande", qty: "1 pct" },
+        { id: "sal_grosso", name: "Sal Grosso", qty: "1 pote" }, { id: "tomate", name: "Tomate", qty: "" }
       ].sort((a, b) => a.name.localeCompare(b.name, 'pt-BR'));
 
       const DEFAULT_LUGGAGE = [
@@ -632,7 +500,6 @@
       const utils = {
         formatBRL: (val) => (val || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }),
         cleanName: (name) => name.replace(/[^\w\sÀ-ÿ]/gi, '').trim(),
-        
         showToast: (msg, icon = '✓') => {
           const container = document.getElementById("toast-container");
           if (!container) return;
@@ -641,110 +508,54 @@
           toast.innerHTML = `<span>${icon}</span> <span>${msg}</span>`;
           container.appendChild(toast);
           requestAnimationFrame(() => toast.classList.add("show"));
-          setTimeout(() => {
-            toast.classList.remove("show");
-            setTimeout(() => toast.remove(), 250);
-          }, 3000);
+          setTimeout(() => { toast.classList.remove("show"); setTimeout(() => toast.remove(), 250); }, 3000);
         },
-
         copyToClipboard: async (text, successMsg) => {
           try {
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-              await navigator.clipboard.writeText(text);
-              utils.showToast(successMsg);
-            } else {
-              throw new Error("Clipboard API indisponível");
-            }
+            if (navigator.clipboard && navigator.clipboard.writeText) { await navigator.clipboard.writeText(text); utils.showToast(successMsg); }
+            else { throw new Error("Clipboard API indisponível"); }
           } catch {
             const textarea = document.createElement("textarea");
-            textarea.value = text;
-            textarea.style.position = "fixed";
-            document.body.appendChild(textarea);
-            textarea.select();
-            document.execCommand('copy');
-            document.body.removeChild(textarea);
-            utils.showToast(successMsg);
+            textarea.value = text; textarea.style.position = "fixed"; document.body.appendChild(textarea);
+            textarea.select(); document.execCommand('copy'); document.body.removeChild(textarea); utils.showToast(successMsg);
           }
         }
       };
 
-      /* --- REPOSITÓRIO (Com Anti-Flicker e Proteção de Estado) --- */
+      /* --- REPOSITÓRIO (Com Anti-Flicker) --- */
       const repository = {
         loadLocal: () => {
           try {
-            const exp = localStorage.getItem("roca_expenses_data");
-            const pay = localStorage.getItem("roca_payments_data");
-            const groc = localStorage.getItem("roca_grocery_data");
-            const lug = localStorage.getItem("roca_luggage_data");
-            const pic = localStorage.getItem("roca_photos_data");
-            const rid = localStorage.getItem("roca_rides_data");
-
-            if (exp) state.expenses = JSON.parse(exp);
-            if (pay) state.payments = JSON.parse(pay);
-            if (groc) state.grocery = JSON.parse(groc);
-            if (lug) state.luggage = JSON.parse(lug);
+            const exp = localStorage.getItem("roca_expenses_data"); const pay = localStorage.getItem("roca_payments_data");
+            const groc = localStorage.getItem("roca_grocery_data"); const lug = localStorage.getItem("roca_luggage_data");
+            const pic = localStorage.getItem("roca_photos_data"); const rid = localStorage.getItem("roca_rides_data");
+            if (exp) state.expenses = JSON.parse(exp); if (pay) state.payments = JSON.parse(pay);
+            if (groc) state.grocery = JSON.parse(groc); if (lug) state.luggage = JSON.parse(lug);
             if (pic) state.photos = JSON.parse(pic);
-            if (rid) {
-              state.rides = JSON.parse(rid);
-              state.rides.forEach(c => c.passengers = c.passengers || []);
-            }
-
-            state.expenses.forEach(item => {
-              if (item.id === "comidas") { item.id = "compras"; item.name = "🛒 Compras"; }
-            });
-
+            if (rid) { state.rides = JSON.parse(rid); state.rides.forEach(c => c.passengers = c.passengers || []); }
+            state.expenses.forEach(item => { if (item.id === "comidas") { item.id = "compras"; item.name = "🛒 Compras"; } });
           } catch (e) { console.error("Falha ao carregar cache local:", e); }
         },
-
         saveLocal: () => {
           try {
-            localStorage.setItem("roca_expenses_data", JSON.stringify(state.expenses));
-            localStorage.setItem("roca_payments_data", JSON.stringify(state.payments));
-            localStorage.setItem("roca_grocery_data", JSON.stringify(state.grocery));
-            localStorage.setItem("roca_luggage_data", JSON.stringify(state.luggage));
-            localStorage.setItem("roca_photos_data", JSON.stringify(state.photos));
-            localStorage.setItem("roca_rides_data", JSON.stringify(state.rides));
+            localStorage.setItem("roca_expenses_data", JSON.stringify(state.expenses)); localStorage.setItem("roca_payments_data", JSON.stringify(state.payments));
+            localStorage.setItem("roca_grocery_data", JSON.stringify(state.grocery)); localStorage.setItem("roca_luggage_data", JSON.stringify(state.luggage));
+            localStorage.setItem("roca_photos_data", JSON.stringify(state.photos)); localStorage.setItem("roca_rides_data", JSON.stringify(state.rides));
           } catch (e) { console.error("Falha ao salvar cache local:", e); }
         },
-
         patchRemoteField: async (path, value) => {
-          repository.saveLocal();
-          if (!navigator.onLine) return;
-          try {
-            await fetch(`${CONFIG.FIREBASE_BASE_URL}/${path}.json`, {
-              method: "PUT",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify(value)
-            });
+          repository.saveLocal(); if (!navigator.onLine) return;
+          try { await fetch(`${CONFIG.FIREBASE_BASE_URL}/${path}.json`, { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(value) });
           } catch (err) { console.warn(`Erro no patch do caminho ${path}:`, err); }
         },
-
         syncEntireState: async () => {
-          state.isSaving = true;
-          repository.saveLocal();
-          if (!navigator.onLine) { state.isSaving = false; return; }
-
+          state.isSaving = true; repository.saveLocal(); if (!navigator.onLine) { state.isSaving = false; return; }
           try {
-            const payload = JSON.stringify({
-              expenses: state.expenses,
-              payments: state.payments,
-              grocery: state.grocery,
-              luggage: state.luggage,
-              photos: state.photos,
-              rides: state.rides,
-              lastUpdated: Date.now()
-            });
-            const res = await fetch(`${CONFIG.FIREBASE_BASE_URL}.json`, {
-              method: "PUT",
-              headers: { "Content-Type": "application/json" },
-              body: payload
-            });
+            const payload = JSON.stringify({ expenses: state.expenses, payments: state.payments, grocery: state.grocery, luggage: state.luggage, photos: state.photos, rides: state.rides, lastUpdated: Date.now() });
+            const res = await fetch(`${CONFIG.FIREBASE_BASE_URL}.json`, { method: "PUT", headers: { "Content-Type": "application/json" }, body: payload });
             if (res.ok) state.hasLoadedCloudOnce = true;
-          } catch (err) { console.warn("Erro ao sincronizar tudo:", err);
-          } finally { setTimeout(() => { state.isSaving = false; }, 400); }
+          } catch (err) { console.warn("Erro ao sincronizar tudo:", err); } finally { setTimeout(() => { state.isSaving = false; }, 400); }
         },
-
-        // Função Atualizada com Filtro Anti-Flicker!
         syncFromCloud: async () => {
           if (state.isSaving || !navigator.onLine) return;
           try {
@@ -752,39 +563,23 @@
             if (res.ok) {
               const data = await res.json();
               if (data) {
-                const incomingExpenses = data.expenses || [];
-                const incomingPayments = data.payments || {};
-                const incomingGrocery = data.grocery || {};
-                const incomingLuggage = data.luggage || [];
-                const incomingPhotos = data.photos || [];
-                const incomingRides = (data.rides || []).map(car => { car.passengers = car.passengers || []; return car; });
+                const incomingExpenses = data.expenses || []; const incomingPayments = data.payments || {};
+                const incomingGrocery = data.grocery || {}; const incomingLuggage = data.luggage || [];
+                const incomingPhotos = data.photos || []; const incomingRides = (data.rides || []).map(car => { car.passengers = car.passengers || []; return car; });
 
                 let needsCloudCorrection = false;
-                incomingExpenses.forEach(item => {
-                  if (item.id === "comidas") { item.id = "compras"; item.name = "🛒 Compras"; needsCloudCorrection = true; }
-                });
+                incomingExpenses.forEach(item => { if (item.id === "comidas") { item.id = "compras"; item.name = "🛒 Compras"; needsCloudCorrection = true; } });
 
-                // Compara a nuvem com a tela para só redesenhar se houver diferença real
                 const incomingStr = JSON.stringify({ expenses: incomingExpenses, payments: incomingPayments, grocery: incomingGrocery, luggage: incomingLuggage, photos: incomingPhotos, rides: incomingRides });
                 const currentStr = JSON.stringify({ expenses: state.expenses, payments: state.payments, grocery: state.grocery, luggage: state.luggage, photos: state.photos, rides: state.rides });
 
                 if (incomingStr !== currentStr || !state.hasLoadedCloudOnce) {
-                  state.expenses = incomingExpenses;
-                  state.payments = incomingPayments;
-                  state.grocery = incomingGrocery;
-                  state.luggage = incomingLuggage;
-                  state.photos = incomingPhotos;
-                  state.rides = incomingRides;
-
-                  repository.saveLocal();
-                  ui.renderAll();
-                  state.hasLoadedCloudOnce = true;
-
+                  state.expenses = incomingExpenses; state.payments = incomingPayments; state.grocery = incomingGrocery;
+                  state.luggage = incomingLuggage; state.photos = incomingPhotos; state.rides = incomingRides;
+                  repository.saveLocal(); ui.renderAll(); state.hasLoadedCloudOnce = true;
                   if (needsCloudCorrection) repository.syncEntireState();
                 }
-              } else if (data === null && !state.hasLoadedCloudOnce) {
-                repository.syncEntireState();
-              }
+              } else if (data === null && !state.hasLoadedCloudOnce) { repository.syncEntireState(); }
             }
           } catch (err) { console.warn("Erro ao buscar dados remotos:", err); }
         }
@@ -794,460 +589,204 @@
       const settingsService = {
         saveFromModal: () => {
           state.expenses.forEach(exp => {
-            const totalInput = document.getElementById(`modal_total_${exp.id}`);
-            const respInput = document.getElementById(`modal_resp_${exp.id}`);
-            const pixInput = document.getElementById(`modal_pix_${exp.id}`);
-            const dispInput = document.getElementById(`modal_disp_${exp.id}`);
-            if (totalInput) {
-              const val = totalInput.value.trim();
-              exp.total = val !== "" && !isNaN(val) ? parseFloat(val) : null;
-            }
+            const totalInput = document.getElementById(`modal_total_${exp.id}`); const respInput = document.getElementById(`modal_resp_${exp.id}`);
+            const pixInput = document.getElementById(`modal_pix_${exp.id}`); const dispInput = document.getElementById(`modal_disp_${exp.id}`);
+            if (totalInput) { const val = totalInput.value.trim(); exp.total = val !== "" && !isNaN(val) ? parseFloat(val) : null; }
             if (respInput) exp.responsible = respInput.value.trim() || "A definir";
             if (pixInput) exp.pix = pixInput.value.trim();
             if (dispInput) exp.pixDisplay = dispInput.value.trim() || exp.pix || "A definir";
           });
-          
           state.rides.forEach(car => {
-            const driverInput = document.getElementById(`modal_car_driver_${car.id}`);
-            const capInput = document.getElementById(`modal_car_cap_${car.id}`);
-            const noteInput = document.getElementById(`modal_car_note_${car.id}`);
-            if(driverInput) car.driver = driverInput.value.trim();
-            if(capInput) car.capacity = parseInt(capInput.value) || 0;
-            if(noteInput) car.note = noteInput.value.trim();
+            const driverInput = document.getElementById(`modal_car_driver_${car.id}`); const capInput = document.getElementById(`modal_car_cap_${car.id}`); const noteInput = document.getElementById(`modal_car_note_${car.id}`);
+            if(driverInput) car.driver = driverInput.value.trim(); if(capInput) car.capacity = parseInt(capInput.value) || 0; if(noteInput) car.note = noteInput.value.trim();
           });
-
-          ui.closeModal('edit-modal');
-          ui.renderExpenses();
-          ui.renderRides();
-          repository.patchRemoteField('expenses', state.expenses);
-          repository.patchRemoteField('rides', state.rides);
-          utils.showToast("Configurações atualizadas!");
+          ui.closeModal('edit-modal'); ui.renderExpenses(); ui.renderRides();
+          repository.patchRemoteField('expenses', state.expenses); repository.patchRemoteField('rides', state.rides); utils.showToast("Configurações atualizadas!");
         }
       };
 
       const expensesService = {
         togglePayment: (expId, person) => {
-          const key = `${expId}_${person}`;
-          state.payments[key] = !state.payments[key];
-          ui.renderExpenses();
-          repository.patchRemoteField(`payments/${key}`, state.payments[key]);
+          const key = `${expId}_${person}`; state.payments[key] = !state.payments[key];
+          ui.renderExpenses(); repository.patchRemoteField(`payments/${key}`, state.payments[key]);
           utils.showToast(state.payments[key] ? `Pagamento marcado: ${person}` : `Pagamento desmarcado: ${person}`);
         }
       };
 
-      /* --- SERVIÇO DE MÍDIA E CORTE AUTOMÁTICO (0S A 30S) --- */
       const photosService = {
         triggerFileInput: () => {
           const select = document.getElementById("photo-sender-select");
           if (!select.value) { utils.showToast("Selecione quem tirou a foto/vídeo primeiro!", "⚠️"); return; }
           document.getElementById("photo-file-input").click();
         },
-        
         saveMediaData: (base64Data, author, type, wasTrimmed = false) => {
-          state.photos.unshift({
-            id: `media_${Date.now()}`, 
-            url: base64Data, 
-            author: author,
-            type: type, 
-            date: new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })
-          });
-          
-          if (state.photos.length > CONFIG.MAX_PHOTOS) {
-            state.photos = state.photos.slice(0, CONFIG.MAX_PHOTOS);
-          }
-
-          ui.renderPhotos();
-          repository.patchRemoteField('photos', state.photos);
-          if (type === 'video') {
-            utils.showToast(wasTrimmed ? "Vídeo cortado (0s-30s) e salvo no mural!" : "Vídeo comprimido e salvo no mural!", "🎥");
-          } else {
-            utils.showToast("Foto salva no mural!");
-          }
+          state.photos.unshift({ id: `media_${Date.now()}`, url: base64Data, author: author, type: type, date: new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }) });
+          if (state.photos.length > CONFIG.MAX_PHOTOS) { state.photos = state.photos.slice(0, CONFIG.MAX_PHOTOS); }
+          ui.renderPhotos(); repository.patchRemoteField('photos', state.photos);
+          if (type === 'video') { utils.showToast(wasTrimmed ? "Vídeo cortado (0s-30s) e salvo no mural!" : "Vídeo comprimido e salvo no mural!", "🎥"); } else { utils.showToast("Foto salva no mural!"); }
         },
-
         compressVideoFile: (file, onProgress) => {
           return new Promise((resolve, reject) => {
             const video = document.createElement("video");
             video.style.cssText = "position:fixed; top:-9999px; left:-9999px; width:1px; height:1px; opacity:0; pointer-events:none;";
-            video.muted = true;
-            video.playsInline = true;
-            video.setAttribute("playsinline", "");
-            video.setAttribute("webkit-playsinline", "");
+            video.muted = true; video.playsInline = true; video.setAttribute("playsinline", ""); video.setAttribute("webkit-playsinline", "");
             document.body.appendChild(video);
-
-            const objectUrl = URL.createObjectURL(file);
-            video.src = objectUrl;
-
+            const objectUrl = URL.createObjectURL(file); video.src = objectUrl;
             let safetyStopTimer = null;
-            const cleanup = () => {
-              if (safetyStopTimer) clearTimeout(safetyStopTimer);
-              URL.revokeObjectURL(objectUrl);
-              if (video.parentNode) video.parentNode.removeChild(video);
-            };
-
+            const cleanup = () => { if (safetyStopTimer) clearTimeout(safetyStopTimer); URL.revokeObjectURL(objectUrl); if (video.parentNode) video.parentNode.removeChild(video); };
             video.onloadedmetadata = () => {
               const rawDuration = (video.duration && isFinite(video.duration)) ? video.duration : CONFIG.VIDEO_MAX_DURATION_SEC;
               const wasTrimmed = rawDuration > CONFIG.VIDEO_MAX_DURATION_SEC;
               const durationToRecord = Math.min(rawDuration, CONFIG.VIDEO_MAX_DURATION_SEC);
-
-              if (wasTrimmed) {
-                utils.showToast(`Vídeo de ${Math.ceil(rawDuration)}s detectado: cortando automaticamente de 0s a ${CONFIG.VIDEO_MAX_DURATION_SEC}s...`, "✂️");
-              }
-
               const maxDim = CONFIG.VIDEO_MAX_DIMENSION;
-              let width = video.videoWidth || 480;
-              let height = video.videoHeight || 360;
-
-              if (width > height) {
-                if (width > maxDim) { height = Math.round((height * maxDim) / width); width = maxDim; }
-              } else {
-                if (height > maxDim) { width = Math.round((width * maxDim) / height); height = maxDim; }
-              }
-
-              width = width % 2 === 0 ? width : width - 1;
-              height = height % 2 === 0 ? height : height - 1;
-
-              const canvas = document.createElement("canvas");
-              canvas.width = width;
-              canvas.height = height;
-              const ctx = canvas.getContext("2d");
-
+              let width = video.videoWidth || 480; let height = video.videoHeight || 360;
+              if (width > height) { if (width > maxDim) { height = Math.round((height * maxDim) / width); width = maxDim; } } 
+              else { if (height > maxDim) { width = Math.round((width * maxDim) / height); height = maxDim; } }
+              width = width % 2 === 0 ? width : width - 1; height = height % 2 === 0 ? height : height - 1;
+              const canvas = document.createElement("canvas"); canvas.width = width; canvas.height = height; const ctx = canvas.getContext("2d");
               const streamFunc = canvas.captureStream || canvas.mozCaptureStream || canvas.webkitCaptureStream;
-              if (!streamFunc || typeof MediaRecorder === "undefined") {
-                cleanup();
-                return reject(new Error("UNSUPPORTED_RECORDER"));
-              }
-
+              if (!streamFunc || typeof MediaRecorder === "undefined") { cleanup(); return reject(new Error("UNSUPPORTED_RECORDER")); }
               const stream = streamFunc.call(canvas, 24);
-              const mimeTypes = [
-                "video/webm;codecs=vp9",
-                "video/webm;codecs=vp8",
-                "video/webm",
-                "video/mp4"
-              ];
+              const mimeTypes = ["video/webm;codecs=vp9", "video/webm;codecs=vp8", "video/webm", "video/mp4"];
               const selectedMime = mimeTypes.find(t => MediaRecorder.isTypeSupported(t)) || "";
-
               let recorder;
-              try {
-                recorder = new MediaRecorder(stream, {
-                  mimeType: selectedMime || undefined,
-                  videoBitsPerSecond: CONFIG.VIDEO_BITRATE
-                });
-              } catch (e) {
-                recorder = new MediaRecorder(stream);
-              }
-
+              try { recorder = new MediaRecorder(stream, { mimeType: selectedMime || undefined, videoBitsPerSecond: CONFIG.VIDEO_BITRATE }); } 
+              catch (e) { recorder = new MediaRecorder(stream); }
               const chunks = [];
-              recorder.ondataavailable = (ev) => {
-                if (ev.data && ev.data.size > 0) chunks.push(ev.data);
-              };
-
+              recorder.ondataavailable = (ev) => { if (ev.data && ev.data.size > 0) chunks.push(ev.data); };
               recorder.onstop = () => {
-                cleanup();
-                const blob = new Blob(chunks, { type: recorder.mimeType || "video/webm" });
-                const reader = new FileReader();
-                reader.onloadend = () => resolve({ base64: reader.result, wasTrimmed });
-                reader.onerror = () => reject(new Error("READ_ERROR"));
-                reader.readAsDataURL(blob);
+                cleanup(); const blob = new Blob(chunks, { type: recorder.mimeType || "video/webm" });
+                const reader = new FileReader(); reader.onloadend = () => resolve({ base64: reader.result, wasTrimmed });
+                reader.onerror = () => reject(new Error("READ_ERROR")); reader.readAsDataURL(blob);
               };
-
-              recorder.onerror = (err) => {
-                cleanup();
-                reject(err);
-              };
-
+              recorder.onerror = (err) => { cleanup(); reject(err); };
               let animFrameId;
-              const stopRecordingSafely = () => {
-                if (recorder && recorder.state === "recording") {
-                  recorder.stop();
-                }
-                video.pause();
-                if (animFrameId) cancelAnimationFrame(animFrameId);
-              };
-
+              const stopRecordingSafely = () => { if (recorder && recorder.state === "recording") { recorder.stop(); } video.pause(); if (animFrameId) cancelAnimationFrame(animFrameId); };
               const renderLoop = () => {
-                if (video.paused || video.ended || video.currentTime >= durationToRecord) {
-                  stopRecordingSafely();
-                  return;
-                }
+                if (video.paused || video.ended || video.currentTime >= durationToRecord) { stopRecordingSafely(); return; }
                 ctx.drawImage(video, 0, 0, width, height);
-                if (onProgress && durationToRecord > 0) {
-                  const pct = Math.min(99, Math.round((video.currentTime / durationToRecord) * 100));
-                  onProgress(pct, wasTrimmed);
-                }
+                if (onProgress && durationToRecord > 0) { const pct = Math.min(99, Math.round((video.currentTime / durationToRecord) * 100)); onProgress(pct, wasTrimmed); }
                 animFrameId = requestAnimationFrame(renderLoop);
               };
-
-              video.onplay = () => {
-                recorder.start(100);
-                safetyStopTimer = setTimeout(stopRecordingSafely, (durationToRecord * 1000) + 400);
-                renderLoop();
-              };
-
-              video.onended = () => {
-                stopRecordingSafely();
-              };
-
-              video.currentTime = 0;
-              video.play().catch(err => {
-                cleanup();
-                reject(err);
-              });
+              video.onplay = () => { recorder.start(100); safetyStopTimer = setTimeout(stopRecordingSafely, (durationToRecord * 1000) + 400); renderLoop(); };
+              video.onended = () => { stopRecordingSafely(); };
+              video.currentTime = 0; video.play().catch(err => { cleanup(); reject(err); });
             };
-
-            video.onerror = () => {
-              cleanup();
-              reject(new Error("LOAD_ERROR"));
-            };
+            video.onerror = () => { cleanup(); reject(new Error("LOAD_ERROR")); };
           });
         },
-
         handleUpload: async (event) => {
-          const file = event.target.files[0];
-          if (!file) return;
-          
+          const file = event.target.files[0]; if (!file) return;
           const author = document.getElementById("photo-sender-select").value || "Alguém";
-          const isVideo = file.type.startsWith('video/');
-          const uploadBtn = document.getElementById("btn-upload-media");
-
+          const isVideo = file.type.startsWith('video/'); const uploadBtn = document.getElementById("btn-upload-media");
           if (isVideo) {
-             if (uploadBtn) {
-               uploadBtn.disabled = true;
-               uploadBtn.textContent = "⏳ Preparando vídeo...";
-             }
-
+             if (uploadBtn) { uploadBtn.disabled = true; uploadBtn.textContent = "⏳ Preparando vídeo..."; }
              try {
                const result = await photosService.compressVideoFile(file, (pct, wasTrimmed) => {
-                 if (uploadBtn) {
-                   uploadBtn.textContent = wasTrimmed
-                     ? `✂️ Cortando (0-30s)... ${pct}%`
-                     : `⏳ Comprimindo... ${pct}%`;
-                 }
+                 if (uploadBtn) { uploadBtn.textContent = wasTrimmed ? `✂️ Cortando (0-30s)... ${pct}%` : `⏳ Comprimindo... ${pct}%`; }
                });
                photosService.saveMediaData(result.base64, author, 'video', result.wasTrimmed);
              } catch (err) {
-               console.warn("Compressão nativa indisponível neste aparelho, tentando fallback direto:", err);
+               console.warn("Compressão nativa indisponível:", err);
                const sizeInMB = file.size / (1024 * 1024);
-               if (sizeInMB > CONFIG.MAX_FALLBACK_SIZE_MB) {
-                 alert(`⚠️ O seu navegador bloqueou o corte automático e o vídeo original é muito pesado (${sizeInMB.toFixed(1)}MB).\n\nEnvie um vídeo menor que ${CONFIG.MAX_FALLBACK_SIZE_MB}MB.`);
-               } else {
-                 const reader = new FileReader();
-                 reader.onload = (e) => photosService.saveMediaData(e.target.result, author, 'video', false);
-                 reader.readAsDataURL(file);
-               }
-             } finally {
-               if (uploadBtn) {
-                 uploadBtn.disabled = false;
-                 uploadBtn.textContent = "➕ Adicionar Mídia";
-               }
-               event.target.value = "";
-             }
+               if (sizeInMB > CONFIG.MAX_FALLBACK_SIZE_MB) { alert(`⚠️ O seu navegador bloqueou o corte automático e o vídeo é muito pesado (${sizeInMB.toFixed(1)}MB).\n\nEnvie um vídeo menor que ${CONFIG.MAX_FALLBACK_SIZE_MB}MB.`); } 
+               else { const reader = new FileReader(); reader.onload = (e) => photosService.saveMediaData(e.target.result, author, 'video', false); reader.readAsDataURL(file); }
+             } finally { if (uploadBtn) { uploadBtn.disabled = false; uploadBtn.textContent = "➕ Adicionar Mídia"; } event.target.value = ""; }
              return;
           }
-
           const reader = new FileReader();
           reader.onload = (e) => {
-            const img = new Image();
-            img.src = e.target.result;
+            const img = new Image(); img.src = e.target.result;
             img.onload = () => {
-              const canvas = document.createElement("canvas");
-              let { width, height } = img;
-              if (width > CONFIG.PHOTO_MAX_WIDTH) {
-                height = Math.round((height * CONFIG.PHOTO_MAX_WIDTH) / width);
-                width = CONFIG.PHOTO_MAX_WIDTH;
-              }
-              canvas.width = width; canvas.height = height;
-              const ctx = canvas.getContext("2d");
-              ctx.drawImage(img, 0, 0, width, height);
+              const canvas = document.createElement("canvas"); let { width, height } = img;
+              if (width > CONFIG.PHOTO_MAX_WIDTH) { height = Math.round((height * CONFIG.PHOTO_MAX_WIDTH) / width); width = CONFIG.PHOTO_MAX_WIDTH; }
+              canvas.width = width; canvas.height = height; const ctx = canvas.getContext("2d"); ctx.drawImage(img, 0, 0, width, height);
               const compressedData = canvas.toDataURL("image/jpeg", CONFIG.PHOTO_JPEG_QUALITY);
-
-              photosService.saveMediaData(compressedData, author, 'image', false);
-              event.target.value = "";
+              photosService.saveMediaData(compressedData, author, 'image', false); event.target.value = "";
             };
           };
           reader.readAsDataURL(file);
         },
-
-        deletePhoto: (photoId) => {
-          state.photos = state.photos.filter(p => p.id !== photoId);
-          ui.renderPhotos();
-          repository.patchRemoteField('photos', state.photos);
-          utils.showToast("Mídia excluída do mural.", "🗑️");
-        }
+        deletePhoto: (photoId) => { state.photos = state.photos.filter(p => p.id !== photoId); ui.renderPhotos(); repository.patchRemoteField('photos', state.photos); utils.showToast("Mídia excluída.", "🗑️"); }
       };
       
       const ridesService = {
         addPassenger: (carId, person) => {
-          if (!person) return;
-          const car = state.rides.find(c => c.id === carId);
+          if (!person) return; const car = state.rides.find(c => c.id === carId);
           if (car && car.passengers.length < car.capacity && !car.passengers.includes(person) && car.driver !== person) {
-            car.passengers.push(person);
-            repository.patchRemoteField('rides', state.rides);
-            ui.renderRides();
-            utils.showToast(`${person} adicionado ao carro de ${car.driver}!`);
+            car.passengers.push(person); repository.patchRemoteField('rides', state.rides); ui.renderRides(); utils.showToast(`${person} adicionado ao carro de ${car.driver}!`);
           }
         },
         removePassenger: (carId, person) => {
-          if (person === "Dona Elda" || person === "Tia") return; 
-          const car = state.rides.find(c => c.id === carId);
-          if (car) {
-            car.passengers = car.passengers.filter(p => p !== person);
-            repository.patchRemoteField('rides', state.rides);
-            ui.renderRides();
-            utils.showToast(`${person} removido do carro.`);
-          }
+          if (person === "Dona Elda" || person === "Tia") return; const car = state.rides.find(c => c.id === carId);
+          if (car) { car.passengers = car.passengers.filter(p => p !== person); repository.patchRemoteField('rides', state.rides); ui.renderRides(); utils.showToast(`${person} removido do carro.`); }
         }
       };
 
       const luggageService = {
-        updateAssignment: (id, person) => {
-          const found = state.luggage.find(i => i.id === id);
-          if (found) {
-            found.assigned = person;
-            repository.patchRemoteField('luggage', state.luggage);
-            utils.showToast(`Item logístico atribuído: ${person || 'Ninguém'}`);
-          }
-        },
-        addItem: () => {
-          const input = document.getElementById("new-luggage-input");
-          const name = input.value.trim();
-          if (!name) return;
-          state.luggage.push({ id: `custom_${Date.now()}`, name: name.startsWith("🎒") ? name : `🎒 ${name}`, assigned: "" });
-          input.value = "";
-          ui.renderLuggage();
-          repository.patchRemoteField('luggage', state.luggage);
-          utils.showToast("Novo item adicionado à bagagem!");
-        }
+        updateAssignment: (id, person) => { const found = state.luggage.find(i => i.id === id); if (found) { found.assigned = person; repository.patchRemoteField('luggage', state.luggage); utils.showToast(`Item logístico atribuído: ${person || 'Ninguém'}`); } },
+        addItem: () => { const input = document.getElementById("new-luggage-input"); const name = input.value.trim(); if (!name) return; state.luggage.push({ id: `custom_${Date.now()}`, name: name.startsWith("🎒") ? name : `🎒 ${name}`, assigned: "" }); input.value = ""; ui.renderLuggage(); repository.patchRemoteField('luggage', state.luggage); utils.showToast("Novo item adicionado à bagagem!"); }
       };
 
       const groceryService = {
-        toggleItem: (itemId) => {
-          state.grocery[itemId] = !state.grocery[itemId];
-          ui.renderGrocery();
-          ui.renderExpenses();
-          repository.patchRemoteField(`grocery/${itemId}`, state.grocery[itemId]);
-          utils.showToast(state.grocery[itemId] ? "Item marcado como comprado!" : "Item desmarcado.");
-        }
+        toggleItem: (itemId) => { state.grocery[itemId] = !state.grocery[itemId]; ui.renderGrocery(); ui.renderExpenses(); repository.patchRemoteField(`grocery/${itemId}`, state.grocery[itemId]); utils.showToast(state.grocery[itemId] ? "Item marcado como comprado!" : "Item desmarcado."); }
       };
 
-      /* --- RELATÓRIOS E EXPORTAÇÃO --- */
       const reportsService = {
         copyWhatsAppReport: () => {
-          let report = `🌾 *RESUMO DE FECHAMENTO - ROÇA 2.0* 🌾\n`;
-          report += `📅 *Período:* 30/10 a 02/11\n`;
-          report += `------------------------------------\n\n`;
-          report += `📋 *STATUS DAS DESPESAS:*\n`;
-
-          const balances = {};
-          const sortedParticipants = [...PARTICIPANTS].sort((a, b) => a.localeCompare(b, 'pt-BR'));
+          let report = `🌾 *RESUMO DE FECHAMENTO - ROÇA 2.0* 🌾\n📅 *Período:* 30/10 a 02/11\n------------------------------------\n\n📋 *STATUS DAS DESPESAS:*\n`;
+          const balances = {}; const sortedParticipants = [...PARTICIPANTS].sort((a, b) => a.localeCompare(b, 'pt-BR'));
           sortedParticipants.forEach(p => { balances[p] = { totalOwed: 0, totalPaid: 0 }; });
-
           const sortedExpenses = [...state.expenses].sort((a, b) => utils.cleanName(a.name).localeCompare(utils.cleanName(b.name), 'pt-BR'));
-
           let totalGasto = 0;
-
           sortedExpenses.forEach(exp => {
-            const excluded = exp.excluded || [];
-            const activePeople = sortedParticipants.filter(p => !excluded.includes(p));
-            const activeCount = activePeople.length;
-            const hasDefined = typeof exp.total === 'number' && exp.total > 0 && activeCount > 0;
-            const perPersonVal = hasDefined ? exp.total / activeCount : 0;
-
+            const excluded = exp.excluded || []; const activePeople = sortedParticipants.filter(p => !excluded.includes(p)); const activeCount = activePeople.length;
+            const hasDefined = typeof exp.total === 'number' && exp.total > 0 && activeCount > 0; const perPersonVal = hasDefined ? exp.total / activeCount : 0;
             if (hasDefined) totalGasto += exp.total;
-
-            let paidCount = 0;
-            const pendingNames = [];
-
+            let paidCount = 0; const pendingNames = [];
             activePeople.forEach(person => {
-              const isPaid = !!state.payments[`${exp.id}_${person}`];
-              if (isPaid) paidCount++;
-              else pendingNames.push(person);
-
-              if (perPersonVal > 0) {
-                balances[person].totalOwed += perPersonVal;
-                if (isPaid) balances[person].totalPaid += perPersonVal;
-              }
+              const isPaid = !!state.payments[`${exp.id}_${person}`]; if (isPaid) paidCount++; else pendingNames.push(person);
+              if (perPersonVal > 0) { balances[person].totalOwed += perPersonVal; if (isPaid) balances[person].totalPaid += perPersonVal; }
             });
-
             pendingNames.sort((a, b) => a.localeCompare(b, 'pt-BR'));
-
             report += `• *${exp.name}*`;
-            if (hasDefined) {
-              report += ` (${utils.formatBRL(perPersonVal)}/pessoa)\n`;
-              report += `  Progresso: ${paidCount}/${activeCount} pagos\n`;
-              report += pendingNames.length > 0 ? `  ⏳ *Falta:* ${pendingNames.join(", ")}\n` : `  ✅ *100% arrecadado!*\n`;
-            } else {
-              report += ` (Valor a definir)\n`;
-            }
+            if (hasDefined) { report += ` (${utils.formatBRL(perPersonVal)}/pessoa)\n  Progresso: ${paidCount}/${activeCount} pagos\n`; report += pendingNames.length > 0 ? `  ⏳ *Falta:* ${pendingNames.join(", ")}\n` : `  ✅ *100% arrecadado!*\n`; } 
+            else { report += ` (Valor a definir)\n`; }
             report += `\n`;
           });
-
-          report += `------------------------------------\n`;
-          report += `📈 *CUSTO TOTAL DA VIAGEM:* ${utils.formatBRL(totalGasto)}\n`;
-          report += `------------------------------------\n\n`;
-
-          report += `🤖 *ACERTO INTELIGENTE (COMO PAGAR):*\n`;
+          report += `------------------------------------\n📈 *CUSTO TOTAL DA VIAGEM:* ${utils.formatBRL(totalGasto)}\n------------------------------------\n\n🤖 *ACERTO INTELIGENTE (COMO PAGAR):*\n`;
           let hasDebts = false;
-          
           Object.keys(state.smartDebts).sort().forEach(debtor => {
              const creditorsObj = state.smartDebts[debtor];
              Object.keys(creditorsObj).sort().forEach(creditor => {
                  const amount = creditorsObj[creditor];
-                 if (amount > 0.01) {
-                     hasDebts = true;
-                     report += `💸 *${debtor}* ➔ envia ${utils.formatBRL(amount)} para *${creditor}*\n`;
-                 }
+                 if (amount > 0.01) { hasDebts = true; report += `💸 *${debtor}* ➔ envia ${utils.formatBRL(amount)} para *${creditor}*\n`; }
              });
           });
-
-          if (!hasDebts) report += `✅ Tudo 100% quitado entre o grupo!\n\n`;
-          else report += `\n`;
-
-          report += `------------------------------------\n`;
-          report += `🔑 *CHAVES PIX DOS RECEBEDORES:*\n`;
-
+          if (!hasDebts) report += `✅ Tudo 100% quitado entre o grupo!\n\n`; else report += `\n`;
+          report += `------------------------------------\n🔑 *CHAVES PIX DOS RECEBEDORES:*\n`;
           const addedPix = new Map();
-          sortedExpenses.forEach(exp => {
-            if (exp.pix && exp.pix.trim() && !addedPix.has(exp.responsible)) {
-              addedPix.set(exp.responsible, exp.pixDisplay || exp.pix);
-            }
-          });
-
-          Array.from(addedPix.entries())
-            .sort((a, b) => a[0].localeCompare(b[0], 'pt-BR'))
-            .forEach(([resp, key]) => { report += `• ${resp}: \`${key}\`\n`; });
-
+          sortedExpenses.forEach(exp => { if (exp.pix && exp.pix.trim() && !addedPix.has(exp.responsible)) { addedPix.set(exp.responsible, exp.pixDisplay || exp.pix); } });
+          Array.from(addedPix.entries()).sort((a, b) => a[0].localeCompare(b[0], 'pt-BR')).forEach(([resp, key]) => { report += `• ${resp}: \`${key}\`\n`; });
           utils.copyToClipboard(report, "Relatório Geral copiado para a área de transferência!");
         }
       };
 
-      /* --- CAMADA DE INTERFACE E LIGHTBOX (VIEW / UI CONTROLLER) --- */
+      /* --- CAMADA DE INTERFACE (VIEW / UI CONTROLLER) --- */
       const ui = {
         carousel: {
-          index: 0, 
-          touchStartX: 0, 
-          touchEndX: 0,
-          timer: null,
-          delay: 4000,
-          
-          // Função corrigida para garantir o loop automático contínuo
+          index: 0, touchStartX: 0, touchEndX: 0, timer: null, delay: 4000,
           startAutoPlay: () => {
             clearTimeout(App.ui.carousel.timer);
             if (state.photos.length <= 1) return;
-
             const currentMedia = state.photos[App.ui.carousel.index];
             const track = document.getElementById('carousel-track');
-            
             if (currentMedia && currentMedia.type === 'video' && track) {
               const slides = track.querySelectorAll('.carousel-slide');
               const activeVideo = slides[App.ui.carousel.index]?.querySelector('video');
               if (activeVideo) {
-                activeVideo.loop = false;
-                activeVideo.currentTime = 0;
-                activeVideo.onended = () => App.ui.carousel.next(true); // Pula quando o vídeo acaba
-                activeVideo.play().catch(() => {
-                  App.ui.carousel.timer = setTimeout(() => App.ui.carousel.next(true), App.ui.carousel.delay);
-                });
+                activeVideo.loop = false; activeVideo.currentTime = 0; activeVideo.onended = () => App.ui.carousel.next(true);
+                activeVideo.play().catch(() => { App.ui.carousel.timer = setTimeout(() => App.ui.carousel.next(true), App.ui.carousel.delay); });
                 return;
               }
             }
@@ -1255,116 +794,54 @@
           },
           stopAutoPlay: () => { clearTimeout(App.ui.carousel.timer); },
           resetAutoPlay: () => { App.ui.carousel.startAutoPlay(); },
-          
           initSwipe: () => {
-            const track = document.getElementById('carousel-track');
-            if(!track) return;
-            track.addEventListener('touchstart', e => { 
-              App.ui.carousel.stopAutoPlay(); 
-              App.ui.carousel.touchStartX = e.changedTouches[0].screenX; 
-            }, {passive: true});
-            
-            track.addEventListener('touchend', e => { 
-              App.ui.carousel.touchEndX = e.changedTouches[0].screenX; 
-              App.ui.carousel.handleSwipe(); 
-              App.ui.carousel.startAutoPlay(); 
-            }, {passive: true});
+            const track = document.getElementById('carousel-track'); if(!track) return;
+            track.addEventListener('touchstart', e => { App.ui.carousel.stopAutoPlay(); App.ui.carousel.touchStartX = e.changedTouches[0].screenX; }, {passive: true});
+            track.addEventListener('touchend', e => { App.ui.carousel.touchEndX = e.changedTouches[0].screenX; App.ui.carousel.handleSwipe(); App.ui.carousel.startAutoPlay(); }, {passive: true});
           },
-          handleSwipe: () => {
-            const diff = App.ui.carousel.touchStartX - App.ui.carousel.touchEndX;
-            if (diff > 40) App.ui.carousel.next();
-            if (diff < -40) App.ui.carousel.prev();
-          },
+          handleSwipe: () => { const diff = App.ui.carousel.touchStartX - App.ui.carousel.touchEndX; if (diff > 40) App.ui.carousel.next(); if (diff < -40) App.ui.carousel.prev(); },
           updateTransform: () => {
-            const track = document.getElementById('carousel-track');
-            if(track) track.style.transform = `translateX(-${App.ui.carousel.index * 100}%)`;
-            document.querySelectorAll('.carousel-dot').forEach((dot, idx) => {
-              dot.classList.toggle('active', idx === App.ui.carousel.index);
-            });
+            const track = document.getElementById('carousel-track'); if(track) track.style.transform = `translateX(-${App.ui.carousel.index * 100}%)`;
+            document.querySelectorAll('.carousel-dot').forEach((dot, idx) => { dot.classList.toggle('active', idx === App.ui.carousel.index); });
           },
           next: (isAuto = false) => { 
             if(state.photos.length <= 1) return;
-            if(App.ui.carousel.index < state.photos.length - 1) { 
-              App.ui.carousel.index++; 
-            } else { 
-              App.ui.carousel.index = 0; // LOOP INFINITO
-            }
-            App.ui.carousel.updateTransform(); 
-            App.ui.carousel.startAutoPlay(); // Garante que o motor recomece
+            if(App.ui.carousel.index < state.photos.length - 1) { App.ui.carousel.index++; } else { App.ui.carousel.index = 0; }
+            App.ui.carousel.updateTransform(); App.ui.carousel.startAutoPlay(); 
           },
           prev: () => { 
             if(state.photos.length <= 1) return;
-            if(App.ui.carousel.index > 0) { 
-              App.ui.carousel.index--; 
-            } else { 
-              App.ui.carousel.index = state.photos.length - 1; 
-            }
-            App.ui.carousel.updateTransform(); 
-            App.ui.carousel.startAutoPlay();
+            if(App.ui.carousel.index > 0) { App.ui.carousel.index--; } else { App.ui.carousel.index = state.photos.length - 1; }
+            App.ui.carousel.updateTransform(); App.ui.carousel.startAutoPlay();
           },
-          goTo: (idx) => { 
-            App.ui.carousel.index = idx; 
-            App.ui.carousel.updateTransform(); 
-            App.ui.carousel.startAutoPlay();
-          },
+          goTo: (idx) => { App.ui.carousel.index = idx; App.ui.carousel.updateTransform(); App.ui.carousel.startAutoPlay(); },
           render: () => {
-            const track = document.getElementById('carousel-track');
-            const indicators = document.getElementById('carousel-indicators');
-            const emptyText = document.getElementById('carousel-empty');
-            
+            const track = document.getElementById('carousel-track'); const indicators = document.getElementById('carousel-indicators'); const emptyText = document.getElementById('carousel-empty');
             if(!track || !indicators || !emptyText) return;
-            
-            if (state.photos.length === 0) {
-              track.innerHTML = ''; indicators.innerHTML = ''; emptyText.style.display = 'block'; 
-              App.ui.carousel.stopAutoPlay();
-              return;
-            }
+            if (state.photos.length === 0) { track.innerHTML = ''; indicators.innerHTML = ''; emptyText.style.display = 'block'; App.ui.carousel.stopAutoPlay(); return; }
             emptyText.style.display = 'none';
-
             const shouldLoopSingleVideo = state.photos.length === 1;
-
             track.innerHTML = state.photos.map((media) => {
               const isVideo = media.type === 'video';
               const mediaContent = isVideo 
-                ? `<video src="${media.url}" autoplay muted ${shouldLoopSingleVideo ? 'loop' : ''} playsinline style="cursor:pointer;" onclick="App.ui.openMediaViewer('${media.id}')"></video>
-                   <div class="video-icon-badge">🎥 VÍDEO</div>`
+                ? `<video src="${media.url}" autoplay muted ${shouldLoopSingleVideo ? 'loop' : ''} playsinline style="cursor:pointer;" onclick="App.ui.openMediaViewer('${media.id}')"></video><div class="video-icon-badge">🎥 VÍDEO</div>`
                 : `<img src="${media.url}" alt="Foto" onclick="App.ui.openMediaViewer('${media.id}')" style="cursor:pointer;" title="Clique para ampliar">`;
-                
-              return `
-                <div class="carousel-slide">
-                  ${mediaContent}
-                  <div class="carousel-author-tag">📸 ${media.author} (${media.date || ''})</div>
-                </div>
-              `;
+              return `<div class="carousel-slide">${mediaContent}<div class="carousel-author-tag">📸 ${media.author} (${media.date || ''})</div></div>`;
             }).join('');
-
             indicators.innerHTML = state.photos.map((_, idx) => `<div class="carousel-dot ${idx === App.ui.carousel.index ? 'active' : ''}" onclick="App.ui.carousel.goTo(${idx})"></div>`).join('');
             if(App.ui.carousel.index >= state.photos.length) App.ui.carousel.index = Math.max(0, state.photos.length - 1);
-            
             App.ui.carousel.updateTransform();
-            
-            if (document.getElementById('carousel-section').style.display !== 'none') {
-               App.ui.carousel.startAutoPlay();
-            }
+            if (document.getElementById('carousel-section').style.display !== 'none') { App.ui.carousel.startAutoPlay(); }
           }
         },
-
         openMediaViewer: (id) => {
-          const media = state.photos.find(p => p.id === id);
-          if (!media) return;
+          const media = state.photos.find(p => p.id === id); if (!media) return;
           const container = document.getElementById('media-viewer-content');
-          if (media.type === 'video') {
-            container.innerHTML = `<video src="${media.url}" controls autoplay playsinline></video>`;
-          } else {
-            container.innerHTML = `<img src="${media.url}" alt="Foto Ampliada">`;
-          }
+          if (media.type === 'video') { container.innerHTML = `<video src="${media.url}" controls autoplay playsinline></video>`; } 
+          else { container.innerHTML = `<img src="${media.url}" alt="Foto Ampliada">`; }
           App.ui.openModal('media-viewer-modal');
         },
-
-        toggleDrawer: (open) => {
-          document.getElementById("drawer-menu").classList.toggle("active", open);
-          document.getElementById("drawer-overlay").classList.toggle("active", open);
-        },
+        toggleDrawer: (open) => { document.getElementById("drawer-menu").classList.toggle("active", open); document.getElementById("drawer-overlay").classList.toggle("active", open); },
         openModal: (modalId) => {
           if (modalId === 'photos-modal') ui.populatePhotoSenders();
           if (modalId === 'edit-modal') ui.renderEditModal();
@@ -1372,400 +849,175 @@
         },
         closeModal: (modalId) => { 
           document.getElementById(modalId)?.classList.remove("active"); 
-          if (modalId === 'media-viewer-modal') {
-             document.getElementById('media-viewer-content').innerHTML = '';
-          }
+          if (modalId === 'media-viewer-modal') { document.getElementById('media-viewer-content').innerHTML = ''; }
         },
-
         updateCountdown: () => {
-          const now = new Date();
-          const targetDate = new Date(CONFIG.COUNTDOWN_TARGET.year, CONFIG.COUNTDOWN_TARGET.month, CONFIG.COUNTDOWN_TARGET.day, CONFIG.COUNTDOWN_TARGET.hour, 0, 0);
-
+          const now = new Date(); const targetDate = new Date(CONFIG.COUNTDOWN_TARGET.year, CONFIG.COUNTDOWN_TARGET.month, CONFIG.COUNTDOWN_TARGET.day, CONFIG.COUNTDOWN_TARGET.hour, 0, 0);
           const diff = targetDate.getTime() - now.getTime();
-          const countdownSection = document.getElementById("countdown-section");
-          const carouselSection = document.getElementById("carousel-section");
-
+          const countdownSection = document.getElementById("countdown-section"); const carouselSection = document.getElementById("carousel-section");
           if (diff <= 0) { 
             if (countdownSection) countdownSection.style.display = "none";
-            if (carouselSection && carouselSection.style.display !== "block") {
-               carouselSection.style.display = "block";
-               App.ui.carousel.updateTransform();
-               App.ui.carousel.startAutoPlay(); 
-            }
+            if (carouselSection && carouselSection.style.display !== "block") { carouselSection.style.display = "block"; App.ui.carousel.updateTransform(); App.ui.carousel.startAutoPlay(); }
             return;
           }
-
-          if (countdownSection) countdownSection.style.display = "block";
-          if (carouselSection) carouselSection.style.display = "none";
-
-          const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-          const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-          const minutes = Math.floor((diff / 1000 / 60) % 60);
-          const seconds = Math.floor((diff / 1000) % 60);
-
-          document.getElementById("cd-days").textContent = String(days).padStart(2, '0');
-          document.getElementById("cd-hours").textContent = String(hours).padStart(2, '0');
-          document.getElementById("cd-minutes").textContent = String(minutes).padStart(2, '0');
-          document.getElementById("cd-seconds").textContent = String(seconds).padStart(2, '0');
+          if (countdownSection) countdownSection.style.display = "block"; if (carouselSection) carouselSection.style.display = "none";
+          const days = Math.floor(diff / (1000 * 60 * 60 * 24)); const hours = Math.floor((diff / (1000 * 60 * 60)) % 24); const minutes = Math.floor((diff / 1000 / 60) % 60); const seconds = Math.floor((diff / 1000) % 60);
+          document.getElementById("cd-days").textContent = String(days).padStart(2, '0'); document.getElementById("cd-hours").textContent = String(hours).padStart(2, '0');
+          document.getElementById("cd-minutes").textContent = String(minutes).padStart(2, '0'); document.getElementById("cd-seconds").textContent = String(seconds).padStart(2, '0');
         },
-
         renderDashboard: (categoryTotals, grandTotal) => {
-          const dashboard = document.getElementById("dashboard-section");
-          if (!dashboard) return;
+          const dashboard = document.getElementById("dashboard-section"); if (!dashboard) return;
           if (grandTotal <= 0) { dashboard.style.display = "none"; return; }
-          
           dashboard.style.display = "block";
-          
           const colors = { "Transporte": "#38bdf8", "Carnes & Bebidas": "#f87171", "Compras & Extras": "#22c55e" };
-
-          let conicString = "";
-          let startAngle = 0;
-          let legendHtml = "";
-
+          let conicString = ""; let startAngle = 0; let legendHtml = "";
           for (const [cat, val] of Object.entries(categoryTotals)) {
               if (val > 0) {
-                 const percentage = (val / grandTotal) * 100;
-                 const endAngle = startAngle + percentage;
-                 conicString += `${colors[cat]} ${startAngle}% ${endAngle}%, `;
-                 startAngle = endAngle;
-
-                 legendHtml += `
-                   <div class="legend-item">
-                      <div>
-                        <span class="legend-color-box" style="background:${colors[cat]};"></span>
-                        <span style="color:var(--color-text-main); font-weight:500;">${cat}</span>
-                      </div>
-                      <strong style="color:${colors[cat]};">${utils.formatBRL(val)} <span style="font-size:0.75rem; color:var(--color-text-muted);">(${percentage.toFixed(0)}%)</span></strong>
-                   </div>
-                 `;
+                 const percentage = (val / grandTotal) * 100; const endAngle = startAngle + percentage;
+                 conicString += `${colors[cat]} ${startAngle}% ${endAngle}%, `; startAngle = endAngle;
+                 legendHtml += `<div class="legend-item"><div><span class="legend-color-box" style="background:${colors[cat]};"></span><span style="color:var(--color-text-main); font-weight:500;">${cat}</span></div><strong style="color:${colors[cat]};">${utils.formatBRL(val)} <span style="font-size:0.75rem; color:var(--color-text-muted);">(${percentage.toFixed(0)}%)</span></strong></div>`;
               }
           }
-
-          if (conicString.length > 0) {
-             conicString = conicString.slice(0, -2);
-             document.getElementById("expense-donut").style.background = `conic-gradient(${conicString})`;
-          }
-          
-          document.getElementById("donut-total").textContent = utils.formatBRL(grandTotal);
-          document.getElementById("dashboard-legend").innerHTML = legendHtml;
+          if (conicString.length > 0) { conicString = conicString.slice(0, -2); document.getElementById("expense-donut").style.background = `conic-gradient(${conicString})`; }
+          document.getElementById("donut-total").textContent = utils.formatBRL(grandTotal); document.getElementById("dashboard-legend").innerHTML = legendHtml;
         },
-
         renderExpenses: () => {
-          const container = document.getElementById("expenses-container");
-          if (!container) return;
-          container.innerHTML = "";
-
-          const balances = {};
-          const debts = {}; 
-          
+          const container = document.getElementById("expenses-container"); if (!container) return; container.innerHTML = "";
+          const balances = {}; const debts = {}; 
           const sortedParticipants = [...PARTICIPANTS].sort((a, b) => a.localeCompare(b, 'pt-BR'));
-          sortedParticipants.forEach(p => { 
-             balances[p] = { totalOwed: 0, totalPaid: 0 }; 
-             debts[p] = {}; 
-          });
-
+          sortedParticipants.forEach(p => { balances[p] = { totalOwed: 0, totalPaid: 0 }; debts[p] = {}; });
           const sortedExpenses = [...state.expenses].sort((a, b) => utils.cleanName(a.name).localeCompare(utils.cleanName(b.name), 'pt-BR'));
-          
-          let totalGastoViagem = 0;
-          let categoryTotals = { "Transporte": 0, "Carnes & Bebidas": 0, "Compras & Extras": 0 };
+          let totalGastoViagem = 0; let categoryTotals = { "Transporte": 0, "Carnes & Bebidas": 0, "Compras & Extras": 0 };
 
           sortedExpenses.forEach(exp => {
-            const card = document.createElement("article");
-            card.className = "expense-card";
-
-            const hasPix = exp.pix && exp.pix.trim().length > 0;
-            const copyBtn = hasPix ? `<button class="copy-btn" onclick="App.utils.copyToClipboard('${exp.pix}', 'Chave PIX copiada: ${exp.pix}')">Copiar PIX</button>` : '';
-
-            const excluded = exp.excluded || [];
-            const activeList = sortedParticipants.filter(p => !excluded.includes(p));
-            const excludedList = sortedParticipants.filter(p => excluded.includes(p));
-            const activeCount = activeList.length;
-
-            let perPersonVal = 0;
-            let perPersonText = "A Definir";
-            let totalText = "A Definir";
+            const card = document.createElement("article"); card.className = "expense-card";
+            const hasPix = exp.pix && exp.pix.trim().length > 0; const copyBtn = hasPix ? `<button class="copy-btn" onclick="App.utils.copyToClipboard('${exp.pix}', 'Chave PIX copiada: ${exp.pix}')">Copiar PIX</button>` : '';
+            const excluded = exp.excluded || []; const activeList = sortedParticipants.filter(p => !excluded.includes(p)); const excludedList = sortedParticipants.filter(p => excluded.includes(p));
+            const activeCount = activeList.length; let perPersonVal = 0; let perPersonText = "A Definir"; let totalText = "A Definir";
             const hasDefinedValue = typeof exp.total === 'number' && exp.total > 0 && activeCount > 0;
 
             if (hasDefinedValue) {
-              totalGastoViagem += exp.total;
-              perPersonVal = exp.total / activeCount;
-              perPersonText = `${utils.formatBRL(perPersonVal)} / pessoa`;
-              totalText = utils.formatBRL(exp.total);
-              
+              totalGastoViagem += exp.total; perPersonVal = exp.total / activeCount; perPersonText = `${utils.formatBRL(perPersonVal)} / pessoa`; totalText = utils.formatBRL(exp.total);
               if(exp.id === "carros" || exp.id === "combustivel") categoryTotals["Transporte"] += exp.total;
-              else if (exp.id === "carnes" || exp.id === "chopp") categoryTotals["Carnes & Bebidas"] += exp.total;
-              else categoryTotals["Compras & Extras"] += exp.total;
+              else if (exp.id === "carnes" || exp.id === "chopp") categoryTotals["Carnes & Bebidas"] += exp.total; else categoryTotals["Compras & Extras"] += exp.total;
             }
 
-            let paidCountInExp = 0;
-            let peopleHtml = "";
-
+            let paidCountInExp = 0; let peopleHtml = "";
             activeList.forEach(person => {
-              const key = `${exp.id}_${person}`;
-              const isPaid = !!state.payments[key];
-
+              const key = `${exp.id}_${person}`; const isPaid = !!state.payments[key];
               if (isPaid) paidCountInExp++;
               if (perPersonVal > 0) {
-                balances[person].totalOwed += perPersonVal;
-                if (isPaid) balances[person].totalPaid += perPersonVal;
-                
-                if (!isPaid && exp.responsible && exp.responsible !== "A definir" && person !== exp.responsible) {
-                    debts[person][exp.responsible] = (debts[person][exp.responsible] || 0) + perPersonVal;
-                }
+                balances[person].totalOwed += perPersonVal; if (isPaid) balances[person].totalPaid += perPersonVal;
+                if (!isPaid && exp.responsible && exp.responsible !== "A definir" && person !== exp.responsible) { debts[person][exp.responsible] = (debts[person][exp.responsible] || 0) + perPersonVal; }
               }
-
-              peopleHtml += `
-                <label class="person-chip ${isPaid ? 'paid' : ''}">
-                  <input type="checkbox" ${isPaid ? 'checked' : ''} onchange="App.expenses.togglePayment('${exp.id}', '${person}')">
-                  <span>${person}</span>
-                </label>
-              `;
+              peopleHtml += `<label class="person-chip ${isPaid ? 'paid' : ''}"><input type="checkbox" ${isPaid ? 'checked' : ''} onchange="App.expenses.togglePayment('${exp.id}', '${person}')"><span>${person}</span></label>`;
             });
+            excludedList.forEach(person => { peopleHtml += `<div class="person-chip" style="opacity: 0.4; cursor: not-allowed;"><span class="excluded-tag">${person} (não entra)</span></div>`; });
 
-            excludedList.forEach(person => {
-              peopleHtml += `
-                <div class="person-chip" style="opacity: 0.4; cursor: not-allowed;">
-                  <span class="excluded-tag">${person} (não entra)</span>
-                </div>
-              `;
-            });
-
-            let statusHtml = '';
-            let progressHtml = '';
-
+            let statusHtml = ''; let progressHtml = '';
             if (hasDefinedValue) {
-              const paidAmount = perPersonVal * paidCountInExp;
-              const pendingAmount = Math.max(0, exp.total - paidAmount);
-              const percent = activeCount > 0 ? Math.round((paidCountInExp / activeCount) * 100) : 0;
-              const isComplete = percent >= 100;
-
-              statusHtml = `
-                <div class="expense-status-row">
-                  <span>Pago: <strong class="text-paid">${utils.formatBRL(paidAmount)}</strong></span>
-                  <span>Pendente: <strong class="text-pending">${utils.formatBRL(pendingAmount)}</strong></span>
-                </div>
-              `;
-
-              progressHtml = `
-                <div class="progress-wrapper">
-                  <div class="progress-bar-bg">
-                    <div class="progress-bar-fill ${isComplete ? 'complete' : ''}" style="width: ${percent}%;"></div>
-                  </div>
-                  <div class="progress-label">
-                    <span>${paidCountInExp} de ${activeCount} pagos</span>
-                    <span>${percent}% arrecadado</span>
-                  </div>
-                </div>
-              `;
-            } else {
-              statusHtml = `<div class="expense-status-row"><span style="color: var(--color-text-muted);">Valores pendentes de definição</span></div>`;
-            }
+              const paidAmount = perPersonVal * paidCountInExp; const pendingAmount = Math.max(0, exp.total - paidAmount); const percent = activeCount > 0 ? Math.round((paidCountInExp / activeCount) * 100) : 0; const isComplete = percent >= 100;
+              statusHtml = `<div class="expense-status-row"><span>Pago: <strong class="text-paid">${utils.formatBRL(paidAmount)}</strong></span><span>Pendente: <strong class="text-pending">${utils.formatBRL(pendingAmount)}</strong></span></div>`;
+              progressHtml = `<div class="progress-wrapper"><div class="progress-bar-bg"><div class="progress-bar-fill ${isComplete ? 'complete' : ''}" style="width: ${percent}%;"></div></div><div class="progress-label"><span>${paidCountInExp} de ${activeCount} pagos</span><span>${percent}% arrecadado</span></div></div>`;
+            } else { statusHtml = `<div class="expense-status-row"><span style="color: var(--color-text-muted);">Valores pendentes de definição</span></div>`; }
 
             let checklistBtnHtml = '';
-            if (exp.id === 'compras') {
-              const boughtTotal = Object.values(state.grocery).filter(Boolean).length;
-              checklistBtnHtml = `
-                <button class="checklist-trigger-btn" onclick="App.ui.openModal('grocery-modal')">
-                  📝 Ver Lista de Compras (${boughtTotal}/${GROCERY_ITEMS.length} comprados)
-                </button>
-              `;
-            }
+            if (exp.id === 'compras') { const boughtTotal = Object.values(state.grocery).filter(Boolean).length; checklistBtnHtml = `<button class="checklist-trigger-btn" onclick="App.ui.openModal('grocery-modal')">📝 Ver Lista de Compras (${boughtTotal}/${GROCERY_ITEMS.length} comprados)</button>`; }
 
-            card.innerHTML = `
-              <div class="expense-header">
-                <div>
-                  <span class="expense-title">${exp.name}</span>
-                  <span style="font-size: 0.8rem; color: var(--color-text-muted);">${totalText} (${activeCount} pessoas)</span>
-                </div>
-                <div>
-                  <div class="expense-val">${perPersonText}</div>
-                  ${statusHtml}
-                </div>
-              </div>
-              ${progressHtml}
-              ${checklistBtnHtml}
-              <div class="pix-box">
-                <span>Resp: <strong>${exp.responsible || 'A definir'}</strong> | PIX: <strong>${exp.pixDisplay || exp.pix || 'A definir'}</strong></span>
-                ${copyBtn}
-              </div>
-              <div class="people-grid">
-                ${peopleHtml}
-              </div>
-            `;
+            card.innerHTML = `<div class="expense-header"><div><span class="expense-title">${exp.name}</span><span style="font-size: 0.8rem; color: var(--color-text-muted);">${totalText} (${activeCount} pessoas)</span></div><div><div class="expense-val">${perPersonText}</div>${statusHtml}</div></div>${progressHtml}${checklistBtnHtml}<div class="pix-box"><span>Resp: <strong>${exp.responsible || 'A definir'}</strong> | PIX: <strong>${exp.pixDisplay || exp.pix || 'A definir'}</strong></span>${copyBtn}</div><div class="people-grid">${peopleHtml}</div>`;
             container.appendChild(card);
           });
 
-          state.smartDebts = debts; 
-          ui.renderDashboard(categoryTotals, totalGastoViagem);
-          ui.renderSummary(balances, sortedParticipants, debts);
+          state.smartDebts = debts; ui.renderDashboard(categoryTotals, totalGastoViagem); ui.renderSummary(balances, sortedParticipants, debts);
         },
-
         renderSummary: (balances, sortedParticipants, debts) => {
-          const summaryContainer = document.getElementById("summary-container");
-          if (!summaryContainer) return;
-          summaryContainer.innerHTML = "";
-
+          const summaryContainer = document.getElementById("summary-container"); if (!summaryContainer) return; summaryContainer.innerHTML = "";
           sortedParticipants.forEach(person => {
-            const { totalOwed, totalPaid } = balances[person];
-            const pending = Math.max(0, totalOwed - totalPaid);
-            const isFullyPaid = totalOwed > 0 && pending < 0.01;
-
-            const row = document.createElement("div");
-            row.className = `summary-row ${isFullyPaid ? 'fully-paid' : ''}`;
-            row.innerHTML = `
-              <div>
-                <strong>${person}</strong>
-                ${isFullyPaid ? '<span style="color: #86efac; font-size: 0.8rem; margin-left: 6px;">✓ Quitado</span>' : ''}
-              </div>
-              <div class="summary-details">
-                <div>Total: <strong>${utils.formatBRL(totalOwed)}</strong></div>
-                <div>
-                  Pago: <span class="text-paid">${utils.formatBRL(totalPaid)}</span> | 
-                  Pendente: <span class="text-pending">${utils.formatBRL(pending)}</span>
-                </div>
-              </div>
-            `;
+            const { totalOwed, totalPaid } = balances[person]; const pending = Math.max(0, totalOwed - totalPaid); const isFullyPaid = totalOwed > 0 && pending < 0.01;
+            const row = document.createElement("div"); row.className = `summary-row ${isFullyPaid ? 'fully-paid' : ''}`;
+            row.innerHTML = `<div><strong>${person}</strong>${isFullyPaid ? '<span style="color: #86efac; font-size: 0.8rem; margin-left: 6px;">✓ Quitado</span>' : ''}</div><div class="summary-details"><div>Total: <strong>${utils.formatBRL(totalOwed)}</strong></div><div>Pago: <span class="text-paid">${utils.formatBRL(totalPaid)}</span> | Pendente: <span class="text-pending">${utils.formatBRL(pending)}</span></div></div>`;
             summaryContainer.appendChild(row);
           });
-          
           const settlementContainer = document.getElementById("settlement-routes-container");
           if (settlementContainer) {
-              settlementContainer.innerHTML = "";
-              let hasDebts = false;
-              
+              settlementContainer.innerHTML = ""; let hasDebts = false;
               Object.keys(debts).sort().forEach(debtor => {
                  const creditors = debts[debtor];
                  Object.keys(creditors).sort().forEach(creditor => {
                      const amount = creditors[creditor];
-                     if (amount > 0.01) {
-                         hasDebts = true;
-                         const route = document.createElement("div");
-                         route.className = "settlement-route";
-                         route.innerHTML = `
-                            <div>
-                               <strong style="color: var(--color-accent-rose);">${debtor}</strong> 
-                               <span class="route-arrow">➔ envia para</span> 
-                               <strong>${creditor}</strong>
-                            </div>
-                            <div class="route-amount">${utils.formatBRL(amount)}</div>
-                         `;
-                         settlementContainer.appendChild(route);
-                     }
+                     if (amount > 0.01) { hasDebts = true; const route = document.createElement("div"); route.className = "settlement-route"; route.innerHTML = `<div><strong style="color: var(--color-accent-rose);">${debtor}</strong> <span class="route-arrow">➔ envia para</span> <strong>${creditor}</strong></div><div class="route-amount">${utils.formatBRL(amount)}</div>`; settlementContainer.appendChild(route); }
                  });
               });
-              
-              if(!hasDebts) {
-                  settlementContainer.innerHTML = `<div style="text-align:center; padding:10px; color:#86efac; font-weight:600; background:rgba(34,197,94,0.1); border-radius:6px;">🎉 Tudo 100% quitado entre o grupo!</div>`;
-              }
+              if(!hasDebts) { settlementContainer.innerHTML = `<div style="text-align:center; padding:10px; color:#86efac; font-weight:600; background:rgba(34,197,94,0.1); border-radius:6px;">🎉 Tudo 100% quitado entre o grupo!</div>`; }
           }
         },
-
         renderRides: () => {
-          const container = document.getElementById("rides-container");
-          if (!container) return;
-          container.innerHTML = "";
-
-          const taken = [];
-          state.rides.forEach(car => {
-            taken.push(car.driver);
-            car.passengers = car.passengers || []; 
-            taken.push(...car.passengers);
-          });
-
+          const container = document.getElementById("rides-container"); if (!container) return; container.innerHTML = "";
+          const taken = []; state.rides.forEach(car => { taken.push(car.driver); car.passengers = car.passengers || []; taken.push(...car.passengers); });
           const available = PARTICIPANTS.filter(p => !taken.includes(p));
-
           state.rides.forEach(car => {
-            const card = document.createElement("div");
-            card.className = "expense-card"; 
-            card.style.borderLeft = "4px solid var(--color-accent-amber)";
-            card.style.marginBottom = "16px";
-            
+            const card = document.createElement("div"); card.className = "expense-card"; card.style.borderLeft = "4px solid var(--color-accent-amber)"; card.style.marginBottom = "16px";
             car.passengers = car.passengers || [];
-
             let passengersHtml = car.passengers.map(p => {
               const isFixed = p === "Dona Elda" || p === "Tia";
-              return `
-                <div class="passenger-chip" ${isFixed ? 'style="background: rgba(245, 158, 11, 0.15); border-color: rgba(245, 158, 11, 0.4); color: var(--color-accent-amber);"' : ''}>
-                  ${p} ${isFixed ? '<span style="color:var(--color-accent-amber); font-size:1rem; cursor:default;">🔒</span>' : `<span onclick="App.rides.removePassenger('${car.id}', '${p}')">&times;</span>`}
-                </div>
-              `;
+              return `<div class="passenger-chip" ${isFixed ? 'style="background: rgba(245, 158, 11, 0.15); border-color: rgba(245, 158, 11, 0.4); color: var(--color-accent-amber);"' : ''}>${p} ${isFixed ? '<span style="color:var(--color-accent-amber); font-size:1rem; cursor:default;">🔒</span>' : `<span onclick="App.rides.removePassenger('${car.id}', '${p}')">&times;</span>`}</div>`;
             }).join('');
-
-            if (car.passengers.length === 0) {
-              passengersHtml = `<span style="font-size:0.85rem; color:var(--color-text-muted);">Nenhum passageiro do grupo ainda.</span>`;
-            }
-
-            let optionsHtml = `<option value="">+ Adicionar ao carro</option>`;
-            available.forEach(p => {
-              optionsHtml += `<option value="${p}">${p}</option>`;
-            });
-
+            if (car.passengers.length === 0) { passengersHtml = `<span style="font-size:0.85rem; color:var(--color-text-muted);">Nenhum passageiro do grupo ainda.</span>`; }
+            let optionsHtml = `<option value="">+ Adicionar ao carro</option>`; available.forEach(p => { optionsHtml += `<option value="${p}">${p}</option>`; });
             const canAdd = car.passengers.length < car.capacity;
-
-            card.innerHTML = `
-              <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--color-border); padding-bottom:8px; margin-bottom:12px;">
-                <span style="font-weight:bold; color:var(--color-accent-amber); font-size: 1.05rem;">🚘 ${car.driver}</span>
-                <span style="font-size:0.75rem; background:var(--color-bg-primary); padding:4px 8px; border-radius:6px; border:1px solid var(--color-border); color: var(--color-text-muted);">${car.passengers.length}/${car.capacity} vagas</span>
-              </div>
-              <div style="font-size:0.82rem; color:var(--color-text-muted); margin-bottom:12px; display: flex; flex-direction: column; gap: 4px;">
-                ${car.note ? `<span style="color:var(--color-accent-rose); font-weight:600;">⚠️ ${car.note}</span>` : ''}
-              </div>
-              <div style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:14px; min-height: 28px; align-items:center;">
-                ${passengersHtml}
-              </div>
-              ${canAdd && available.length > 0 ? `
-                <select style="width:100%; background:var(--color-bg-primary); border:1px solid var(--color-border); color:var(--color-accent-sky); padding:10px; border-radius:8px; font-size:0.9rem;" onchange="App.rides.addPassenger('${car.id}', this.value); this.value='';">
-                  ${optionsHtml}
-                </select>
-              ` : `<div style="font-size:0.85rem; background: rgba(34, 197, 94, 0.1); padding:8px; border-radius: 8px; color:var(--color-accent-emerald); text-align:center; border: 1px solid rgba(34, 197, 94, 0.3); font-weight:500;">${!canAdd ? '⚠️ Vagas esgotadas!' : '✅ Todos já têm carona!'}</div>`}
-            `;
+            card.innerHTML = `<div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--color-border); padding-bottom:8px; margin-bottom:12px;"><span style="font-weight:bold; color:var(--color-accent-amber); font-size: 1.05rem;">🚘 ${car.driver}</span><span style="font-size:0.75rem; background:var(--color-bg-primary); padding:4px 8px; border-radius:6px; border:1px solid var(--color-border); color: var(--color-text-muted);">${car.passengers.length}/${car.capacity} vagas</span></div><div style="font-size:0.82rem; color:var(--color-text-muted); margin-bottom:12px; display: flex; flex-direction: column; gap: 4px;">${car.note ? `<span style="color:var(--color-accent-rose); font-weight:600;">⚠️ ${car.note}</span>` : ''}</div><div style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:14px; min-height: 28px; align-items:center;">${passengersHtml}</div>${canAdd && available.length > 0 ? `<select style="width:100%; background:var(--color-bg-primary); border:1px solid var(--color-border); color:var(--color-accent-sky); padding:10px; border-radius:8px; font-size:0.9rem;" onchange="App.rides.addPassenger('${car.id}', this.value); this.value='';">${optionsHtml}</select>` : `<div style="font-size:0.85rem; background: rgba(34, 197, 94, 0.1); padding:8px; border-radius: 8px; color:var(--color-accent-emerald); text-align:center; border: 1px solid rgba(34, 197, 94, 0.3); font-weight:500;">${!canAdd ? '⚠️ Vagas esgotadas!' : '✅ Todos já têm carona!'}</div>`}`;
             container.appendChild(card);
           });
         },
-
         renderGrocery: () => {
-          const container = document.getElementById("grocery-list-container");
-          if (!container) return;
-          container.innerHTML = "";
-
+          const container = document.getElementById("grocery-list-container"); if (!container) return; container.innerHTML = "";
           let boughtCount = 0;
           GROCERY_ITEMS.forEach(item => {
-            const isBought = !!state.grocery[item.id];
-            if (isBought) boughtCount++;
-            const row = document.createElement("div");
-            row.className = `grocery-item ${isBought ? 'bought' : ''}`;
-            row.onclick = () => groceryService.toggleItem(item.id);
-            row.innerHTML = `
-              <div class="grocery-left">
-                <input type="checkbox" ${isBought ? 'checked' : ''} style="cursor: pointer;" onclick="event.stopPropagation(); App.grocery.toggleItem('${item.id}')">
-                <span class="grocery-text" style="font-weight: 500;">${item.name}</span>
-              </div>
-              ${item.qty ? `<span class="grocery-qty">${item.qty}</span>` : ''}
-            `;
+            const isBought = !!state.grocery[item.id]; if (isBought) boughtCount++;
+            const row = document.createElement("div"); row.className = `grocery-item ${isBought ? 'bought' : ''}`; row.onclick = () => groceryService.toggleItem(item.id);
+            row.innerHTML = `<div class="grocery-left"><input type="checkbox" ${isBought ? 'checked' : ''} style="cursor: pointer;" onclick="event.stopPropagation(); App.grocery.toggleItem('${item.id}')"><span class="grocery-text" style="font-weight: 500;">${item.name}</span></div>${item.qty ? `<span class="grocery-qty">${item.qty}</span>` : ''}`;
             container.appendChild(row);
           });
-          const counter = document.getElementById("grocery-counter");
-          if (counter) counter.textContent = `${boughtCount} de ${GROCERY_ITEMS.length} itens comprados`;
+          const counter = document.getElementById("grocery-counter"); if (counter) counter.textContent = `${boughtCount} de ${GROCERY_ITEMS.length} itens comprados`;
         },
-
         renderLuggage: () => {
-          const container = document.getElementById("luggage-container");
-          if (!container) return;
-          container.innerHTML = "";
+          const container = document.getElementById("luggage-container"); if (!container) return; container.innerHTML = "";
           state.luggage.forEach(item => {
-            const row = document.createElement("div");
-            row.style.cssText = "display:flex; justify-content:space-between; align-items:center; background:#0f172a; padding:10px 12px; border-radius:8px; border:1px solid var(--color-border);";
-            let opts = `<option value="">Ninguém ainda</option>`;
-            PARTICIPANTS.forEach(p => { opts += `<option value="${p}" ${item.assigned === p ? 'selected' : ''}>${p}</option>`; });
-            row.innerHTML = `
-              <span style="font-weight:500; font-size:0.88rem;">${item.name}</span>
-              <select style="background:#1e293b; border:1px solid var(--color-border); color:var(--color-accent-sky); padding:5px 8px; border-radius:6px; font-size:0.8rem;" onchange="App.luggage.updateAssignment('${item.id}', this.value)">
-                ${opts}
-              </select>
-            `;
+            const row = document.createElement("div"); row.style.cssText = "display:flex; justify-content:space-between; align-items:center; background:#0f172a; padding:10px 12px; border-radius:8px; border:1px solid var(--color-border);";
+            let opts = `<option value="">Ninguém ainda</option>`; PARTICIPANTS.forEach(p => { opts += `<option value="${p}" ${item.assigned === p ? 'selected' : ''}>${p}</option>`; });
+            row.innerHTML = `<span style="font-weight:500; font-size:0.88rem;">${item.name}</span><select style="background:#1e293b; border:1px solid var(--color-border); color:var(--color-accent-sky); padding:5px 8px; border-radius:6px; font-size:0.8rem;" onchange="App.luggage.updateAssignment('${item.id}', this.value)">${opts}</select>`;
             container.appendChild(row);
           });
-        }
+        },
+        renderPhotos: () => {
+          const container = document.getElementById("photos-container"); if (!container) return; container.innerHTML = "";
+          if (state.photos.length === 0) { container.innerHTML = `<p style="grid-column: 1/-1; text-align:center; color:var(--color-text-muted); font-size:0.85rem; padding: 20px;">Nenhuma foto/vídeo enviado ainda.</p>`; } 
+          else {
+            state.photos.forEach(media => {
+              const item = document.createElement("div"); item.className = "photo-item";
+              const isVideo = media.type === 'video';
+              const mediaContent = isVideo ? `<video src="${media.url}" autoplay muted loop playsinline style="cursor:pointer;" onclick="App.ui.openMediaViewer('${media.id}')"></video><div class="video-icon-badge">🎥 VÍDEO</div>` : `<img src="${media.url}" alt="Foto" onclick="App.ui.openMediaViewer('${media.id}')" style="cursor:pointer;" title="Clique para ampliar">`;
+              item.innerHTML = `${mediaContent}<button class="photo-delete-btn" onclick="event.stopPropagation(); App.photos.deletePhoto('${media.id}')" title="Excluir">🗑️</button><div class="photo-uploader-tag">📸 ${media.author} (${media.date || ''})</div>`;
+              container.appendChild(item);
+            });
+          }
+          App.ui.carousel.render(); 
+        },
+        populatePhotoSenders: () => { const select = document.getElementById("photo-sender-select"); if (select && select.options.length <= 1) { PARTICIPANTS.forEach(p => { const opt = document.createElement("option"); opt.value = p; opt.textContent = p; select.appendChild(opt); }); } },
+        renderEditModal: () => {
+          const modalBody = document.getElementById("modal-body"); if (!modalBody) return;
+          let expensesHtml = `<h4 style="color: var(--color-accent-sky); margin-bottom: 10px;">💰 Gastos e Divisões</h4>`;
+          const sortedExpenses = [...state.expenses].sort((a, b) => utils.cleanName(a.name).localeCompare(utils.cleanName(b.name), 'pt-BR'));
+          sortedExpenses.forEach(exp => {
+            expensesHtml += `<div class="edit-item-card" style="margin-bottom: 10px;"><div class="edit-item-title">${exp.name}</div><div class="edit-form-grid"><div class="form-group"><label>Valor Total (R$)</label><input type="number" step="0.01" id="modal_total_${exp.id}" value="${exp.total !== null ? exp.total : ''}" placeholder="Ex: 500.00"></div><div class="form-group"><label>Responsável</label><input type="text" id="modal_resp_${exp.id}" value="${exp.responsible || ''}" placeholder="Nome"></div><div class="form-group"><label>Chave PIX (apenas dígitos ou chave)</label><input type="text" id="modal_pix_${exp.id}" value="${exp.pix || ''}" placeholder="Ex: 61999999999"></div><div class="form-group"><label>Exibição do PIX</label><input type="text" id="modal_disp_${exp.id}" value="${exp.pixDisplay || ''}" placeholder="Ex: 61 99999-9999"></div></div></div>`;
+          });
+          let carsHtml = `<h4 style="color: var(--color-accent-amber); margin: 20px 0 10px; border-bottom: 1px solid var(--color-border); padding-bottom: 5px;">🚗 Configuração das Caronas</h4>`;
+          state.rides.forEach(car => {
+            carsHtml += `<div class="edit-item-card" style="margin-bottom: 10px;"><div class="edit-item-title">Carro: ${car.driver}</div><div class="edit-form-grid"><div class="form-group"><label>Motorista</label><input type="text" id="modal_car_driver_${car.id}" value="${car.driver}"></div><div class="form-group"><label>Vagas Totais (incluindo fixos)</label><input type="number" id="modal_car_cap_${car.id}" value="${car.capacity}"></div><div class="form-group" style="grid-column: 1/-1;"><label>Observação (Ex: Leva chopp, Dona Elda...)</label><input type="text" id="modal_car_note_${car.id}" value="${car.note || ''}"></div></div></div>`;
+          });
+          modalBody.innerHTML = expensesHtml + carsHtml;
+        },
+        renderAll: () => { ui.renderExpenses(); ui.renderGrocery(); ui.renderLuggage(); ui.renderPhotos(); ui.renderRides(); }
       };
 
       /* --- INICIALIZAÇÃO CONTROLADA --- */
@@ -1774,16 +1026,10 @@
         repository.loadLocal();
         ui.renderAll();
         ui.updateCountdown();
-
         setInterval(ui.updateCountdown, 1000);
         setInterval(repository.syncFromCloud, CONFIG.SYNC_INTERVAL_MS);
-
         window.addEventListener('online', repository.syncFromCloud);
-        window.addEventListener('click', (event) => {
-          if (event.target.classList.contains('modal-overlay') && event.target.id !== 'media-viewer-modal') {
-            event.target.classList.remove('active');
-          }
-        });
+        window.addEventListener('click', (event) => { if (event.target.classList.contains('modal-overlay') && event.target.id !== 'media-viewer-modal') { event.target.classList.remove('active'); } });
         repository.syncFromCloud();
       };
 
